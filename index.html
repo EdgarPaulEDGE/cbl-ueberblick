@@ -610,6 +610,75 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 /* Zettel: Inhalt so groß, dass der Kasten neben dem Fragezeichen nicht leer wirkt */
 .zettel ul { font-size: 0; }
 .zettel li { font-size: 31px; line-height: 1.9; }
+
+/* ---------- Der Kompass im Raum ----------
+   Eine Scheibe, um 58 Grad nach hinten gekippt, zwei Ringe darunter für die
+   Tiefe, eine Nadel, die von Frage zu Frage wandert. Alles CSS-3D, kein
+   WebGL: läuft im Standbild ebenso wie im Vortrag, und ohne box-shadow. */
+.kompass-buehne { flex: 0 0 560px; height: 520px; position: relative; perspective: 1400px; }
+.kompass {
+  position: absolute; left: 50%; top: 46%; width: 440px; height: 440px;
+  transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-14deg);
+  transform-style: preserve-3d;
+  animation: kompass-schweben 7s ease-in-out infinite alternate;
+}
+@keyframes kompass-schweben {
+  from { transform: translate(-50%, -52%) rotateX(58deg) rotateZ(-16deg); }
+  to   { transform: translate(-50%, -48%) rotateX(56deg) rotateZ(-11deg); }
+}
+.kompass-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(244, 246, 255, .18); background: rgba(6, 8, 18, .9);
+}
+.kompass-ring.r1 { transform: translateZ(-14px); }
+.kompass-ring.r2 { transform: translateZ(-28px); background: rgba(3, 4, 12, .95); }
+.kompass-ring::before {
+  content: ""; position: absolute; inset: -3px; border-radius: 50%;
+  background: conic-gradient(var(--purple), var(--blau) 38%, var(--cyan) 62%, var(--purple));
+  z-index: -1; opacity: .55;
+}
+.kompass-scheibe { position: absolute; inset: 0; transform: translateZ(2px); }
+.kompass-scheibe svg { width: 100%; height: 100%; display: block; }
+.kompass-buchstabe { font-family: var(--font); font-weight: 700; font-size: 26px; text-anchor: middle; }
+.kompass-nadel {
+  position: absolute; left: 50%; top: 50%; width: 22px; height: 300px;
+  margin: -150px 0 0 -11px; transform-style: preserve-3d;
+  animation: nadel-wandern 16s cubic-bezier(.5, 0, .2, 1) infinite;
+}
+.kompass-nadel i {
+  position: absolute; left: 0; width: 22px; height: 150px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.kompass-nadel i:first-child { top: 0; background: linear-gradient(180deg, var(--cyan), var(--blau)); }
+.kompass-nadel i:last-child { top: 150px; transform: rotate(180deg); background: linear-gradient(180deg, rgba(244,246,255,.7), rgba(244,246,255,.25)); }
+.kompass-achse {
+  position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px;
+  border-radius: 50%; background: #F4F6FF; border: 4px solid #070a14; transform: translateZ(6px);
+}
+/* Die Nadel hält auf jeder Richtung an: Rolle, Aufgabe, Kontext, Förmchen */
+@keyframes nadel-wandern {
+  0%, 20%   { transform: rotate(0deg); }
+  25%, 45%  { transform: rotate(90deg); }
+  50%, 70%  { transform: rotate(180deg); }
+  75%, 95%  { transform: rotate(270deg); }
+  100%      { transform: rotate(360deg); }
+}
+.kompass-schatten {
+  position: absolute; left: 50%; bottom: 10px; width: 420px; height: 70px; transform: translateX(-50%);
+  border-radius: 50%; background: radial-gradient(50% 50% at 50% 50%, rgba(0, 226, 226, .22), transparent 70%);
+}
+@media (prefers-reduced-motion: reduce) { .kompass, .kompass-nadel { animation: none; } }
+
+/* Die vier Fragen neben dem Kompass */
+.kompass-zeile { display: grid; grid-template-columns: 190px 1fr; column-gap: 24px; padding: 22px 6px; }
+.kompass-zeile .baustein-kopf { margin: 6px 0 0; font-size: 22px; }
+.kompass-zeile b { font-size: 34px; font-weight: 700; display: block; }
+.kompass-zeile span:last-child { grid-column: 2; font-size: 26px; color: var(--w-70); margin-top: 4px; }
+
+/* Drei Antworten: Frage klein, Antwort groß, nichts sonst */
+.antwort { padding: 40px 6px; }
+.antwort .label { display: block; margin-bottom: 14px; }
+.antwort p { font-size: 44px; font-weight: 600; line-height: 1.3; margin: 0; }
 </style>
 </head>
 <body>
@@ -640,8 +709,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       <img src="assets/logos/convention-bureau.png" alt="Convention Bureau Lübeck">
     </div>
     <aside class="notes">
-      Emre begrüßt. Kein Agenda-Slide. Ein Satz zur Terrasse hinter uns, dann
-      direkt zur Vorstellung.
+      Emre begrüßt. Ein Satz zur Terrasse hinter uns, dann die Vorstellung.
     </aside>
   </div>
 </section>
@@ -698,21 +766,23 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <div class="zeilen feld" style="padding:20px 52px;">
       <div class="fragment fade-up" style="display:flex;align-items:center;gap:44px;padding:44px 6px;">
         <span class="ring"><b>1</b></span>
-        <span style="font-size:60px;font-weight:600;">Wer hat diese Woche KI benutzt?</span>
+        <span style="font-size:56px;font-weight:600;">Wer hat diese Woche KI benutzt?</span>
       </div>
       <div class="fragment fade-up" style="display:flex;align-items:center;gap:44px;padding:44px 6px;">
         <span class="ring"><b>2</b></span>
-        <span style="font-size:60px;font-weight:600;">Wer hat sich über sie geärgert?</span>
+        <span style="font-size:56px;font-weight:600;">Wer hat sich dabei über eine Antwort geärgert?</span>
       </div>
       <div class="fragment fade-up" style="display:flex;align-items:center;gap:44px;padding:44px 6px;">
         <span class="ring"><b>3</b></span>
-        <span style="font-size:60px;font-weight:600;">Wer weiß, welches Tool wofür?</span>
+        <span style="font-size:56px;font-weight:600;">Wer hat drei Tools ausprobiert<br>und ist bei keinem geblieben?</span>
       </div>
     </div>
     </div>
     <aside class="notes">
       Bei Frage 1 gehen alle Hände hoch, bei Frage 2 die meisten, bei Frage 3
-      wenige. Das laut benennen: genau diese Lücke schließen wir heute.
+      erstaunlich viele. Das laut benennen: „Genau dafür sind wir heute hier."
+      Mehr Beteiligung gibt es den ganzen Vormittag nicht, alles Weitere
+      machen wir vorne.
     </aside>
   </div>
 </section>
@@ -747,9 +817,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     </div>
     </div>
     <aside class="notes">
-      Elf Bögen, null mal „Nein, noch nicht". Das ist der Unterschied zu allen
-      Runden davor: hier muss niemand überzeugt werden. Jede Frage rechts
-      bekommt heute eine Antwort, die man sieht, nicht nur hört.
+      Elf Bögen, null mal „Nein, noch nicht". Hier muss niemand überzeugt
+      werden. Jede Frage rechts bekommt heute eine Antwort auf der Leinwand.
     </aside>
   </div>
 </section>
@@ -760,8 +829,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <h2 class="hero" style="font-size:110px;margin-bottom:14px;">Weiß die KI alles?</h2>
     <p class="hero schimmer gesetzt" style="font-size:96px;margin:0;">Nein.<br>Aber sie antwortet auf alles.</p>
     <aside class="notes">
-      Die Frage steht wörtlich auf einem Bogen. Kurz stehen lassen. Das ist
-      das ganze Thema des Vormittags in zwei Zeilen.
+      Die Frage steht wörtlich auf einem Bogen. Kurz stehen lassen.
     </aside>
   </div>
 </section>
@@ -775,7 +843,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <p class="divider-zeit">Assistent · Rechercheur · Bildermacher · Gedächtnis</p>
     <aside class="notes">
       Eddie übernimmt. Vom Dach aus sieht man die ganze Stadt, aber nicht jede
-      Straße. Genau so KI: nicht jedes Tool kennen, sondern die vier Türme.
+      Straße. Bei KI ist es genauso: Ihr müsst nicht jedes Tool kennen, nur
+      die vier Türme.
     </aside>
   </div>
 </section>
@@ -783,59 +852,60 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ 7: DIE VIER TÜRME ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">Vier Türme. Mehr braucht ihr <span class="schimmer">nicht.</span></h2>
+    <h2 class="headline gesetzt">Mehr als vier Werkzeuge<br>braucht ihr <span class="schimmer">nicht.</span></h2>
     <div class="gruppe-mittig wachsen">
-    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:64px 52px;">
+    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:56px 52px;">
       <div class="fragment fade-up">
         <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4Z"/><path d="M8 9h8M8 13h5"/></svg></div>
         <div class="baustein-kopf b-rolle">Der Assistent</div>
-        <h3 style="font-size:40px;min-height:2.4em;">Text und Denken</h3>
-        <p style="font-size:30px;">ChatGPT<br>Claude<br>Gemini<br>Copilot</p>
+        <h3 style="font-size:36px;min-height:2.6em;">Schreibt, denkt mit, fasst zusammen</h3>
+        <p style="font-size:29px;">ChatGPT, Claude, Gemini oder Copilot. Eines davon reicht.</p>
       </div>
       <div class="fragment fade-up">
         <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8 11h6M11 8v6"/></svg></div>
         <div class="baustein-kopf b-ziel">Der Rechercheur</div>
-        <h3 style="font-size:40px;min-height:2.4em;">Quellen und Vergleiche</h3>
-        <p style="font-size:30px;">Deep Research<br>Perplexity<br>Gemini</p>
+        <h3 style="font-size:36px;min-height:2.6em;">Sucht mit Quellen, wenn es stimmen muss</h3>
+        <p style="font-size:29px;">Deep Research, Perplexity.</p>
       </div>
       <div class="fragment fade-up">
         <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 9"/></svg></div>
         <div class="baustein-kopf b-kontext">Der Bildermacher</div>
-        <h3 style="font-size:40px;min-height:2.4em;">Bilder mit Referenz</h3>
-        <p style="font-size:30px;">Nano Banana Pro<br>GPT Image<br>Canva</p>
+        <h3 style="font-size:36px;min-height:2.6em;">Baut Bilder aus euren Fotos und Logos</h3>
+        <p style="font-size:29px;">Nano Banana Pro, GPT Image, Canva.</p>
       </div>
       <div class="fragment fade-up">
         <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C7D300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0-3 4 4 4 0 0 0 3 4v1a4 4 0 0 0 8 0v-1a4 4 0 0 0 3-4 4 4 0 0 0-3-4V7a4 4 0 0 0-4-4Z"/><path d="M12 3v18"/></svg></div>
         <div class="baustein-kopf b-aufgabe">Das Gedächtnis</div>
-        <h3 style="font-size:40px;min-height:2.4em;">Eure Vorlagen, euer Ton</h3>
-        <p style="font-size:30px;">Projekte<br>Custom GPT<br>NotebookLM</p>
+        <h3 style="font-size:36px;min-height:2.6em;">Merkt sich euren Ton und eure Vorlagen</h3>
+        <p style="font-size:29px;">Projekte in ChatGPT oder Claude, Custom GPTs, NotebookLM.</p>
       </div>
     </div>
     <div class="takeaway mt-auto" style="padding-top:26px;">
-      <p>Ein Hauptwerkzeug. Zwei Spezialisten. Ein Gedächtnis.</p>
+      <p>Eins davon benutzt ihr jeden Tag. Die anderen holt ihr, wenn ihr sie braucht.</p>
     </div>
     </div>
     <aside class="notes">
-      Turm 1: eines reicht. Copilot, wenn die Firma es stellt, weil es in
-      Outlook wohnt. Sonst ChatGPT oder Claude. Nicht drei parallel.
-      Turm 2: wenn Quellen zählen. Turm 3: nie ohne Referenzbild.
-      Turm 4: der Turm, den fast niemand nutzt, und der die meiste Zeit spart.
+      Turm 1: Wer Copilot von der Firma hat, nimmt Copilot, weil es in Outlook
+      wohnt. Alle anderen ChatGPT oder Claude. Nicht drei parallel.
+      Turm 2 kommt gleich in der Hotelsuche, Turm 3 im Bild, Turm 4 ist der,
+      den fast niemand nutzt und der die meiste Zeit spart: einmal einen
+      Prompt speichern, dann nie wieder von vorn erklären.
     </aside>
   </div>
 </section>
 
 <!-- ============ 8: WO ANFANGEN ============ -->
 <section data-chrome="aus">
-  <div class="slide mittig" style="position:relative;">
-    <div class="begleiter" style="right:90px;bottom:0;height:420px;">
-      <img src="assets/images/robo/zeigt-hoch.png" alt="">
+  <div class="slide" style="justify-content:center;position:relative;">
+    <div class="begleiter" style="right:100px;bottom:0;height:560px;">
+      <img src="assets/images/robo/fernglas.png" alt="">
     </div>
     <p class="label" style="margin-bottom:30px;">Wo anfangen?</p>
-    <h2 class="hero gesetzt" style="font-size:94px;padding-right:380px;">Bei der Aufgabe,<br>die ihr diese Woche<br><span class="schimmer">dreimal</span> gemacht habt.</h2>
+    <h2 class="hero gesetzt" style="font-size:104px;padding-right:520px;">Mit der Aufgabe,<br>die jede Woche<br><span class="schimmer">wiederkommt.</span></h2>
     <aside class="notes">
-      Die häufigste Frage überhaupt: „Was kann ich damit anfangen?" Antwort:
-      nicht mit dem Spannendsten, mit dem Wiederkehrenden. Beispiele aus
-      den Bögen: Übersetzungen, Angebote, Teilnehmerlisten, Einladungen.
+      Die häufigste Frage: „Was kann ich damit anfangen?" Nicht mit dem
+      Spannendsten, mit dem, was jede Woche wiederkommt. Aus den Bögen:
+      Übersetzungen, Angebote, Teilnehmerlisten, Einladungen.
     </aside>
   </div>
 </section>
@@ -843,32 +913,41 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ 9: DER KOMPASS ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">Ein Kompass. Vier <span class="schimmer">Richtungen.</span></h2>
+    <h2 class="headline">Vier Fragen, bevor ihr <span class="schimmer">tippt.</span></h2>
     <div class="gruppe-mittig wachsen">
-    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:64px 52px;">
-      <div>
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></div>
-        <div class="baustein-kopf b-rolle">Rolle</div>
-        <h3 style="font-size:42px;min-height:2.4em;">Wer soll die KI sein?</h3>
-        <p style="font-size:31px;">„Du bist Eventmanagerin mit 15 Jahren Erfahrung."</p>
+    <div class="reihe" style="gap:70px;align-items:center;">
+      <!-- Der Kompass ist gebaut, nicht behauptet: eine gekippte Scheibe im
+           Raum, die Nadel wandert von Frage zu Frage. -->
+      <div class="kompass-buehne">
+        <div class="kompass">
+          <div class="kompass-ring r1"></div>
+          <div class="kompass-ring r2"></div>
+          <div class="kompass-scheibe">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="92" fill="rgba(8,11,22,.9)" stroke="rgba(244,246,255,.22)" stroke-width="1.5"/>
+              <circle cx="100" cy="100" r="74" fill="none" stroke="rgba(244,246,255,.12)" stroke-width="1"/>
+              <g stroke="rgba(244,246,255,.35)" stroke-width="1.2">
+                <line x1="100" y1="10" x2="100" y2="22"/><line x1="190" y1="100" x2="178" y2="100"/>
+                <line x1="100" y1="190" x2="100" y2="178"/><line x1="10" y1="100" x2="22" y2="100"/>
+                <line x1="163.6" y1="36.4" x2="155" y2="45"/><line x1="163.6" y1="163.6" x2="155" y2="155"/>
+                <line x1="36.4" y1="163.6" x2="45" y2="155"/><line x1="36.4" y1="36.4" x2="45" y2="45"/>
+              </g>
+              <text class="kompass-buchstabe" x="100" y="44" fill="#C15DE6">R</text>
+              <text class="kompass-buchstabe" x="160" y="106" fill="#009FF4">A</text>
+              <text class="kompass-buchstabe" x="100" y="168" fill="#00E2E2">K</text>
+              <text class="kompass-buchstabe" x="40" y="106" fill="#C7D300">F</text>
+            </svg>
+            <div class="kompass-nadel"><i></i><i></i></div>
+            <div class="kompass-achse"></div>
+          </div>
+        </div>
+        <div class="kompass-schatten"></div>
       </div>
-      <div>
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="#009FF4"/></svg></div>
-        <div class="baustein-kopf b-ziel">Aufgabe</div>
-        <h3 style="font-size:42px;min-height:2.4em;">Was genau soll entstehen?</h3>
-        <p style="font-size:31px;">„Eine Vergleichsliste mit fünf Hotels."</p>
-      </div>
-      <div>
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9.5 4h5v3.2h-5z"/><path d="M9 12.5h6M9 16.5h4"/></svg></div>
-        <div class="baustein-kopf b-kontext">Kontext</div>
-        <h3 style="font-size:42px;min-height:2.4em;">Was weiß nur ihr?</h3>
-        <p style="font-size:31px;">„180 Euro, November, eine Stunde von Lübeck."</p>
-      </div>
-      <div>
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C7D300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 14.5l2 2 4-4"/></svg></div>
-        <div class="baustein-kopf b-aufgabe">Förmchen</div>
-        <h3 style="font-size:42px;min-height:2.4em;">In welcher Form?</h3>
-        <p style="font-size:31px;">„Tabelle: Hotel, Entfernung, Preis, Quelle."</p>
+      <div class="zeilen" style="flex:1;">
+        <div class="kompass-zeile"><span class="baustein-kopf b-rolle">Rolle</span><b>Wer soll die KI sein?</b><span>„Du bist Eventmanagerin mit 15 Jahren Erfahrung."</span></div>
+        <div class="kompass-zeile"><span class="baustein-kopf b-ziel">Aufgabe</span><b>Was genau soll entstehen?</b><span>„Eine Absage an das Hotel, das wir nicht genommen haben."</span></div>
+        <div class="kompass-zeile"><span class="baustein-kopf b-kontext">Kontext</span><b>Was weiß nur ihr?</b><span>„Preis war ausschlaggebend, nächstes Jahr wieder anfragen."</span></div>
+        <div class="kompass-zeile"><span class="baustein-kopf b-aufgabe">Förmchen</span><b>In welcher Form?</b><span>„Unter 100 Wörter, per Sie, warm, kein Werbedeutsch."</span></div>
       </div>
     </div>
     <div class="takeaway mt-auto" style="padding-top:26px;">
@@ -876,9 +955,9 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     </div>
     </div>
     <aside class="notes">
-      Eine Folie, kein Sandburg-Prinzip. Für die aus Travemünde ein Nicken,
-      für die Neuen die Kurzfassung. Dann sofort: „Jetzt zeigen wir, was das
-      live ausmacht."
+      Für die aus Travemünde ein Nicken, für die Neuen die Kurzfassung. Die
+      Beispiele rechts sind schon der Fall der nächsten Folie, deshalb direkt:
+      „Und genau das tippen wir jetzt."
     </aside>
   </div>
 </section>
@@ -890,29 +969,29 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       <img src="assets/images/robo/laptop.png" alt="">
     </div>
     <p class="label">Jetzt live</p>
-    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Vier Demos.<br>Zwanzig <span class="schimmer">Minuten.</span></h2>
-    <p class="divider-zeit">Bestellung · Hotelsuche · Bild · Zettel</p>
+    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Jetzt zeigen<br>wir es <span class="schimmer">euch.</span></h2>
+    <p class="divider-zeit">Absage-Mail · Hotelsuche · Gala-Bild · Handschrift</p>
     <aside class="notes">
-      Ab hier tippt Eddie, Emre moderiert und hält die Zeit. Harte Stopps je
-      Demo. Backups liegen als Screenshots im Ordner, falls das Netz zickt.
+      Ab hier tippt Eddie, Emre erzählt und hält die Zeit. Alles ist
+      vorbereitet, niemand im Raum muss etwas liefern. Backups liegen als
+      Screenshots im Ordner, falls das Netz zickt.
     </aside>
   </div>
 </section>
 
-<!-- ============ 11: DEMO 1 BESTELLUNG ============ -->
+<!-- ============ 11: DEMO 1 DIE ABSAGE ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">Die <span class="schimmer">Bestellung.</span></h2>
+    <h2 class="headline">Die <span class="schimmer">Absage.</span></h2>
     <div class="gruppe-mittig wachsen">
     <div class="band">
-      <div class="station" style="flex:0 0 430px;">
+      <div class="station" style="flex:0 0 470px;">
         <div class="station-kopf">
           <span class="ring klein warn"><b>1</b></span>
-          <span class="label">Euer Fall</span>
+          <span class="label">Der Fall</span>
         </div>
         <div class="feld" style="border-color:rgba(255,107,94,.25);">
-          <p style="font-size:34px;line-height:1.45;margin:0;color:var(--weiss);">Welche Mail habt ihr diese Woche dreimal geschrieben?</p>
-          <p class="label" style="margin:0;color:var(--weiss);">Kommt aus dem Raum</p>
+          <p style="font-size:31px;line-height:1.5;margin:0;color:var(--weiss);">Drei Hotels angefragt, eins gebucht. Die anderen beiden brauchen eine Absage, und nächstes Jahr wollt ihr dort wieder anfragen.</p>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
@@ -920,15 +999,14 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
         <defs><linearGradient id="d1a" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
           <stop stop-color="#C15DE6"/><stop offset="1" stop-color="#009FF4"/></linearGradient></defs>
       </svg>
-      <div class="station" style="flex:0 0 520px;">
+      <div class="station" style="flex:1;">
         <div class="station-kopf">
           <span class="ring klein"><b>2</b></span>
-          <span class="label">Wir tippen</span>
+          <span class="label">Was Eddie tippt</span>
         </div>
-        <div class="feld">
-          <div class="stich"><svg viewBox="0 0 24 24" fill="none" stroke="#ff6b5e" stroke-width="1.9" stroke-linecap="round"><path d="M4 12h16"/></svg><span>Einmal faul: ein Satz</span></div>
-          <div class="stich"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-3 6-3-6"/></svg><span>Einmal mit Kompass</span></div>
-          <div class="stich"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Eure alte Mail als Tonvorlage</span></div>
+        <div class="feld" style="gap:18px;">
+          <div class="prompt klein"><span>Schreib eine Absage an das Hotel.</span></div>
+          <div class="prompt klein"><span>Du bist Eventmanagerin. Schreib eine Absage an das Hotel Seeblick: Wir haben uns für ein anderes Haus entschieden, der Preis war ausschlaggebend, die Betreuung durch Frau M. war top, nächstes Jahr fragen wir wieder an. <b>Unter 100 Wörter, per Sie, warm, kein Werbedeutsch.</b></span></div>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
@@ -936,24 +1014,26 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
         <defs><linearGradient id="d1b" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
           <stop stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
       </svg>
-      <div class="station" style="flex:1;">
+      <div class="station" style="flex:0 0 400px;">
         <div class="station-kopf">
           <span class="ring klein ok"><b>3</b></span>
-          <span class="label">Geht raus</span>
+          <span class="label">Was rauskommt</span>
         </div>
         <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
           <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
-          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Schauen wir uns<br>doch mal live an</p>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Beides live,<br>in einer Minute</p>
         </div>
       </div>
     </div>
     </div>
     <aside class="notes">
-      Emre fragt einen Wiederholer nach seiner Mail der Woche. Eddie tippt
-      Split-Screen: links ein Satz, rechts der Kompass mit dem Kontext, den
-      die Person gerade gesagt hat. Dann der Trick für „persönlich bleiben":
-      eine eigene alte Mail einfügen, „schreib in genau diesem Ton".
-      Sieben Minuten, nicht mehr.
+      Beide Prompts liegen im Zwischenspeicher, Eddie fügt ein statt zu
+      tippen. Erst der kurze: die Antwort ist die Sorte Mail, die alle kennen
+      und keiner lesen will. Dann der lange: Frau M. ist drin, der Preis ist
+      drin, die Tür bleibt offen. Danach der dritte Schritt, ohne Folie: Eddie
+      hängt eine echte Mail von sich an und schreibt darunter „Schreib es so,
+      wie ich schreibe." Das ist die Antwort auf „Zeit sparen, aber persönlich
+      bleiben". Sieben Minuten.
     </aside>
   </div>
 </section>
@@ -965,59 +1045,62 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <h2 class="hero" style="font-size:96px;margin-bottom:14px;">Die KI liefert nicht schlecht.</h2>
     <p class="hero schimmer" style="font-size:126px;margin:0;">Wir bestellen schlecht.</p>
     <aside class="notes">
-      Der Satz aus K64 und Travemünde. Die Wiederholer sprechen ihn mit.
-      Nicht erklären, stehen lassen, weiter.
+      Der Satz aus K64 und Travemünde. Nicht erklären, stehen lassen.
     </aside>
   </div>
 </section>
 
-<!-- ============ 13: DEMO 2 HOTELSUCHE ============ -->
+<!-- ============ 13: DIE HOTELSUCHE IN DREI STUFEN ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">Die Hotelsuche. Mit <span class="schimmer">Quellen.</span></h2>
+    <h2 class="headline gesetzt">Dieselbe Frage.<br>Drei <span class="schimmer">Stufen.</span></h2>
     <div class="gruppe-mittig wachsen">
-    <div class="gegen" style="align-items:stretch;grid-template-columns:1.25fr 1fr;">
+    <div class="prompt" style="font-size:31px;">
+      <span>Welches Hotel höchstens eine Stunde von Lübeck hat 20 Einzelzimmer und einen Tagungsraum mit Tageslicht für 25 Personen, im November, bis 180 Euro pro Nacht?</span>
+    </div>
+    <div class="spalten" style="grid-template-columns:repeat(3,1fr);align-items:stretch;margin-top:34px;">
       <div>
-        <div class="wertung" style="color:var(--w-45);">Der Prompt</div>
-        <div class="prompt" style="flex:1;font-size:31px;">
-          <span>Du bist Einkäuferin für Tagungen. Finde fünf Hotels höchstens eine Stunde von Lübeck: 20 Einzelzimmer, Tagungsraum mit Tageslicht für 25, im November, bis 180 Euro pro Person und Nacht. Tabelle mit Hotel, Entfernung, Preis, Tagungsraum und <b>Quelle</b>.</span>
-        </div>
+        <div class="station-kopf"><span class="ring klein warn"><b>1</b></span><span class="label">Schnelle Antwort</span></div>
+        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert drei Sekunden und kommt aus dem Gedächtnis der KI. Sie erfindet gern ein Hotel dazu, das es nicht gibt.</p>
       </div>
       <div>
-        <div class="wertung ok">Deep Research</div>
-        <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
-          <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
-          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Läuft live,<br>drei Minuten</p>
-        </div>
+        <div class="station-kopf"><span class="ring klein"><b>2</b></span><span class="label">Mit Websuche</span></div>
+        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert eine halbe Minute. Die KI liest die aktuellen Seiten der Hotels und nennt, woher sie es hat.</p>
+      </div>
+      <div>
+        <div class="station-kopf"><span class="ring klein ok"><b>3</b></span><span class="label">Deep Research</span></div>
+        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert eine Viertelstunde, liest fünfzig Seiten und schreibt einen Bericht mit Quellen. Heute früh um acht gestartet, das Ergebnis liegt bereit.</p>
       </div>
     </div>
-    <div class="takeaway" style="padding-top:26px;">
-      <p>Prüfen ist ein Klick. Aber es bleibt euer Klick.</p>
+    <div class="takeaway mt-auto" style="padding-top:26px;">
+      <p>Je wichtiger die Antwort, desto höher die Stufe.</p>
     </div>
     </div>
     <aside class="notes">
-      Deep Research starten, während es läuft erklärt Emre Turm 1 gegen
-      Turm 2. Ergebnis: Tabelle mit Links. Eddie klickt eine Quelle an.
-      Vorher einmal gelaufen, Dauer gemessen. Fallback: fertiges Ergebnis
-      als Screenshot.
+      Stufe 1 live: Frage einfügen, drei Sekunden, ein erfundenes Hotel
+      steht drin. Emre: „Kennt das jemand?" Stufe 2 live: Websuche
+      einschalten, dieselbe Frage, eine halbe Minute, jetzt mit Links.
+      Stufe 3 nicht live, dafür fertig: den Bericht von heute Morgen öffnen,
+      Tabelle zeigen, eine Quelle anklicken. „Prüfen ist ein Klick, aber es
+      bleibt euer Klick." Fünf Minuten.
     </aside>
   </div>
 </section>
 
-<!-- ============ 14: DEMO 3 BILD ============ -->
+<!-- ============ 14: DEMO 3 DAS BILD ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">Das <span class="schimmer">Bild.</span></h2>
+    <h2 class="headline">Drei Bilder in fünf <span class="schimmer">Minuten.</span></h2>
     <div class="gruppe-mittig wachsen">
     <div class="band" style="gap:34px;">
       <div class="station" style="flex:1;">
         <div class="station-kopf">
           <span class="ring klein"><b>1</b></span>
-          <span class="label">Der Raum</span>
+          <span class="label">Der Raum, in dem ihr sitzt</span>
         </div>
         <div class="feld wachsen" style="justify-content:flex-start;">
-          <p style="font-size:31px;line-height:1.45;margin:0;color:var(--w-70);">Foto von heute früh, dieser Raum.</p>
-          <div class="prompt klein"><span>Als Gala-Dinner für 80, Abend, Kerzen, Bühne.</span></div>
+          <p style="font-size:29px;line-height:1.45;margin:0;color:var(--w-70);">Eddie hat ihn heute früh fotografiert.</p>
+          <div class="prompt klein"><span>Zeig mir diesen Raum als Gala-Dinner für 80 Gäste: runde Tische, Kerzen, vorn eine Bühne.</span></div>
         </div>
       </div>
       <div class="station" style="flex:1;">
@@ -1026,8 +1109,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <span class="label">Das Logo</span>
         </div>
         <div class="feld wachsen" style="justify-content:flex-start;">
-          <p style="font-size:31px;line-height:1.45;margin:0;color:var(--w-70);">Nicht beschreiben. Hochladen.</p>
-          <div class="prompt klein"><span>Setze <b>exakt dieses Logo</b> auf die Bühnenrückwand.</span></div>
+          <p style="font-size:29px;line-height:1.45;margin:0;color:var(--w-70);">Beschreibt ihr es, rät die KI. Ladet ihr es hoch, nimmt sie es.</p>
+          <div class="prompt klein"><span>Setz das angehängte Logo auf die Bühnenwand, genau so wie in der Datei.</span></div>
         </div>
       </div>
       <div class="station" style="flex:1;">
@@ -1036,84 +1119,102 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <span class="label">Das Gesicht</span>
         </div>
         <div class="feld wachsen" style="justify-content:flex-start;">
-          <p style="font-size:31px;line-height:1.45;margin:0;color:var(--w-70);">Warum ihr entstellt ausseht.</p>
-          <div class="prompt klein"><span>Ändere <b>nur</b> Hintergrund und Kleidung. Gesicht, Frisur, Körper bleiben exakt.</span></div>
+          <p style="font-size:29px;line-height:1.45;margin:0;color:var(--w-70);">Sagt ihr nicht, was bleiben soll, ändert die KI alles.</p>
+          <div class="prompt klein"><span>Tausch nur den Hintergrund gegen ein Studio-Grau. Gesicht, Haare und Kleidung bleiben, wie sie sind.</span></div>
         </div>
       </div>
     </div>
     <div class="takeaway" style="padding-top:26px;">
-      <p>Logos lädt man hoch. Gesichter lässt man in Ruhe. Und wer postet, kennzeichnet.</p>
+      <p>Und wer so ein Bild veröffentlicht, schreibt dazu, dass es KI ist.</p>
     </div>
     </div>
     <aside class="notes">
-      Der Moment, den alle fotografieren: der Raum, in dem sie sitzen, wird
-      auf der Leinwand zum Gala-Dinner. Dann das CLB-Logo als Datei rein.
-      Dann Eddies eigenes Foto: erst ohne Regel (Gesicht verändert sich),
-      dann mit der Regel. Nebeneinander zeigen. Kennzeichnungspflicht seit
-      2. August als Nebensatz, nicht als Vortrag. Acht Minuten.
+      Bild 1: Raumfoto hochladen, Prompt einfügen, 30 Sekunden warten, der
+      eigene Raum wird zum Gala-Dinner. Der Moment, den alle fotografieren.
+      Bild 2: die Logo-Datei anhängen, Prompt einfügen, das Logo sitzt.
+      Antwort auf die Travemünde-Frage. Bild 3: Eddies Porträt, erst ohne
+      Regel („mach ein Bewerbungsfoto daraus", ein fremder Eddie kommt raus),
+      dann mit der Regel, Eddie bleibt Eddie. Antwort auf „entstellt".
+      Kennzeichnung seit 2. August als Nebensatz, kein Vortrag.
+      Alle drei Ergebnisse liegen als Backup im Ordner. Acht Minuten.
     </aside>
   </div>
 </section>
 
-<!-- ============ 15: DEMO 4 ZETTEL ============ -->
+<!-- ============ 15: DEMO 4 HANDSCHRIFT ============ -->
 <section>
   <div class="slide">
     <h2 class="headline">Vom Zettel zum <span class="schimmer">Plan.</span></h2>
     <div class="gruppe-mittig wachsen">
     <div class="band">
-      <div class="station" style="flex:0 0 560px;">
+      <div class="station" style="flex:0 0 440px;">
         <div class="station-kopf">
           <span class="ring klein warn"><b>1</b></span>
-          <span class="label">Handy-Foto</span>
+          <span class="label">Emres Notizen von heute früh</span>
         </div>
         <div class="zettel wachsen" style="display:flex;flex-direction:column;justify-content:center;">
-          <ul style="font-size:0;">
+          <ul>
             <li>Sommerfest 11.9.</li>
             <li>60 Leute + Familien</li>
-            <li>Grillen, Volleyball, ab 15 Uhr</li>
+            <li>Grillen, Volleyball, 15 Uhr</li>
             <li>Anmeldung bis 29.8.</li>
             <li>Budget??</li>
-            <li>Location: Wasser</li>
+            <li>Location: am Wasser?</li>
           </ul>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
         <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d4a)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         <defs><linearGradient id="d4a" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#C15DE6"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
+          <stop stop-color="#C15DE6"/><stop offset="1" stop-color="#009FF4"/></linearGradient></defs>
       </svg>
       <div class="station" style="flex:1;">
         <div class="station-kopf">
-          <span class="ring klein ok"><b>2</b></span>
-          <span class="label">Dreißig Sekunden später</span>
+          <span class="ring klein"><b>2</b></span>
+          <span class="label">Was Eddie tippt</span>
+        </div>
+        <div class="feld wachsen" style="gap:18px;justify-content:center;">
+          <div class="prompt klein"><span>Das sind meine Notizen aus dem Kundengespräch. Mach daraus eine Aufgabenliste mit Fristen und Verantwortlichen.</span></div>
+          <div class="prompt klein"><span>Welche Ordner brauche ich dafür in Teams? Gib mir die Namen mit je einer Checkliste.</span></div>
+        </div>
+      </div>
+      <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
+        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d4b)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="d4b" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
+      </svg>
+      <div class="station" style="flex:0 0 380px;">
+        <div class="station-kopf">
+          <span class="ring klein ok"><b>3</b></span>
+          <span class="label">Was rauskommt</span>
         </div>
         <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
           <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
-          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Ablaufplan · Teams-Ordner · Checkliste</p>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Live, in einer<br>halben Minute</p>
         </div>
       </div>
     </div>
     </div>
     <aside class="notes">
-      Emre schreibt den Zettel morgens von Hand, fotografiert ihn, AirDrop
-      auf den Laptop. „Mach daraus einen Ablaufplan als Tabelle." Dann:
-      „Baue daraus die Ordnerstruktur für den Event-Ordner in Teams, mit
-      Checkliste pro Ordner." Antwort auf die Teams-Frage vom Bogen.
+      Emre hat den Zettel morgens wirklich von Hand geschrieben und
+      fotografiert, das Foto liegt schon auf dem Laptop. Eddie zieht es in
+      den Chat, fügt den ersten Prompt ein: eine Tabelle, und „Budget??"
+      steht darin als offene Frage, nicht als erfundene Zahl. Dann der zweite
+      Prompt: die Ordnerstruktur für Teams, Antwort auf die Frage vom Bogen.
       Vier Minuten.
     </aside>
   </div>
 </section>
 
-<!-- ============ 16: DIVIDER DREI ANTWORTEN ============ -->
+<!-- ============ 16: DIVIDER DREI FRAGEN ============ -->
 <section data-chrome="aus" data-background-image="assets/images/robo/passat.jpg" data-background-size="cover" data-schleier="seite">
   <div class="slide" style="justify-content:center;">
     <span class="bild-quelle">Bild mit KI erstellt</span>
-    <p class="label">Eure drei großen Fragen</p>
-    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Daten. Strom.<br><span class="schimmer">Jobs.</span></h2>
-    <p class="divider-zeit">Kurz und ehrlich</p>
+    <p class="label">Zum Schluss</p>
+    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Drei Fragen,<br>die immer <span class="schimmer">kommen.</span></h2>
+    <p class="divider-zeit">Datenschutz · Strom · Jobs</p>
     <aside class="notes">
       Tonwechsel. Beide vorne, Pingpong wie die Blitzrunde am Strand.
-      Keine Folienwand, drei Minuten.
     </aside>
   </div>
 </section>
@@ -1140,9 +1241,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       </div>
     </div>
     <aside class="notes">
-      Kein Paragrafenritt. Die Frage vom Bogen war: „Bleibt meine
-      Kommunikation im Haus?" Antwort in einem Satz: In der Gratis-Version
-      nicht, in der Business-Version ja. Details auf der nächsten Folie.
+      Kein Paragrafenritt. Die Frage vom Bogen war „Bleibt meine
+      Kommunikation im Haus?", die Antwort steht auf der nächsten Folie.
     </aside>
   </div>
 </section>
@@ -1152,40 +1252,27 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
   <div class="slide">
     <h2 class="headline">Drei <span class="schimmer">Antworten.</span></h2>
     <div class="gruppe-mittig wachsen">
-    <div class="spalten" style="grid-template-columns:repeat(3,1fr);align-items:start;">
-      <div>
-        <h3 style="font-size:40px;min-height:2.4em;">Wo landen meine Daten?</h3>
-        <div class="zeilen" style="font-size:30px;color:var(--w-70);">
-          <div>Gratis-Version lernt mit</div>
-          <div>Business-Version nicht</div>
-          <div>EU-Server: Copilot, Mistral</div>
-          <div>Test: Würdet ihr es einem Dienstleister mailen?</div>
-        </div>
+    <div class="zeilen feld" style="padding:16px 56px;">
+      <div class="antwort">
+        <span class="label">Wo landen meine Daten?</span>
+        <p>In der Gratis-Version beim Anbieter.<br>In der Business-Version bleiben sie bei euch.</p>
       </div>
-      <div>
-        <h3 style="font-size:40px;min-height:2.4em;">Was kostet das an Strom?</h3>
-        <div class="zeilen" style="font-size:30px;color:var(--w-70);">
-          <div>Ja, das kostet</div>
-          <div>Rechenzentren wachsen</div>
-          <div>Modelle schrumpfen</div>
-          <div>Pro Frage wird es jedes Jahr billiger</div>
-        </div>
+      <div class="antwort">
+        <span class="label">Was kostet das an Strom?</span>
+        <p>Eine Frage an die KI braucht weniger Strom als eine Minute Fernsehen.</p>
       </div>
-      <div>
-        <h3 style="font-size:40px;min-height:2.4em;">Nimmt sie mir den Job?</h3>
-        <div class="zeilen" style="font-size:30px;color:var(--w-70);">
-          <div>Routinetexte schrumpfen</div>
-          <div>Urteil und Kontrolle wachsen</div>
-          <div>Keine Prognose mit Zahlen</div>
-          <div>Die Sandburg baut sich nicht von allein</div>
-        </div>
+      <div class="antwort">
+        <span class="label">Nimmt sie mir den Job?</span>
+        <p>Sie nimmt euch das Tippen ab, nicht das Entscheiden.</p>
       </div>
     </div>
     </div>
     <aside class="notes">
-      Eddie nimmt Daten, Emre nimmt Strom, Jobs beide. Strom: ehrlich, ohne
-      Zahlenschlacht. Wer eine Zahl will, bekommt sie nachgereicht, nicht
-      geraten. Jobs: nicht spalten, Raum mitnehmen.
+      Eddie nimmt die Daten (dazu: Copilot läuft in der EU, ChatGPT Business
+      trainiert nicht mit, Mistral sitzt in Paris), Emre den Strom (die
+      Größenordnung stammt von OpenAI selbst, 0,34 Wattstunden pro Anfrage,
+      Rechenzentren wachsen trotzdem, die Modelle werden pro Frage sparsamer),
+      die Jobs beide. Nicht spalten, den Raum mitnehmen.
     </aside>
   </div>
 </section>
@@ -1197,7 +1284,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <h2 class="hero" style="font-size:100px;margin-bottom:14px;">Wer den Überblick behält,</h2>
     <p class="hero schimmer" style="font-size:126px;margin:0;">bleibt gefragt.</p>
     <aside class="notes">
-      Antwort auf die Jobfrage. Kurz stehen lassen, dann zur Montags-Aufgabe.
+      Antwort auf die Jobfrage, kurz stehen lassen.
     </aside>
   </div>
 </section>
@@ -1205,7 +1292,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ 20: MONTAG ============ -->
 <section>
   <div class="slide" style="position:relative;">
-    <h2 class="headline">Montag, <span class="schimmer">9 Uhr.</span></h2>
+    <h2 class="headline">Und am <span class="schimmer">Montag?</span></h2>
     <div class="begleiter" style="right:56px;bottom:0;height:330px;">
       <img src="assets/images/robo/daumen.png" alt="">
     </div>
@@ -1213,24 +1300,21 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <div class="zeilen feld" style="padding:20px 52px;">
       <div style="display:flex;align-items:center;gap:44px;padding:40px 6px;">
         <span class="ring"><b>1</b></span>
-        <span style="font-size:54px;font-weight:600;">Die Aufgabe, die dreimal kam</span>
+        <span style="font-size:48px;font-weight:600;">Sucht euch eine Aufgabe, die jede Woche kommt.</span>
       </div>
       <div style="display:flex;align-items:center;gap:44px;padding:40px 6px;">
         <span class="ring"><b>2</b></span>
-        <span style="font-size:54px;font-weight:600;">Einmal sauber mit Kompass</span>
+        <span style="font-size:48px;font-weight:600;">Schreibt dafür einmal einen richtigen Prompt.</span>
       </div>
       <div style="display:flex;align-items:center;gap:44px;padding:40px 6px;">
         <span class="ring"><b>3</b></span>
-        <span style="font-size:54px;font-weight:600;">Als Vorlage gespeichert</span>
+        <span style="font-size:48px;font-weight:600;">Speichert ihn.<br>Beim nächsten Mal dauert es eine Minute.</span>
       </div>
-    </div>
-    <div class="takeaway" style="padding-top:10px;">
-      <p>Ab dann kostet die Aufgabe eine Minute.</p>
     </div>
     </div>
     <aside class="notes">
-      „Was kann ich mit KI anfangen?" bekommt eine Hausaufgabe für Montag.
-      Turm 4 in der Praxis: Projekt anlegen, Prompt rein, fertig.
+      Die Hausaufgabe. Turm 4 in der Praxis: Projekt anlegen, Prompt rein,
+      fertig. Wer Copilot hat, speichert ihn als Notiz in OneNote.
     </aside>
   </div>
 </section>
@@ -1247,17 +1331,16 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       <div class="spalte" style="flex:1;gap:30px;justify-content:center;">
         <p class="hero schimmer" style="font-size:64px;text-transform:none;letter-spacing:-.01em;margin:0;">ueberblick.edge-digital.ai</p>
         <div class="zeilen" style="font-size:34px;">
-          <div>Die vier Türme</div>
-          <div>Der Kompass</div>
-          <div>Die Prompts von heute, zum Kopieren</div>
-          <div>Die Montags-Aufgabe</div>
+          <div>Die vier Werkzeuge</div>
+          <div>Die vier Fragen vor dem Tippen</div>
+          <div>Alle Prompts von heute, zum Kopieren</div>
+          <div>Die Aufgabe für Montag</div>
         </div>
       </div>
     </div>
     </div>
     <aside class="notes">
-      Nichts zum Drucken, alles auf dem Handy. Eine Minute Zeit zum Scannen
-      geben. Die Seite hat alle vier Prompts mit Kopieren-Knopf.
+      Nichts zum Drucken, alles auf dem Handy. Eine Minute Zeit zum Scannen.
     </aside>
   </div>
 </section>
@@ -1269,8 +1352,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <h2 class="hero gesetzt" style="font-size:110px;">Noch Fragen<br>über den <span class="schimmer">Dächern?</span></h2>
     <aside class="notes">
       Fünfzehn Minuten. Stille aushalten. Fallschirm: die Restfragen vom
-      Bogen: Excel-Bereinigung, Prompts für Eventplanung, Weiß die KI alles.
-      Harter Stopp um 11:00, danach die drei Themenstränge.
+      Bogen: Excel-Bereinigung, Prompts für Eventplanung. Harter Stopp
+      um 11:00, danach die drei Themenstränge.
     </aside>
   </div>
 </section>
@@ -1291,8 +1374,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       <img src="assets/images/team-luebeck.jpg" alt="Das EDGE-Team über den Dächern von Lübeck" style="height:820px;object-fit:cover;object-position:center 30%;">
     </div>
     <aside class="notes">
-      Das Team auf dem Dach über Lübeck. Der Bogen zum Titel schließt sich.
-      Stehen lassen, während die Gruppe in die Themenstränge geht.
+      Das Team auf dem Dach über Lübeck. Stehen lassen, während die Gruppe
+      in die Themenstränge geht.
     </aside>
   </div>
 </section>
