@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zum Mitnehmen | Den Überblick behalten</title>
+<meta name="theme-color" content="#030309">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+/* Die digitale Karte zum Vortrag: dieselbe Fläche wie das Deck, gebaut fürs
+   Handy im Saal. Kein Druck, nichts zum Falten: scannen, lesen, kopieren. */
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-DemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Bold.ttf") format("truetype"); font-weight: 700; }
+:root {
+  --raum: #030309; --weiss: #F4F6FF;
+  --w-70: rgba(244,246,255,.70); --w-45: rgba(244,246,255,.45);
+  --hairline: rgba(244,246,255,.14); --hairline-stark: rgba(244,246,255,.28);
+  --purple: #C15DE6; --blau: #009FF4; --cyan: #00E2E2; --limette: #C7D300;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: dark; }
+body {
+  margin: 0; background: var(--raum); color: var(--weiss);
+  font-family: "Avenir Next LT", "Avenir Next", Avenir, "Nunito Sans", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased; line-height: 1.5;
+}
+.nebel {
+  position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(60px);
+  background:
+    radial-gradient(38% 30% at 78% 24%, rgba(0,159,244,.10), transparent 70%),
+    radial-gradient(34% 28% at 16% 80%, rgba(193,93,230,.11), transparent 70%);
+}
+main { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 32px 22px 80px; }
+.kopf { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+.kopf img { height: 26px; display: block; }
+.kopf img.cb { height: 22px; opacity: .9; }
+.label { font-weight: 600; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--w-45); margin: 0 0 10px; }
+h1 { font-size: clamp(40px, 11vw, 64px); line-height: 1.05; letter-spacing: -.025em; font-weight: 700; text-transform: uppercase; margin: 0 0 12px; }
+.schimmer {
+  background: linear-gradient(96deg, var(--purple), var(--blau) 52%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lead { color: var(--w-70); font-size: 19px; margin: 0 0 48px; }
+h2 { font-size: 30px; line-height: 1.15; letter-spacing: -.02em; font-weight: 700; text-transform: uppercase; margin: 56px 0 18px; }
+.feld {
+  border: 1px solid var(--hairline); border-radius: 22px;
+  background: rgba(8,11,22,.62); padding: 6px 22px;
+}
+.zeile { display: flex; gap: 18px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid var(--hairline); }
+.zeile:last-child { border-bottom: none; }
+.zeile b { display: block; font-size: 19px; font-weight: 700; }
+.zeile span { display: block; color: var(--w-70); font-size: 16px; margin-top: 2px; }
+.ring { position: relative; width: 44px; height: 44px; border-radius: 50%; padding: 2px; overflow: hidden; flex-shrink: 0; }
+.ring::before { content: ""; position: absolute; inset: -30%; border-radius: 50%;
+  background: conic-gradient(var(--purple), var(--blau) 38%, var(--cyan) 62%, var(--purple)); animation: ring-drehen 5s linear infinite; }
+.ring > i { position: relative; display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%;
+  background: #070a14; font-style: normal; font-size: 19px; font-weight: 700; }
+@keyframes ring-drehen { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ring::before { animation: none; } }
+.kopfwort { font-weight: 700; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; }
+.b-rolle { color: var(--purple); } .b-ziel { color: var(--blau); } .b-kontext { color: var(--cyan); } .b-aufgabe { color: var(--limette); }
+.prompt {
+  border: 1px solid var(--hairline-stark); border-radius: 18px; background: rgba(0,226,226,.045);
+  padding: 18px 20px; font-size: 16px; line-height: 1.55; margin: 0 0 14px; position: relative;
+}
+.prompt p { margin: 0 0 14px; }
+.prompt button {
+  font: inherit; font-weight: 600; font-size: 14px; letter-spacing: .06em;
+  border: 1px solid var(--hairline-stark); border-radius: 999px; background: transparent; color: var(--weiss);
+  padding: 8px 16px; cursor: pointer;
+}
+.prompt button.kopiert { border-color: var(--cyan); color: var(--cyan); }
+.takeaway { text-align: center; padding-top: 6px; margin-top: 40px; }
+.takeaway::before { content: ""; display: block; width: 70px; height: 3px; margin: 0 auto 18px;
+  background: linear-gradient(90deg, var(--purple), var(--blau) 52%, var(--cyan)); border-radius: 2px; }
+.takeaway p { font-size: 22px; font-weight: 600; line-height: 1.35; margin: 0; text-wrap: balance; }
+.fuss { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--hairline); color: var(--w-45); font-size: 14px; line-height: 1.6; }
+.fuss a { color: var(--weiss); text-decoration: none; border-bottom: 1px solid var(--hairline-stark); }
+</style>
+</head>
+<body>
+<div class="nebel"></div>
+<main>
+  <div class="kopf">
+    <img src="assets/logos/edge-logo-white.png" alt="EDGE Digital">
+    <img class="cb" src="assets/logos/convention-bureau.png" alt="Convention Bureau Lübeck">
+  </div>
+
+  <p class="label">Lübeck.lokal · 9. September 2026 · Atlantic Hotel</p>
+  <h1>Den Überblick <span class="schimmer">behalten.</span></h1>
+  <p class="lead">KI-Impulse über den Dächern von Lübeck. Alles vom Vormittag, zum Nachlesen und Kopieren.</p>
+
+  <h2>Vier <span class="schimmer">Türme.</span></h2>
+  <div class="feld">
+    <div class="zeile"><span class="ring"><i>1</i></span><div><b>Der Assistent</b><span>Text und Denken. ChatGPT, Claude, Gemini, Copilot. Eines reicht.</span></div></div>
+    <div class="zeile"><span class="ring"><i>2</i></span><div><b>Der Rechercheur</b><span>Quellen und Vergleiche. Deep Research, Perplexity.</span></div></div>
+    <div class="zeile"><span class="ring"><i>3</i></span><div><b>Der Bildermacher</b><span>Bilder mit Referenz. Nano Banana Pro, GPT Image, Canva.</span></div></div>
+    <div class="zeile"><span class="ring"><i>4</i></span><div><b>Das Gedächtnis</b><span>Eure Vorlagen, euer Ton. Projekte, Custom GPT, NotebookLM.</span></div></div>
+  </div>
+  <div class="takeaway"><p>Ein Hauptwerkzeug. Zwei Spezialisten. Ein Gedächtnis.</p></div>
+
+  <h2>Der <span class="schimmer">Kompass.</span></h2>
+  <div class="feld">
+    <div class="zeile"><div><div class="kopfwort b-rolle">Rolle</div><b>Wer soll die KI sein?</b><span>„Du bist Eventmanagerin mit 15 Jahren Erfahrung."</span></div></div>
+    <div class="zeile"><div><div class="kopfwort b-ziel">Aufgabe</div><b>Was genau soll entstehen?</b><span>„Eine Vergleichsliste mit fünf Hotels."</span></div></div>
+    <div class="zeile"><div><div class="kopfwort b-kontext">Kontext</div><b>Was weiß nur ihr?</b><span>„180 Euro, November, eine Stunde von Lübeck."</span></div></div>
+    <div class="zeile"><div><div class="kopfwort b-aufgabe">Förmchen</div><b>In welcher Form?</b><span>„Tabelle: Hotel, Entfernung, Preis, Quelle."</span></div></div>
+  </div>
+  <div class="takeaway"><p>Was die KI nicht weiß, erfindet sie.</p></div>
+
+  <h2>Die Prompts von <span class="schimmer">heute.</span></h2>
+  <p class="label">Zum Kopieren und Anpassen</p>
+
+  <div class="prompt">
+    <p class="label" style="margin-bottom:8px;">Die Bestellung</p>
+    <p data-text>Du bist [Rolle, z. B. Assistenz der Geschäftsführung]. Schreibe [Aufgabe, z. B. eine Absage an den Vereinsvorstand]. Kontext: [alles, was nur ihr wisst: Vorgeschichte, Zahlen, Beziehung]. Form: höchstens 120 Wörter, per Sie, freundlich und klar, keine Floskeln, Ende mit einer konkreten Frage. Schreibe im Ton der Mail, die ich dir unten anhänge.</p>
+    <button type="button">Kopieren</button>
+  </div>
+
+  <div class="prompt">
+    <p class="label" style="margin-bottom:8px;">Die Hotelsuche mit Quellen</p>
+    <p data-text>Du bist Einkäuferin für Tagungen. Finde fünf Hotels höchstens eine Stunde von Lübeck: 20 Einzelzimmer, Tagungsraum mit Tageslicht für 25 Personen, im November, bis 180 Euro pro Person und Nacht. Antworte als Tabelle mit Hotel, Entfernung, Preis, Tagungsraum und Quelle mit Link. Keine Angabe ohne Quelle.</p>
+    <button type="button">Kopieren</button>
+  </div>
+
+  <div class="prompt">
+    <p class="label" style="margin-bottom:8px;">Das Bild mit Referenz</p>
+    <p data-text>Nutze das angehängte Foto als Grundlage. Ändere NUR [Hintergrund und Kleidung]. Gesicht, Frisur, Körper, Haltung und Proportionen bleiben exakt wie im Referenzbild. Setze das angehängte Logo exakt so ein, wie es ist, ohne es neu zu zeichnen.</p>
+    <button type="button">Kopieren</button>
+  </div>
+
+  <div class="prompt">
+    <p class="label" style="margin-bottom:8px;">Vom Zettel zum Plan</p>
+    <p data-text>Auf dem Foto sind meine handschriftlichen Notizen zu einer Veranstaltung. Mach daraus erstens einen Ablaufplan als Tabelle mit Datum, Aufgabe, Verantwortlich und Frist. Zweitens eine Ordnerstruktur für den Event-Ordner in Microsoft Teams mit einer Checkliste pro Ordner. Was auf dem Zettel offen ist, markiere als offene Frage, erfinde nichts dazu.</p>
+    <button type="button">Kopieren</button>
+  </div>
+
+  <h2>Montag, <span class="schimmer">9 Uhr.</span></h2>
+  <div class="feld">
+    <div class="zeile"><span class="ring"><i>1</i></span><div><b>Die Aufgabe, die dreimal kam</b><span>Nicht die spannendste. Die wiederkehrende.</span></div></div>
+    <div class="zeile"><span class="ring"><i>2</i></span><div><b>Einmal sauber mit Kompass</b><span>Rolle, Aufgabe, Kontext, Förmchen.</span></div></div>
+    <div class="zeile"><span class="ring"><i>3</i></span><div><b>Als Vorlage gespeichert</b><span>Projekt, Custom GPT oder einfach eine Notiz.</span></div></div>
+  </div>
+  <div class="takeaway"><p>Ab dann kostet die Aufgabe eine Minute.</p></div>
+
+  <p class="fuss">
+    Lübeck.lokal, 9. September 2026, Convention Bureau Lübeck mit EDGE Digital.<br>
+    EDGE Digital · Fischstraße 16 · 23552 Lübeck · <a href="https://edge-digital.ai">edge-digital.ai</a>
+  </p>
+</main>
+<script>
+/* Kopieren-Knopf je Prompt: bestätigt kurz im Knopf selbst, kein Popup */
+document.querySelectorAll('.prompt').forEach(function (feld) {
+  var knopf = feld.querySelector('button');
+  var text = feld.querySelector('[data-text]').textContent.trim();
+  knopf.addEventListener('click', function () {
+    navigator.clipboard.writeText(text).then(function () {
+      knopf.textContent = 'Kopiert';
+      knopf.classList.add('kopiert');
+      setTimeout(function () { knopf.textContent = 'Kopieren'; knopf.classList.remove('kopiert'); }, 1800);
+    });
+  });
+});
+</script>
+</body>
+</html>

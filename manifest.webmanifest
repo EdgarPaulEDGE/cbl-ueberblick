@@ -1,0 +1,24 @@
+{
+  "name": "Den Überblick behalten. KI-Impulse über den Dächern von Lübeck",
+  "short_name": "Überblick",
+  "description": "Impuls von EDGE Digital bei Lübeck.lokal des Convention Bureau Lübeck",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#030309",
+  "theme_color": "#030309",
+  "icons": [
+    {
+      "src": "assets/images/app-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

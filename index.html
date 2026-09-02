@@ -1,0 +1,1454 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Den Überblick behalten. KI-Impulse über den Dächern von Lübeck | EDGE Digital x Convention Bureau Lübeck</title>
+<meta name="theme-color" content="#030309">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Als App installierbar: Chrome bietet dann "Installieren" an, das Fenster
+     startet ohne Adressleiste und ohne Tableiste. -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="vendor/reveal/reveal.css">
+<style>
+/* ============================================================================
+   DEN ÜBERBLICK BEHALTEN. KI-IMPULSE ÜBER DEN DÄCHERN VON LÜBECK
+   Lübeck.lokal des Convention Bureau, Atlantic Hotel, 09.09.2026
+   Stamm: das K64-Deck (cbl-aufgeweckt), nur Folien und Bilder sind neu.
+   Gestaltung 1:1 aus der SoulByte-Schulung: Raumschwarz, Galaxie, Avenir Next,
+   Typografie trägt die Fläche, Struktur aus Hairline-Trennern.
+   Kein box-shadow (decktape-PDF-Bug). Kein Monospace. Keine Emojis.
+   ========================================================================== */
+
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-DemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Bold.ttf") format("truetype"); font-weight: 700; }
+
+:root {
+  --raum: #030309;
+  --weiss: #F4F6FF;
+  --w-70: rgba(244, 246, 255, 0.70);
+  --w-45: rgba(244, 246, 255, 0.45);
+  --w-25: rgba(244, 246, 255, 0.25);
+  --hairline: rgba(244, 246, 255, 0.14);
+  --hairline-stark: rgba(244, 246, 255, 0.28);
+  --purple: #C15DE6;
+  --blau: #009FF4;
+  --cyan: #00E2E2;
+  --limette: #C7D300;      /* Convention Lübeck, nur als Gastfarbe */
+  --warn: #ff6b5e;
+  --ok: #3ad29f;
+  --font: "Avenir Next LT", "Avenir Next", Avenir, "Nunito Sans", "Segoe UI", sans-serif;
+}
+
+/* Ohne diese Zeile rechnet der Browser Innenabstand und Rahmen ZUSÄTZLICH
+   zur angegebenen Breite. Ein Kasten mit width:100% und 48px Padding wird
+   dann 96px breiter als sein Platz und schiebt sich unter den Nachbarn.
+   Genau das ist auf der Halluzinations-Folie passiert. */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { background: var(--raum); font-family: var(--font); }
+.reveal-viewport { background: transparent !important; }
+
+/* ---------- Raum-Ebenen: liegen fix HINTER allen Folien ---------- */
+#kosmos { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; }
+.nebel {
+  position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(60px);
+  background:
+    radial-gradient(38% 30% at 78% 24%, rgba(0, 159, 244, 0.10), transparent 70%),
+    radial-gradient(34% 28% at 16% 80%, rgba(193, 93, 230, 0.11), transparent 70%),
+    radial-gradient(24% 20% at 62% 86%, rgba(0, 226, 226, 0.07), transparent 70%);
+  animation: nebel-atmen 46s ease-in-out infinite alternate;
+}
+@keyframes nebel-atmen {
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  to   { transform: translate3d(2.5%, -1.8%, 0) scale(1.06); opacity: .82; }
+}
+.vignette {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(140% 120% at 50% 42%, transparent 50%, rgba(1, 1, 4, 0.88) 100%);
+}
+.schnuppe {
+  position: fixed; z-index: 0; width: 150px; height: 1.5px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(220, 235, 255, 0.9), transparent);
+  filter: drop-shadow(0 0 6px rgba(160, 220, 255, 0.8));
+  animation: schnuppen-flug 1.1s ease-out forwards;
+}
+@keyframes schnuppen-flug {
+  from { opacity: 0; transform: rotate(var(--wk)) translateX(0); }
+  12%  { opacity: 1; }
+  to   { opacity: 0; transform: rotate(var(--wk)) translateX(46vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nebel { animation: none; }
+  .schnuppe { animation: none; display: none; }
+}
+
+/* ---------- Reveal-Grundgerüst ---------- */
+.reveal { font-family: var(--font); font-size: 30px; color: var(--weiss); }
+.reveal .slides { text-align: left; }
+.reveal .slides > section { padding: 0; height: 1080px; }
+.reveal .progress { color: var(--cyan); height: 4px; }
+.reveal .controls { color: var(--w-45); }
+.reveal ::selection { background: rgba(0, 226, 226, 0.28); }
+
+.slide {
+  width: 1920px; height: 1080px;
+  display: flex !important; flex-direction: column;
+  padding: 132px 130px 96px;
+  box-sizing: border-box;
+}
+.slide.mittig { justify-content: center; align-items: center; text-align: center; }
+
+/* Für Prüfung und PDF-Export: jede Animation sofort auf ihren Endzustand.
+   Sonst fotografiert decktape die Folie mitten im Einlauf, und im PDF steht
+   ein halb aufgebauter Kasten samt Schreibmaschinen-Cursor. */
+body.standbild *, body.standbild *::before, body.standbild *::after {
+  animation-duration: .001s !important;
+  animation-delay: 0s !important;
+  transition: none !important;
+}
+body.standbild .cursor, body.standbild .tippen::after { display: none !important; }
+/* Bedienelemente gehören auf die Leinwand, nicht ins Export-PDF */
+body.standbild .reveal .controls,
+body.standbild .reveal .progress { display: none !important; }
+
+/* ---------- Typografie ---------- */
+h1, h2, h3, h4 { margin: 0; font-family: var(--font); }
+.hero {
+  font-size: 148px; line-height: 1.09; letter-spacing: -.025em; font-weight: 700;
+  text-transform: uppercase; text-wrap: balance; margin: 0 0 28px;
+}
+.headline {
+  font-size: 82px; line-height: 1.12; letter-spacing: -.02em; font-weight: 700;
+  text-transform: uppercase; text-wrap: balance; margin: 0 0 20px; flex-shrink: 0;
+}
+/* Headlines mit gesetztem Umbruch: balance würde gegen die Satzgrenze
+   rechnen und wieder mitten im Satz trennen. */
+.headline.gesetzt, .hero.gesetzt { text-wrap: initial; }
+.schimmer {
+  background: linear-gradient(96deg, var(--purple), var(--blau) 52%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lead { color: var(--w-70); font-size: 35px; line-height: 1.5; max-width: 32em; text-wrap: balance; margin: 0; }
+.slide.mittig .lead { margin-left: auto; margin-right: auto; }
+.label {
+  font-weight: 600; font-size: 20px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--w-45);
+}
+
+/* ---------- Feld: dunkles Glas mit Space-Schimmer ---------- */
+.feld {
+  border: 1px solid var(--hairline);
+  border-radius: 28px;
+  background: rgba(8, 11, 22, 0.62);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  padding: 40px 48px;
+  position: relative; overflow: hidden;
+}
+.feld::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(90% 70% at 10% 0%, rgba(0, 226, 226, 0.07), transparent 60%),
+    radial-gradient(80% 60% at 95% 100%, rgba(0, 159, 244, 0.05), transparent 60%);
+}
+.feld.zeilen > div:first-child { border-top: none; }
+.feld.zeilen > div:last-child { border-bottom: none; }
+
+/* ---------- Offene Spalten mit Hairline-Trennern ---------- */
+.spalten { display: grid; width: 100%; }
+.spalten > div { padding: 0 50px; }
+.spalten > div:first-child { padding-left: 0; }
+.spalten > div:last-child { padding-right: 0; }
+.spalten > div + div { border-left: 1px solid var(--hairline); }
+.spalten .sp-icon { margin-bottom: 24px; }
+.spalten .sp-icon svg { width: 70px; height: 70px; }
+.spalten h3 { font-size: 36px; font-weight: 700; letter-spacing: -.015em; margin: 0 0 14px; }
+.spalten p { color: var(--w-70); font-size: 26px; line-height: 1.55; margin: 0; }
+.sp-num { font-size: 46px; font-weight: 700; color: var(--cyan); margin-bottom: 16px; line-height: 1; }
+
+/* ---------- Nummern-Badge: der drehende Verlaufs-Ring ----------
+   Nie 01 02 03, immer die nackte Zahl. Der Markenverlauf läuft als Kontur
+   einmal um den Kreis und rotiert langsam: dieselbe Sprache wie der
+   Schimmer in den Headlines, nur in Bewegung. Die Drehung liegt auf einem
+   Pseudo-Element mit transform, das läuft überall und kostet kein Layout. */
+.ring {
+  position: relative; width: 84px; height: 84px; border-radius: 50%;
+  padding: 3px; overflow: hidden; flex-shrink: 0; display: inline-block;
+}
+.ring::before {
+  content: ""; position: absolute; inset: -30%; border-radius: 50%;
+  background: conic-gradient(var(--purple), var(--blau) 38%, var(--cyan) 62%, var(--purple));
+  animation: ring-drehen 5s linear infinite;
+}
+.ring > b {
+  position: relative; display: grid; place-items: center;
+  width: 100%; height: 100%; border-radius: 50%;
+  background: #070a14; font-size: 38px; font-weight: 700; color: var(--weiss);
+}
+.ring.warn::before { background: conic-gradient(#ff9a8e, var(--warn) 45%, #b23a2f 75%, #ff9a8e); }
+.ring.ok::before { background: conic-gradient(#8fe9c9, var(--ok) 45%, #1e8f68 75%, #8fe9c9); }
+.ring.klein { width: 72px; height: 72px; }
+.ring.klein > b { font-size: 32px; }
+@keyframes ring-drehen { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ring::before { animation: none; } }
+
+/* ---------- Fließband: rein, tippen, raus ---------- */
+.band { display: flex; gap: 26px; align-items: stretch; }
+/* Band plus Merkzeile stehen als Gruppe mittig im Rest der Folie. Die Kästen
+   sind so hoch wie der längste von ihnen, nicht so hoch wie die Folie:
+   ein Loch im Kasten liest sich als Fehler, Luft um die Gruppe als Absicht. */
+.gruppe-mittig { display: flex; flex-direction: column; justify-content: center; gap: 34px; min-height: 0; }
+.band .pfeil-r { flex-shrink: 0; align-self: center; }
+.station { display: flex; flex-direction: column; min-width: 0; }
+.station-kopf { display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
+.station .feld { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.stich { display: flex; gap: 18px; align-items: flex-start; font-size: 29px; line-height: 1.45; }
+.stich svg { width: 34px; height: 34px; flex-shrink: 0; margin-top: 2px; }
+
+/* ---------- Zeilen-Liste mit Piktogramm ----------
+   Jede Zeile trägt ihr eigenes Zeichen, damit sie unterscheidbar bleibt
+   und nicht als Textblock gelesen wird. */
+.zeilen.mit-ikon > div { display: flex; align-items: center; gap: 24px; }
+.zeilen.mit-ikon svg { width: 30px; height: 30px; flex-shrink: 0; }
+
+/* ---------- Zeilen-Listen ---------- */
+.zeilen { display: flex; flex-direction: column; width: 100%; }
+.zeilen > div { padding: 24px 6px; border-bottom: 1px solid var(--hairline); }
+.zeilen > div:first-child { border-top: 1px solid var(--hairline); }
+
+/* ---------- Takeaway: Statement statt Box ---------- */
+.takeaway { text-align: center; padding-top: 6px; }
+.takeaway::before {
+  content: ""; display: block; width: 90px; height: 3px; margin: 0 auto 24px;
+  background: linear-gradient(90deg, var(--purple), var(--blau) 52%, var(--cyan));
+  border-radius: 2px;
+}
+.takeaway p { font-size: 40px; font-weight: 600; line-height: 1.35; margin: 0; text-wrap: balance; }
+
+/* ---------- Chrome (fixe Overlays) ---------- */
+.chrome { position: fixed; z-index: 20; pointer-events: none; transition: opacity .3s; }
+/* Die Werte sind Folienpixel und werden mit --folie-skala umgerechnet, die
+   Ränder kommen aus der tatsächlichen Lage der Bühne im Fenster. */
+.chrome-edge {
+  top: calc(var(--folie-oben, 0px) + 34px * var(--folie-skala, 1));
+  left: calc(var(--folie-links, 0px) + 56px * var(--folie-skala, 1));
+}
+.chrome-edge img { height: calc(50px * var(--folie-skala, 1)); display: block; }
+.chrome-client {
+  top: calc(var(--folie-oben, 0px) + 40px * var(--folie-skala, 1));
+  right: calc(var(--folie-rechts, 0px) + 56px * var(--folie-skala, 1));
+}
+.chrome-client img { height: calc(40px * var(--folie-skala, 1)); display: block; opacity: .9; }
+.chrome-num {
+  bottom: calc(var(--folie-unten, 0px) + 36px * var(--folie-skala, 1));
+  left: calc(var(--folie-links, 0px) + 60px * var(--folie-skala, 1));
+  font-weight: 600; font-size: calc(21px * var(--folie-skala, 1));
+  letter-spacing: .12em; color: var(--w-45);
+}
+body.chrome-aus .chrome-edge, body.chrome-aus .chrome-client { opacity: 0; }
+body.deckblatt .chrome-num { opacity: 0; }
+
+/* ---------- Divider ---------- */
+.riesenzahl {
+  position: absolute; top: 50%; right: 120px; transform: translateY(-50%);
+  font-size: 620px; font-weight: 700; line-height: 1; pointer-events: none;
+  color: transparent; -webkit-text-stroke: 2px rgba(244, 246, 255, 0.10);
+}
+.divider-zeit {
+  font-weight: 500; font-size: 24px; letter-spacing: .18em; color: var(--w-45);
+  margin-top: 32px; text-transform: uppercase;
+}
+
+/* ============================================================================
+   EIGENE BAUTEILE FÜR DIESEN VORTRAG
+   ========================================================================== */
+
+/* ---------- Kaffeetasse auf der Titelfolie ----------
+   Der Dampf steigt in drei Fäden unterschiedlich schnell auf. Reine CSS-
+   Animation auf einem SVG-Pfad: läuft auch dann weiter, wenn der Browser
+   die Seite im Hintergrund hält und rAF anhält. */
+.tasse { width: 268px; height: 268px; display: block; }
+.dampf { stroke: rgba(244, 246, 255, .5); stroke-width: 4.5; fill: none; stroke-linecap: round; }
+.dampf-1 { animation: dampf-steigen 4.2s ease-in-out infinite; }
+.dampf-2 { animation: dampf-steigen 5.4s ease-in-out infinite .6s; }
+.dampf-3 { animation: dampf-steigen 4.8s ease-in-out infinite 1.2s; }
+@keyframes dampf-steigen {
+  0%   { opacity: 0; transform: translateY(14px) scaleY(.7); }
+  25%  { opacity: .85; }
+  100% { opacity: 0; transform: translateY(-30px) scaleY(1.25); }
+}
+@media (prefers-reduced-motion: reduce) { .dampf-1, .dampf-2, .dampf-3 { animation: none; opacity: .55; } }
+
+/* ---------- Mail- und Chatfenster ----------
+   Ein Fenster steht für "das hier kennt ihr aus eurem Postfach". Die Kopfzeile
+   trägt Absender und Betreff, damit der Text darunter ohne Erklärung wirkt. */
+.fenster {
+  border: 1px solid var(--hairline); border-radius: 20px; overflow: hidden;
+  background: rgba(8, 11, 22, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  display: flex; flex-direction: column;
+}
+.fenster-kopf {
+  padding: 22px 34px; border-bottom: 1px solid var(--hairline);
+  display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
+}
+.fenster-kopf .von { font-size: 24px; font-weight: 600; color: var(--w-70); }
+.fenster-kopf .betreff { font-size: 24px; color: var(--w-45); }
+.fenster-leib { padding: 32px 34px; font-size: 29px; line-height: 1.55; color: var(--weiss); }
+.fenster-leib p { margin: 0 0 18px; }
+.fenster-leib p:last-child { margin-bottom: 0; }
+.fenster-fuss { padding: 18px 34px 24px; border-top: 1px solid var(--hairline); }
+
+/* ---------- Gegenüberstellung schwach gegen gut ----------
+   Kein farbiger Balken als Dekoration: die Wertung steht als Wort über der
+   Spalte, die Fläche bleibt ruhig. Nur ein Hauch Farbe im Hintergrund. */
+.gegen { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; width: 100%; }
+.gegen > div { display: flex; flex-direction: column; }
+.wertung { font-weight: 700; font-size: 22px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 16px; }
+.wertung.schwach { color: var(--warn); }
+.wertung.gut { color: var(--ok); }
+.karte-schwach { border-color: rgba(255, 107, 94, .28); }
+.karte-gut { border-color: rgba(58, 210, 159, .32); background: rgba(9, 18, 20, .68); }
+
+/* ---------- Prompt-Zeile ----------
+   Der Prompt ist das Werkzeug, deshalb steht er nicht in Fließtext, sondern
+   in einer eigenen Zeile mit vorangestelltem Zeichen. Kein Monospace: die
+   Runde soll ihn lesen wie einen Satz, nicht wie Code. */
+.prompt {
+  border: 1px solid var(--hairline-stark); border-radius: 18px;
+  background: rgba(0, 226, 226, .045);
+  padding: 26px 32px; font-size: 28px; line-height: 1.5; color: var(--weiss);
+  display: flex; gap: 18px; align-items: flex-start;
+}
+.prompt::before {
+  content: ""; flex: 0 0 10px; height: 10px; margin-top: 14px; border-radius: 50%;
+  background: linear-gradient(96deg, var(--purple), var(--cyan));
+}
+.prompt.klein { font-size: 25px; padding: 20px 26px; }
+.prompt b { font-weight: 700; color: var(--cyan); }
+/* blinkender Balken hinter getipptem Text */
+.cursor { display: inline-block; width: 3px; height: 1em; margin-left: 4px;
+  background: var(--cyan); vertical-align: text-bottom; animation: blinken 1s steps(2) infinite; }
+@keyframes blinken { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+/* ---------- Wortzahl unter dem Prompt ----------
+   Ersetzt den Erklärabsatz: der Größenunterschied zwischen beiden Prompts
+   ist eine Zahl und braucht keinen Satz. margin-top:auto stellt beide Zahlen
+   auf dieselbe Linie, egal wie lang der Prompt darüber ist. */
+.wortzahl { display: flex; align-items: baseline; gap: 18px; padding-top: 26px; }
+.wortzahl .zahl { font-size: 104px; font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+.wortzahl .was { font-size: 27px; color: var(--w-45); }
+.wortzahl.schwach .zahl { color: var(--w-45); }
+.wortzahl.gut .zahl {
+  background: linear-gradient(96deg, var(--purple), var(--blau) 52%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* ---------- Notizzettel: der handschriftliche Ausgangspunkt ---------- */
+.zettel {
+  border: 1px dashed var(--hairline-stark); border-radius: 18px;
+  padding: 26px 32px; background: rgba(244, 246, 255, .03);
+}
+.zettel ul { margin: 0; padding: 0; list-style: none; }
+.zettel li { font-size: 27px; line-height: 1.75; color: var(--w-70); }
+.zettel li::before { content: "·"; color: var(--cyan); font-weight: 700; margin-right: 14px; }
+
+/* ---------- Bausteine des Prompts ---------- */
+.baustein-kopf { font-weight: 700; font-size: 26px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; }
+.b-rolle { color: var(--purple); }
+.b-ziel { color: var(--blau); }
+.b-kontext { color: var(--cyan); }
+.b-aufgabe { color: var(--limette); }
+
+/* ---------- Pizza ---------- */
+.pizza { width: 340px; height: 340px; display: block; margin: 0 auto; }
+.pizza .zutat { opacity: 0; transition: opacity .5s ease; }
+.pizza.fertig .zutat { opacity: 1; }
+.pizza.fertig .zutat:nth-of-type(2) { transition-delay: .25s; }
+.pizza.fertig .zutat:nth-of-type(3) { transition-delay: .5s; }
+.pizza.fertig .zutat:nth-of-type(4) { transition-delay: .75s; }
+
+/* ---------- Sterne für die Bewertung ---------- */
+.sterne { display: flex; gap: 6px; }
+.sterne svg { width: 30px; height: 30px; }
+.stern-voll { fill: #ffc531; }
+.stern-leer { fill: rgba(244, 246, 255, .16); }
+
+/* ---------- Zeitstrahl ---------- */
+.strahl { position: relative; width: 100%; padding-top: 20px; }
+.strahl-linie { position: absolute; left: 0; right: 0; top: 96px; height: 2px; border: none; margin: 0;
+  background: linear-gradient(90deg, rgba(244,246,255,.18), var(--blau) 55%, var(--cyan)); }
+.strahl-reihe { display: grid; grid-template-columns: repeat(5, 1fr); gap: 26px; position: relative; }
+.strahl-punkt { text-align: center; }
+/* Die Jahreszahl bekommt eine feste Zeilenhöhe. Sonst schiebt die größere
+   Schrift von "Heute" den eigenen Knoten unter die Linie der anderen. */
+.strahl-jahr {
+  font-size: 40px; font-weight: 700; letter-spacing: -.01em; color: var(--w-45);
+  height: 56px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px;
+}
+.strahl-punkt.jetzt .strahl-jahr { color: var(--cyan); font-size: 46px; }
+.strahl-knoten { width: 16px; height: 16px; border-radius: 50%; background: var(--w-25); margin: 0 auto 30px; }
+.strahl-punkt.jetzt .strahl-knoten {
+  width: 22px; height: 22px; background: var(--cyan); margin: -3px auto 27px;
+}
+.strahl-text { font-size: 25px; line-height: 1.45; color: var(--w-70); padding: 0 8px; text-wrap: balance; }
+
+/* ---------- Takeaway-Liste ---------- */
+.mitnehmen { display: grid; grid-template-columns: 1fr 1fr; gap: 0 60px; width: 100%; }
+.mitnehmen > div { display: flex; gap: 30px; align-items: center; padding: 26px 4px; border-bottom: 1px solid var(--hairline); }
+.mitnehmen .nr { flex: 0 0 62px; }
+.mitnehmen .satz { font-size: 35px; line-height: 1.35; font-weight: 600; }
+.mitnehmen .satz small { display: block; font-size: 26px; color: var(--w-45); margin-top: 6px; }
+
+/* ---------- Warnliste (was nie ins Tool gehört) ---------- */
+.nie { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 34px; width: 100%; }
+.nie > div { display: flex; gap: 24px; align-items: center; font-size: 36px; line-height: 1.3; padding: 26px 0; }
+.nie .zeichen { flex: 0 0 50px; height: 50px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255, 107, 94, .12); }
+.nie .zeichen svg { width: 28px; height: 28px; stroke: var(--warn); }
+
+/* ---------- Portraits ---------- */
+.koepfe { display: flex; gap: 56px; }
+.kopf { display: flex; align-items: center; gap: 28px; }
+.kopf-foto {
+  width: 224px; height: 224px; border-radius: 50%; flex: 0 0 224px;
+  border: 1px solid var(--hairline-stark);
+  background:
+    radial-gradient(75% 70% at 50% 12%, rgba(0, 226, 226, .10), transparent 62%),
+    radial-gradient(80% 80% at 50% 100%, rgba(0, 159, 244, .10), transparent 60%),
+    rgba(12, 16, 30, .78);
+  position: relative; overflow: hidden;
+}
+.kopf-foto img { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 104%; height: auto; display: block; }
+.kopf-name { font-size: 46px; font-weight: 700; }
+.kopf-rolle { font-size: 28px; color: var(--w-45); margin-top: 8px; }
+
+/* ---------- Vollflächiges Bild hinter einer Trennfolie ----------
+   Der Verlauf darüber ist kein Effekt, sondern Bedingung: ohne ihn steht
+   weiße Schrift auf einem Foto mit hellen Stellen und wird unlesbar.
+   Bei "seite" läuft er von links (fast deckend) nach rechts (offen), also
+   entgegengesetzt zur Leserichtung der Headline. */
+/* Der Schleier gehört auf Reveals Hintergrund-Ebene: sie deckt das ganze
+   Fenster, während die Bühne nur 16:9 ist. Lag das Bild im Slide, endete es
+   an der Folienkante und daneben lief die Galaxie weiter. */
+.reveal .slide-background[data-schleier]::after { content: ""; position: absolute; inset: 0; }
+.reveal .slide-background[data-schleier="seite"]::after {
+  background:
+    linear-gradient(90deg, rgba(3, 3, 9, .97) 0%, rgba(3, 3, 9, .88) 38%, rgba(3, 3, 9, .35) 78%, rgba(3, 3, 9, .55) 100%),
+    linear-gradient(0deg, rgba(3, 3, 9, .7) 0%, transparent 45%);
+}
+/* "leicht" lässt das Motiv sichtbar: nur oben und unten so viel Dunkel,
+   dass Headline und Uferzeilen lesbar bleiben. */
+.reveal .slide-background[data-schleier="leicht"]::after {
+  background: linear-gradient(180deg, rgba(3, 3, 9, .74) 0%, rgba(3, 3, 9, .28) 30%, rgba(3, 3, 9, .22) 62%, rgba(3, 3, 9, .68) 100%);
+}
+.reveal .slide-background[data-schleier="mittig"]::after {
+  background: radial-gradient(120% 100% at 50% 50%, rgba(3, 3, 9, .8) 0%, rgba(3, 3, 9, .92) 55%, rgba(3, 3, 9, .97) 100%);
+}
+/* Hinter einem Vollbild hat die Galaxie nichts zu suchen */
+body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacity: 0; }
+#kosmos, .nebel, .vignette { transition: opacity .4s; }
+/* Wir verlangen die Kennzeichnung auf Folie 20 selbst, also steht sie auch
+   an unserem eigenen Bild. Dezent, aber vorhanden. */
+.bild-quelle {
+  position: absolute; left: 130px; bottom: 40px; z-index: 2;
+  font-weight: 500; font-size: 17px; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(244, 246, 255, .38);
+}
+
+/* ---------- Beispiel-Posting mit Kennzeichnung ----------
+   Das Bild auf der Rechtsfolie ist selbst mit KI erzeugt. Die Zeile darunter
+   ist die Kennzeichnung, die das Gesetz verlangt, und zugleich die Vorlage,
+   die die Runde abschreiben kann. */
+.posting { border: 1px solid var(--hairline-stark); border-radius: 20px; overflow: hidden; background: rgba(8, 11, 22, .7); }
+.posting img { width: 100%; height: 420px; object-fit: cover; display: block; }
+.posting .hinweis {
+  display: flex; align-items: center; gap: 16px;
+  padding: 22px 26px; font-size: 25px; color: var(--w-70); border-top: 1px solid var(--hairline);
+}
+.posting .hinweis svg { width: 26px; height: 26px; flex: 0 0 26px; stroke: var(--cyan); }
+
+/* ---------- Vier Bilder als Beleg ----------
+   Enge Fugen und gleiche Rundung lassen die vier als eine Fläche lesen.
+   Die Bildunterschrift trägt den Ort, nicht die Erklärung. */
+.galerie { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
+.galerie figure { margin: 0; position: relative; overflow: hidden; border-radius: 18px;
+  border: 1px solid var(--hairline); }
+.galerie img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.galerie figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 24px 16px;
+  font-weight: 600; font-size: 22px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--weiss);
+  background: linear-gradient(0deg, rgba(3, 3, 9, .88), transparent);
+}
+
+/* ---------- Bilder in Flex-Spalten ----------
+   In einer Spalten-Flexbox gilt align-items:stretch. Ein Bild mit fester Höhe
+   und width:auto wird dadurch auf die Containerbreite gezogen und verzerrt.
+   Hier stand der Roboter am Laptop 825px breit statt 195px. */
+.gegen > div > img, .spalte > img, .zeilen > img { align-self: flex-start; }
+
+/* ---------- Protokoll: eine Geschichte von oben nach unten ----------
+   Drei Zeilen statt drei Blöcke: die Leute lesen abwärts, nicht über die
+   Fläche. Die Zeitmarken sind bewusst fast gleich lang (Davor, Dabei,
+   Danach), damit die Textspalte daneben auf einer Kante steht. */
+.protokoll { display: flex; gap: 50px; align-items: stretch; min-height: 0; }
+.protokoll .liste { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.protokoll .zeile { display: flex; gap: 34px; align-items: center; padding: 34px 46px; border-bottom: 1px solid var(--hairline); }
+.protokoll .zeile:last-child { border-bottom: none; }
+.protokoll .wann {
+  font-size: 22px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--w-45); font-weight: 600; flex: 0 0 150px;
+}
+.protokoll .was { font-size: 33px; line-height: 1.35; }
+.protokoll .zeile.schluss .wann { color: var(--warn); }
+.protokoll .zeile.schluss .was { font-size: 44px; font-weight: 700; }
+.protokoll .beweis {
+  flex: 0 0 430px; border-radius: 26px; overflow: hidden;
+  border: 1px solid var(--hairline); position: relative; margin: 0;
+}
+.protokoll .beweis img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.protokoll .beweis figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 26px;
+  background: linear-gradient(0deg, rgba(3, 3, 9, .94), transparent);
+  font-size: 22px; color: var(--w-70);
+}
+
+/* ---------- Collage: echte Fotos, echte Menschen ----------
+   Drei mal drei Kacheln im Seitenverhältnis 3:2, enge Fugen, gleiche Rundung:
+   so lesen sich die neun Bilder als eine Fläche statt als Tabelle. */
+.collage {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  width: 100%; align-content: center;
+}
+.collage img {
+  width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block;
+  border-radius: 12px; border: 1px solid var(--hairline);
+}
+
+/* ---------- Der Begleiter ----------
+   Freigestellt, deshalb ohne Rahmen und ohne Fläche: er steht einfach da. */
+.begleiter { position: absolute; z-index: 3; pointer-events: none; }
+.begleiter img { display: block; height: 100%; width: auto; }
+
+/* ---------- Die offiziellen EU-Zeichen plus QR ----------
+   Die Icons liegen als SVG in Weiß vor, deshalb brauchen sie keine Fläche
+   hinter sich. Der QR-Code bleibt bewusst dunkel auf hell: helle Module auf
+   dunklem Grund lesen ältere Scanner nicht zuverlässig, und dieser Code wird
+   im Saal vom Beamer abfotografiert. */
+.zeichen-reihe { display: flex; align-items: center; gap: 44px; }
+.zeichen-reihe .eu-icon { display: block; }
+.qr { display: flex; align-items: center; gap: 20px; }
+.qr img { width: 140px; height: 140px; display: block; border-radius: 12px; }
+.qr span { font-size: 22px; line-height: 1.35; color: var(--w-45); }
+
+/* ---------- Platzhalter für offene Punkte ---------- */
+.ph {
+  border: 2px dashed var(--hairline-stark); border-radius: 26px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; color: var(--w-25); background: rgba(244, 246, 255, 0.02); padding: 40px;
+  text-align: center;
+}
+.ph .label { color: var(--w-25); font-size: 16px; letter-spacing: .2em; }
+.ph p { font-size: 26px; color: var(--w-45); margin: 0; max-width: 24em; line-height: 1.5; }
+
+/* ---------- Aufbau einer Folie ----------
+   Regel: erst die Headline, allein. Danach Segment für Segment, ein Klick je
+   Segment. Headline und Inhalt kommen nie zusammen.
+   Die Headline ist deshalb KEIN Fragment: sie würde sonst einen eigenen Klick
+   kosten und die Folie liefe leer an. Stattdessen läuft sie beim Blättern von
+   selbst ein, sobald die Folie steht. */
+.reveal .slides section.present .headline,
+.reveal .slides section.present .hero {
+  animation: kopf-ein .5s cubic-bezier(.2, .7, .3, 1) both;
+}
+@keyframes kopf-ein {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Beim Zurückblättern und in der Übersicht stört das Einlaufen nur */
+.reveal.overview .headline, .reveal.overview .hero { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal .slides section.present .headline,
+  .reveal .slides section.present .hero { animation: none; }
+}
+
+/* ---------- Fragmente ---------- */
+.reveal .fragment.fade-up { transform: translateY(14px); }
+.reveal .fragment.fade-up.visible { transform: translateY(0); }
+
+/* ---------- Utility ---------- */
+.reihe { display: flex; gap: 34px; }
+.spalte { display: flex; flex-direction: column; gap: 34px; }
+.wachsen { flex: 1; min-height: 0; }
+.mt-auto { margin-top: auto; }
+.mt { margin-top: 40px; }
+.zentriert { text-align: center; }
+.cyan { color: var(--cyan); }
+.warn { color: var(--warn); }
+.ok { color: var(--ok); }
+.limette { color: var(--limette); }
+.quelle { font-size: 19px; color: var(--w-25); letter-spacing: .04em; }
+
+/* ---------- Titel: beide Logos unten links ---------- */
+.titel-logos { position: absolute; left: 130px; bottom: 96px; display: flex; align-items: center; gap: 34px; }
+.titel-logos img { height: 54px; display: block; }
+.titel-x { font-size: 36px; color: var(--w-45); font-weight: 500; }
+/* Text rechts, wenn das Motiv links steht */
+.slide.rechts { align-items: flex-end; text-align: right; }
+.slide.rechts .titel-logos { left: auto; right: 130px; }
+.slide.rechts .bild-quelle { left: auto; right: 130px; }
+.reveal .slide-background[data-schleier="seite-rechts"]::after {
+  background:
+    linear-gradient(270deg, rgba(3, 3, 9, .97) 0%, rgba(3, 3, 9, .88) 38%, rgba(3, 3, 9, .35) 78%, rgba(3, 3, 9, .55) 100%),
+    linear-gradient(0deg, rgba(3, 3, 9, .7) 0%, transparent 45%);
+}
+/* Zettel: Inhalt so groß, dass der Kasten neben dem Fragezeichen nicht leer wirkt */
+.zettel ul { font-size: 0; }
+.zettel li { font-size: 31px; line-height: 1.9; }
+</style>
+</head>
+<body>
+
+<canvas id="kosmos"></canvas>
+<div class="nebel"></div>
+<div class="vignette"></div>
+
+<div class="chrome chrome-edge"><img src="assets/logos/edge-logo-white.png" alt="EDGE Digital"></div>
+<div class="chrome chrome-client"><img src="assets/logos/convention-bureau.png" alt="Convention Bureau Lübeck"></div>
+<div class="chrome chrome-num" id="chrome-num"></div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ============ 1: TITEL ============ -->
+<section data-chrome="aus" data-background-image="assets/images/robo/dach-petriturm.jpg" data-background-size="cover" data-schleier="seite-rechts">
+  <!-- Der Roboter steht links am Geländer, also wandert der Text nach rechts
+       in den freien Himmel. Bild spiegeln ginge nicht: die Kappe trägt Schrift. -->
+  <div class="slide rechts" style="justify-content:center;position:relative;">
+    <span class="bild-quelle">Bild mit KI erstellt</span>
+    <p class="label">Lübeck.lokal · 9. September 2026 · Atlantic Hotel</p>
+    <h1 class="hero gesetzt" style="font-size:168px;margin-top:26px;">Den Überblick<br><span class="schimmer">behalten.</span></h1>
+    <p class="lead" style="font-size:42px;margin-top:6px;">KI-Impulse über den Dächern von Lübeck.</p>
+    <div class="titel-logos">
+      <img src="assets/logos/edge-logo-white.png" alt="EDGE Digital">
+      <span class="titel-x">×</span>
+      <img src="assets/logos/convention-bureau.png" alt="Convention Bureau Lübeck">
+    </div>
+    <aside class="notes">
+      Emre begrüßt. Kein Agenda-Slide. Ein Satz zur Terrasse hinter uns, dann
+      direkt zur Vorstellung.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 2: WER WIR SIND ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Moin. Wir sind <span class="schimmer">EDGE.</span></h2>
+    <div class="reihe wachsen" style="margin-top:26px;gap:60px;align-items:center;">
+      <div class="spalte" style="flex:0 0 540px;gap:40px;justify-content:center;">
+        <div class="kopf">
+          <div class="kopf-foto"><img src="assets/images/team/emre.png" alt="Emre Erdogan"></div>
+          <div>
+            <div class="kopf-name">Emre</div>
+            <div class="kopf-rolle">Geschäftsführer</div>
+          </div>
+        </div>
+        <div class="kopf">
+          <div class="kopf-foto"><img src="assets/images/team/edgar.png" alt="Edgar Paul-Ghazaryan"></div>
+          <div>
+            <div class="kopf-name">Eddie</div>
+            <div class="kopf-rolle">COO</div>
+          </div>
+        </div>
+        <p class="lead" style="font-size:30px;">KI aus Lübeck.<br>Für Deutschland.</p>
+      </div>
+      <div class="collage">
+        <img src="assets/images/collage/01.jpg" alt="">
+        <img src="assets/images/collage/02.jpg" alt="">
+        <img src="assets/images/collage/03.jpg" alt="">
+        <img src="assets/images/collage/04.jpg" alt="">
+        <img src="assets/images/collage/07.jpg" alt="">
+        <img src="assets/images/collage/05.jpg" alt="">
+        <img src="assets/images/collage/08.jpg" alt="">
+        <img src="assets/images/collage/06.jpg" alt="">
+        <img src="assets/images/collage/09.jpg" alt="">
+      </div>
+    </div>
+    <aside class="notes">
+      Zwei Minuten, über die Fotos erzählt. Wer aus Travemünde dabei war,
+      kennt uns: dann nur ein Satz und weiter.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 3: HANDZEICHEN ============ -->
+<section>
+  <div class="slide" style="position:relative;">
+    <h2 class="headline">Kurze Runde. Hand <span class="schimmer">hoch.</span></h2>
+    <div class="begleiter" style="right:56px;bottom:0;height:330px;">
+      <img src="assets/images/robo/zeigt-links.png" alt="">
+    </div>
+    <div class="gruppe-mittig wachsen" style="padding-right:300px;">
+    <div class="zeilen feld" style="padding:20px 52px;">
+      <div class="fragment fade-up" style="display:flex;align-items:center;gap:44px;padding:44px 6px;">
+        <span class="ring"><b>1</b></span>
+        <span style="font-size:60px;font-weight:600;">Wer hat diese Woche KI benutzt?</span>
+      </div>
+      <div class="fragment fade-up" style="display:flex;align-items:center;gap:44px;padding:44px 6px;">
+        <span class="ring"><b>2</b></span>
+        <span style="font-size:60px;font-weight:600;">Wer hat sich über sie geärgert?</span>
+      </div>
+      <div class="fragment fade-up" style="display:flex;align-items:center;gap:44px;padding:44px 6px;">
+        <span class="ring"><b>3</b></span>
+        <span style="font-size:60px;font-weight:600;">Wer weiß, welches Tool wofür?</span>
+      </div>
+    </div>
+    </div>
+    <aside class="notes">
+      Bei Frage 1 gehen alle Hände hoch, bei Frage 2 die meisten, bei Frage 3
+      wenige. Das laut benennen: genau diese Lücke schließen wir heute.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 4: DER SPIEGEL ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Das habt ihr uns <span class="schimmer">geschrieben.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="reihe" style="gap:44px;align-items:stretch;">
+      <div class="spalte" style="flex:0 0 560px;">
+        <p class="label">Eure Tools</p>
+        <div class="zeilen feld wachsen" style="justify-content:center;font-size:36px;font-weight:600;">
+          <div>ChatGPT</div>
+          <div>Copilot</div>
+          <div>Gemini</div>
+          <div>Claude</div>
+          <div>Eure Firmen-GPTs</div>
+        </div>
+      </div>
+      <div class="spalte" style="flex:1;">
+        <p class="label">Eure Fragen</p>
+        <div class="zeilen feld wachsen" style="justify-content:center;font-size:33px;color:var(--w-70);">
+          <div>„Kann ich die KI in eine Richtung lenken?"</div>
+          <div>„Zeit sparen, aber persönlich bleiben?"</div>
+          <div>„Welche Prompts für die Locationsuche?"</div>
+          <div>„Warum sehe ich auf KI-Bildern entstellt aus?"</div>
+          <div>„Bleibt meine Kommunikation im Haus?"</div>
+          <div>„Bedroht KI unsere Jobs?"</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <aside class="notes">
+      Elf Bögen, null mal „Nein, noch nicht". Das ist der Unterschied zu allen
+      Runden davor: hier muss niemand überzeugt werden. Jede Frage rechts
+      bekommt heute eine Antwort, die man sieht, nicht nur hört.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 5: WEISS DIE KI ALLES ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig">
+    <h2 class="hero" style="font-size:110px;margin-bottom:14px;">Weiß die KI alles?</h2>
+    <p class="hero schimmer gesetzt" style="font-size:96px;margin:0;">Nein.<br>Aber sie antwortet auf alles.</p>
+    <aside class="notes">
+      Die Frage steht wörtlich auf einem Bogen. Kurz stehen lassen. Das ist
+      das ganze Thema des Vormittags in zwei Zeilen.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 6: DIVIDER LANDKARTE ============ -->
+<section data-chrome="aus" data-background-image="assets/images/robo/tuerme.jpg" data-background-size="cover" data-schleier="seite">
+  <div class="slide" style="justify-content:center;">
+    <span class="bild-quelle">Bild mit KI erstellt</span>
+    <p class="label">Der Überblick</p>
+    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Vier Türme statt<br><span class="schimmer">fünfzig Logos.</span></h2>
+    <p class="divider-zeit">Assistent · Rechercheur · Bildermacher · Gedächtnis</p>
+    <aside class="notes">
+      Eddie übernimmt. Vom Dach aus sieht man die ganze Stadt, aber nicht jede
+      Straße. Genau so KI: nicht jedes Tool kennen, sondern die vier Türme.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 7: DIE VIER TÜRME ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Vier Türme. Mehr braucht ihr <span class="schimmer">nicht.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:64px 52px;">
+      <div class="fragment fade-up">
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4Z"/><path d="M8 9h8M8 13h5"/></svg></div>
+        <div class="baustein-kopf b-rolle">Der Assistent</div>
+        <h3 style="font-size:40px;min-height:2.4em;">Text und Denken</h3>
+        <p style="font-size:30px;">ChatGPT<br>Claude<br>Gemini<br>Copilot</p>
+      </div>
+      <div class="fragment fade-up">
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8 11h6M11 8v6"/></svg></div>
+        <div class="baustein-kopf b-ziel">Der Rechercheur</div>
+        <h3 style="font-size:40px;min-height:2.4em;">Quellen und Vergleiche</h3>
+        <p style="font-size:30px;">Deep Research<br>Perplexity<br>Gemini</p>
+      </div>
+      <div class="fragment fade-up">
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 9"/></svg></div>
+        <div class="baustein-kopf b-kontext">Der Bildermacher</div>
+        <h3 style="font-size:40px;min-height:2.4em;">Bilder mit Referenz</h3>
+        <p style="font-size:30px;">Nano Banana Pro<br>GPT Image<br>Canva</p>
+      </div>
+      <div class="fragment fade-up">
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C7D300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0-3 4 4 4 0 0 0 3 4v1a4 4 0 0 0 8 0v-1a4 4 0 0 0 3-4 4 4 0 0 0-3-4V7a4 4 0 0 0-4-4Z"/><path d="M12 3v18"/></svg></div>
+        <div class="baustein-kopf b-aufgabe">Das Gedächtnis</div>
+        <h3 style="font-size:40px;min-height:2.4em;">Eure Vorlagen, euer Ton</h3>
+        <p style="font-size:30px;">Projekte<br>Custom GPT<br>NotebookLM</p>
+      </div>
+    </div>
+    <div class="takeaway mt-auto" style="padding-top:26px;">
+      <p>Ein Hauptwerkzeug. Zwei Spezialisten. Ein Gedächtnis.</p>
+    </div>
+    </div>
+    <aside class="notes">
+      Turm 1: eines reicht. Copilot, wenn die Firma es stellt, weil es in
+      Outlook wohnt. Sonst ChatGPT oder Claude. Nicht drei parallel.
+      Turm 2: wenn Quellen zählen. Turm 3: nie ohne Referenzbild.
+      Turm 4: der Turm, den fast niemand nutzt, und der die meiste Zeit spart.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 8: WO ANFANGEN ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <div class="begleiter" style="right:90px;bottom:0;height:420px;">
+      <img src="assets/images/robo/zeigt-hoch.png" alt="">
+    </div>
+    <p class="label" style="margin-bottom:30px;">Wo anfangen?</p>
+    <h2 class="hero gesetzt" style="font-size:94px;padding-right:380px;">Bei der Aufgabe,<br>die ihr diese Woche<br><span class="schimmer">dreimal</span> gemacht habt.</h2>
+    <aside class="notes">
+      Die häufigste Frage überhaupt: „Was kann ich damit anfangen?" Antwort:
+      nicht mit dem Spannendsten, mit dem Wiederkehrenden. Beispiele aus
+      den Bögen: Übersetzungen, Angebote, Teilnehmerlisten, Einladungen.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 9: DER KOMPASS ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Ein Kompass. Vier <span class="schimmer">Richtungen.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:64px 52px;">
+      <div>
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></div>
+        <div class="baustein-kopf b-rolle">Rolle</div>
+        <h3 style="font-size:42px;min-height:2.4em;">Wer soll die KI sein?</h3>
+        <p style="font-size:31px;">„Du bist Eventmanagerin mit 15 Jahren Erfahrung."</p>
+      </div>
+      <div>
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="#009FF4"/></svg></div>
+        <div class="baustein-kopf b-ziel">Aufgabe</div>
+        <h3 style="font-size:42px;min-height:2.4em;">Was genau soll entstehen?</h3>
+        <p style="font-size:31px;">„Eine Vergleichsliste mit fünf Hotels."</p>
+      </div>
+      <div>
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9.5 4h5v3.2h-5z"/><path d="M9 12.5h6M9 16.5h4"/></svg></div>
+        <div class="baustein-kopf b-kontext">Kontext</div>
+        <h3 style="font-size:42px;min-height:2.4em;">Was weiß nur ihr?</h3>
+        <p style="font-size:31px;">„180 Euro, November, eine Stunde von Lübeck."</p>
+      </div>
+      <div>
+        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C7D300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 14.5l2 2 4-4"/></svg></div>
+        <div class="baustein-kopf b-aufgabe">Förmchen</div>
+        <h3 style="font-size:42px;min-height:2.4em;">In welcher Form?</h3>
+        <p style="font-size:31px;">„Tabelle: Hotel, Entfernung, Preis, Quelle."</p>
+      </div>
+    </div>
+    <div class="takeaway mt-auto" style="padding-top:26px;">
+      <p>Was die KI nicht weiß, erfindet sie.</p>
+    </div>
+    </div>
+    <aside class="notes">
+      Eine Folie, kein Sandburg-Prinzip. Für die aus Travemünde ein Nicken,
+      für die Neuen die Kurzfassung. Dann sofort: „Jetzt zeigen wir, was das
+      live ausmacht."
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 10: DIVIDER LIVE ============ -->
+<section data-chrome="aus">
+  <div class="slide" style="justify-content:center;position:relative;">
+    <div class="begleiter" style="right:110px;bottom:0;height:640px;">
+      <img src="assets/images/robo/laptop.png" alt="">
+    </div>
+    <p class="label">Jetzt live</p>
+    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Vier Demos.<br>Zwanzig <span class="schimmer">Minuten.</span></h2>
+    <p class="divider-zeit">Bestellung · Hotelsuche · Bild · Zettel</p>
+    <aside class="notes">
+      Ab hier tippt Eddie, Emre moderiert und hält die Zeit. Harte Stopps je
+      Demo. Backups liegen als Screenshots im Ordner, falls das Netz zickt.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 11: DEMO 1 BESTELLUNG ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Die <span class="schimmer">Bestellung.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="band">
+      <div class="station" style="flex:0 0 430px;">
+        <div class="station-kopf">
+          <span class="ring klein warn"><b>1</b></span>
+          <span class="label">Euer Fall</span>
+        </div>
+        <div class="feld" style="border-color:rgba(255,107,94,.25);">
+          <p style="font-size:34px;line-height:1.45;margin:0;color:var(--weiss);">Welche Mail habt ihr diese Woche dreimal geschrieben?</p>
+          <p class="label" style="margin:0;color:var(--weiss);">Kommt aus dem Raum</p>
+        </div>
+      </div>
+      <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
+        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d1a)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="d1a" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#C15DE6"/><stop offset="1" stop-color="#009FF4"/></linearGradient></defs>
+      </svg>
+      <div class="station" style="flex:0 0 520px;">
+        <div class="station-kopf">
+          <span class="ring klein"><b>2</b></span>
+          <span class="label">Wir tippen</span>
+        </div>
+        <div class="feld">
+          <div class="stich"><svg viewBox="0 0 24 24" fill="none" stroke="#ff6b5e" stroke-width="1.9" stroke-linecap="round"><path d="M4 12h16"/></svg><span>Einmal faul: ein Satz</span></div>
+          <div class="stich"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-3 6-3-6"/></svg><span>Einmal mit Kompass</span></div>
+          <div class="stich"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Eure alte Mail als Tonvorlage</span></div>
+        </div>
+      </div>
+      <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
+        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d1b)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="d1b" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
+      </svg>
+      <div class="station" style="flex:1;">
+        <div class="station-kopf">
+          <span class="ring klein ok"><b>3</b></span>
+          <span class="label">Geht raus</span>
+        </div>
+        <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+          <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Schauen wir uns<br>doch mal live an</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <aside class="notes">
+      Emre fragt einen Wiederholer nach seiner Mail der Woche. Eddie tippt
+      Split-Screen: links ein Satz, rechts der Kompass mit dem Kontext, den
+      die Person gerade gesagt hat. Dann der Trick für „persönlich bleiben":
+      eine eigene alte Mail einfügen, „schreib in genau diesem Ton".
+      Sieben Minuten, nicht mehr.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 12: MERKSATZ ============ -->
+<section data-chrome="aus" data-background-image="assets/images/robo/holstentor.jpg" data-background-size="cover" data-schleier="mittig">
+  <div class="slide mittig">
+    <span class="bild-quelle">Bild mit KI erstellt</span>
+    <h2 class="hero" style="font-size:96px;margin-bottom:14px;">Die KI liefert nicht schlecht.</h2>
+    <p class="hero schimmer" style="font-size:126px;margin:0;">Wir bestellen schlecht.</p>
+    <aside class="notes">
+      Der Satz aus K64 und Travemünde. Die Wiederholer sprechen ihn mit.
+      Nicht erklären, stehen lassen, weiter.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 13: DEMO 2 HOTELSUCHE ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Die Hotelsuche. Mit <span class="schimmer">Quellen.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="gegen" style="align-items:stretch;grid-template-columns:1.25fr 1fr;">
+      <div>
+        <div class="wertung" style="color:var(--w-45);">Der Prompt</div>
+        <div class="prompt" style="flex:1;font-size:31px;">
+          <span>Du bist Einkäuferin für Tagungen. Finde fünf Hotels höchstens eine Stunde von Lübeck: 20 Einzelzimmer, Tagungsraum mit Tageslicht für 25, im November, bis 180 Euro pro Person und Nacht. Tabelle mit Hotel, Entfernung, Preis, Tagungsraum und <b>Quelle</b>.</span>
+        </div>
+      </div>
+      <div>
+        <div class="wertung ok">Deep Research</div>
+        <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+          <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Läuft live,<br>drei Minuten</p>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway" style="padding-top:26px;">
+      <p>Prüfen ist ein Klick. Aber es bleibt euer Klick.</p>
+    </div>
+    </div>
+    <aside class="notes">
+      Deep Research starten, während es läuft erklärt Emre Turm 1 gegen
+      Turm 2. Ergebnis: Tabelle mit Links. Eddie klickt eine Quelle an.
+      Vorher einmal gelaufen, Dauer gemessen. Fallback: fertiges Ergebnis
+      als Screenshot.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 14: DEMO 3 BILD ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Das <span class="schimmer">Bild.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="band" style="gap:34px;">
+      <div class="station" style="flex:1;">
+        <div class="station-kopf">
+          <span class="ring klein"><b>1</b></span>
+          <span class="label">Der Raum</span>
+        </div>
+        <div class="feld wachsen" style="justify-content:flex-start;">
+          <p style="font-size:31px;line-height:1.45;margin:0;color:var(--w-70);">Foto von heute früh, dieser Raum.</p>
+          <div class="prompt klein"><span>Als Gala-Dinner für 80, Abend, Kerzen, Bühne.</span></div>
+        </div>
+      </div>
+      <div class="station" style="flex:1;">
+        <div class="station-kopf">
+          <span class="ring klein"><b>2</b></span>
+          <span class="label">Das Logo</span>
+        </div>
+        <div class="feld wachsen" style="justify-content:flex-start;">
+          <p style="font-size:31px;line-height:1.45;margin:0;color:var(--w-70);">Nicht beschreiben. Hochladen.</p>
+          <div class="prompt klein"><span>Setze <b>exakt dieses Logo</b> auf die Bühnenrückwand.</span></div>
+        </div>
+      </div>
+      <div class="station" style="flex:1;">
+        <div class="station-kopf">
+          <span class="ring klein"><b>3</b></span>
+          <span class="label">Das Gesicht</span>
+        </div>
+        <div class="feld wachsen" style="justify-content:flex-start;">
+          <p style="font-size:31px;line-height:1.45;margin:0;color:var(--w-70);">Warum ihr entstellt ausseht.</p>
+          <div class="prompt klein"><span>Ändere <b>nur</b> Hintergrund und Kleidung. Gesicht, Frisur, Körper bleiben exakt.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway" style="padding-top:26px;">
+      <p>Logos lädt man hoch. Gesichter lässt man in Ruhe. Und wer postet, kennzeichnet.</p>
+    </div>
+    </div>
+    <aside class="notes">
+      Der Moment, den alle fotografieren: der Raum, in dem sie sitzen, wird
+      auf der Leinwand zum Gala-Dinner. Dann das CLB-Logo als Datei rein.
+      Dann Eddies eigenes Foto: erst ohne Regel (Gesicht verändert sich),
+      dann mit der Regel. Nebeneinander zeigen. Kennzeichnungspflicht seit
+      2. August als Nebensatz, nicht als Vortrag. Acht Minuten.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 15: DEMO 4 ZETTEL ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Vom Zettel zum <span class="schimmer">Plan.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="band">
+      <div class="station" style="flex:0 0 560px;">
+        <div class="station-kopf">
+          <span class="ring klein warn"><b>1</b></span>
+          <span class="label">Handy-Foto</span>
+        </div>
+        <div class="zettel wachsen" style="display:flex;flex-direction:column;justify-content:center;">
+          <ul style="font-size:0;">
+            <li>Sommerfest 11.9.</li>
+            <li>60 Leute + Familien</li>
+            <li>Grillen, Volleyball, ab 15 Uhr</li>
+            <li>Anmeldung bis 29.8.</li>
+            <li>Budget??</li>
+            <li>Location: Wasser</li>
+          </ul>
+        </div>
+      </div>
+      <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
+        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d4a)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="d4a" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#C15DE6"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
+      </svg>
+      <div class="station" style="flex:1;">
+        <div class="station-kopf">
+          <span class="ring klein ok"><b>2</b></span>
+          <span class="label">Dreißig Sekunden später</span>
+        </div>
+        <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+          <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Ablaufplan · Teams-Ordner · Checkliste</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <aside class="notes">
+      Emre schreibt den Zettel morgens von Hand, fotografiert ihn, AirDrop
+      auf den Laptop. „Mach daraus einen Ablaufplan als Tabelle." Dann:
+      „Baue daraus die Ordnerstruktur für den Event-Ordner in Teams, mit
+      Checkliste pro Ordner." Antwort auf die Teams-Frage vom Bogen.
+      Vier Minuten.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 16: DIVIDER DREI ANTWORTEN ============ -->
+<section data-chrome="aus" data-background-image="assets/images/robo/passat.jpg" data-background-size="cover" data-schleier="seite">
+  <div class="slide" style="justify-content:center;">
+    <span class="bild-quelle">Bild mit KI erstellt</span>
+    <p class="label">Eure drei großen Fragen</p>
+    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Daten. Strom.<br><span class="schimmer">Jobs.</span></h2>
+    <p class="divider-zeit">Kurz und ehrlich</p>
+    <aside class="notes">
+      Tonwechsel. Beide vorne, Pingpong wie die Blitzrunde am Strand.
+      Keine Folienwand, drei Minuten.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 17: DATENSCHUTZ ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Das gehört in kein <span class="schimmer">KI-Tool.</span></h2>
+    <div class="gruppe-mittig wachsen">
+      <div class="feld" style="padding:56px 60px;">
+        <div class="nie">
+          <div><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Namen und Adressen von Gästen</div>
+          <div><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18"/><path d="M8 13h8M8 17h5"/></svg></span>Teilnehmerlisten</div>
+          <div><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h4"/></svg></span>Verträge und Konditionen</div>
+          <div><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h3.6a2 2 0 0 1 1.6.8L11.4 8H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/></svg></span>Personalakten und Bewerbungen</div>
+          <div><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>Kontodaten und Rechnungen</div>
+          <div><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>Interne Strategiepapiere</div>
+        </div>
+        <hr style="border:none;height:1px;background:var(--hairline);margin:38px 0 34px;">
+        <p class="lead" style="font-size:38px;max-width:none;text-align:center;font-weight:500;color:var(--weiss);">
+          Der Weg drumherum: <span class="cyan" style="font-weight:700;">Platzhalter statt Klarnamen.</span><br>
+          „Frau B." statt „Frau Behrens", der Text wird genauso gut.
+        </p>
+      </div>
+    </div>
+    <aside class="notes">
+      Kein Paragrafenritt. Die Frage vom Bogen war: „Bleibt meine
+      Kommunikation im Haus?" Antwort in einem Satz: In der Gratis-Version
+      nicht, in der Business-Version ja. Details auf der nächsten Folie.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 18: DREI ANTWORTEN ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Drei <span class="schimmer">Antworten.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="spalten" style="grid-template-columns:repeat(3,1fr);align-items:start;">
+      <div>
+        <h3 style="font-size:40px;min-height:2.4em;">Wo landen meine Daten?</h3>
+        <div class="zeilen" style="font-size:30px;color:var(--w-70);">
+          <div>Gratis-Version lernt mit</div>
+          <div>Business-Version nicht</div>
+          <div>EU-Server: Copilot, Mistral</div>
+          <div>Test: Würdet ihr es einem Dienstleister mailen?</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:40px;min-height:2.4em;">Was kostet das an Strom?</h3>
+        <div class="zeilen" style="font-size:30px;color:var(--w-70);">
+          <div>Ja, das kostet</div>
+          <div>Rechenzentren wachsen</div>
+          <div>Modelle schrumpfen</div>
+          <div>Pro Frage wird es jedes Jahr billiger</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:40px;min-height:2.4em;">Nimmt sie mir den Job?</h3>
+        <div class="zeilen" style="font-size:30px;color:var(--w-70);">
+          <div>Routinetexte schrumpfen</div>
+          <div>Urteil und Kontrolle wachsen</div>
+          <div>Keine Prognose mit Zahlen</div>
+          <div>Die Sandburg baut sich nicht von allein</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <aside class="notes">
+      Eddie nimmt Daten, Emre nimmt Strom, Jobs beide. Strom: ehrlich, ohne
+      Zahlenschlacht. Wer eine Zahl will, bekommt sie nachgereicht, nicht
+      geraten. Jobs: nicht spalten, Raum mitnehmen.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 19: MERKSATZ ÜBERBLICK ============ -->
+<section data-chrome="aus" data-background-image="assets/images/robo/tuerme.jpg" data-background-size="cover" data-schleier="seite">
+  <div class="slide" style="justify-content:center;">
+    <span class="bild-quelle">Bild mit KI erstellt</span>
+    <h2 class="hero" style="font-size:100px;margin-bottom:14px;">Wer den Überblick behält,</h2>
+    <p class="hero schimmer" style="font-size:126px;margin:0;">bleibt gefragt.</p>
+    <aside class="notes">
+      Antwort auf die Jobfrage. Kurz stehen lassen, dann zur Montags-Aufgabe.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 20: MONTAG ============ -->
+<section>
+  <div class="slide" style="position:relative;">
+    <h2 class="headline">Montag, <span class="schimmer">9 Uhr.</span></h2>
+    <div class="begleiter" style="right:56px;bottom:0;height:330px;">
+      <img src="assets/images/robo/daumen.png" alt="">
+    </div>
+    <div class="gruppe-mittig wachsen" style="padding-right:300px;">
+    <div class="zeilen feld" style="padding:20px 52px;">
+      <div style="display:flex;align-items:center;gap:44px;padding:40px 6px;">
+        <span class="ring"><b>1</b></span>
+        <span style="font-size:54px;font-weight:600;">Die Aufgabe, die dreimal kam</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:44px;padding:40px 6px;">
+        <span class="ring"><b>2</b></span>
+        <span style="font-size:54px;font-weight:600;">Einmal sauber mit Kompass</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:44px;padding:40px 6px;">
+        <span class="ring"><b>3</b></span>
+        <span style="font-size:54px;font-weight:600;">Als Vorlage gespeichert</span>
+      </div>
+    </div>
+    <div class="takeaway" style="padding-top:10px;">
+      <p>Ab dann kostet die Aufgabe eine Minute.</p>
+    </div>
+    </div>
+    <aside class="notes">
+      „Was kann ich mit KI anfangen?" bekommt eine Hausaufgabe für Montag.
+      Turm 4 in der Praxis: Projekt anlegen, Prompt rein, fertig.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 21: ZUM MITNEHMEN ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Alles zum <span class="schimmer">Mitnehmen.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="reihe" style="gap:70px;align-items:center;">
+      <div class="posting" style="flex:0 0 460px;padding:28px;background:#F4F6FF;">
+        <img src="assets/images/qr-karte.png" alt="QR-Code zur Karte" style="height:auto;width:100%;display:block;">
+      </div>
+      <div class="spalte" style="flex:1;gap:30px;justify-content:center;">
+        <p class="hero schimmer" style="font-size:64px;text-transform:none;letter-spacing:-.01em;margin:0;">ueberblick.edge-digital.ai</p>
+        <div class="zeilen" style="font-size:34px;">
+          <div>Die vier Türme</div>
+          <div>Der Kompass</div>
+          <div>Die Prompts von heute, zum Kopieren</div>
+          <div>Die Montags-Aufgabe</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <aside class="notes">
+      Nichts zum Drucken, alles auf dem Handy. Eine Minute Zeit zum Scannen
+      geben. Die Seite hat alle vier Prompts mit Kopieren-Knopf.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 22: OFFENES ENDE ============ -->
+<section data-chrome="aus" data-background-image="assets/images/robo/dach-petriturm.jpg" data-background-size="cover" data-schleier="seite-rechts">
+  <div class="slide rechts" style="justify-content:center;">
+    <span class="bild-quelle">Bild mit KI erstellt</span>
+    <h2 class="hero gesetzt" style="font-size:110px;">Noch Fragen<br>über den <span class="schimmer">Dächern?</span></h2>
+    <aside class="notes">
+      Fünfzehn Minuten. Stille aushalten. Fallschirm: die Restfragen vom
+      Bogen: Excel-Bereinigung, Prompts für Eventplanung, Weiß die KI alles.
+      Harter Stopp um 11:00, danach die drei Themenstränge.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 23: ABSCHLUSS ============ -->
+<section data-chrome="aus">
+  <div class="slide" style="flex-direction:row;align-items:center;gap:90px;">
+    <div class="spalte" style="flex:1;gap:26px;justify-content:center;">
+      <img src="assets/logos/edge-logo-white.png" alt="EDGE Digital" style="height:110px;align-self:flex-start;margin-bottom:26px;">
+      <h2 class="hero gesetzt" style="font-size:100px;margin:0;">Danke fürs<br><span class="schimmer">Mitdenken.</span></h2>
+      <p class="lead" style="font-size:34px;margin-top:10px;">
+        EDGE Digital<br>
+        Fischstraße 16 · 23552 Lübeck
+      </p>
+      <p class="label" style="margin-top:34px;">Künstliche Intelligenz. Echte Wirkung.</p>
+    </div>
+    <div class="posting" style="flex:0 0 640px;">
+      <img src="assets/images/team-luebeck.jpg" alt="Das EDGE-Team über den Dächern von Lübeck" style="height:820px;object-fit:cover;object-position:center 30%;">
+    </div>
+    <aside class="notes">
+      Das Team auf dem Dach über Lübeck. Der Bogen zum Titel schließt sich.
+      Stehen lassen, während die Gruppe in die Themenstränge geht.
+    </aside>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script>
+/* Standbild-Modus für Prüfläufe und den PDF-Export */
+if (new URLSearchParams(location.search).has('nofrag')) {
+  document.body.classList.add('standbild');
+}
+
+Reveal.initialize({
+  /* ?nofrag zeigt alle Einblendungen sofort: für die visuelle Prüfung und den PDF-Export */
+  fragments: !new URLSearchParams(location.search).has('nofrag'),
+  hash: true,
+  history: true,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  backgroundTransition: 'none',
+  controls: true,
+  controlsLayout: 'bottom-right',
+  controlsTutorial: false,
+  progress: true,
+  slideNumber: false,
+  center: false,
+  width: 1920,
+  height: 1080,
+  margin: 0,
+  plugins: [RevealNotes]
+});
+
+/* Seitenzahl und Chrome: Titel- und Trennfolien (data-chrome="aus")
+   laufen ohne Logos und ohne Zähler. */
+var numEl = document.getElementById('chrome-num');
+function chromeUpdate() {
+  var idx = Reveal.getState().indexh;
+  var aktuelle = Reveal.getCurrentSlide();
+  var aus = aktuelle.dataset.chrome === 'aus';
+  document.body.classList.toggle('chrome-aus', aus);
+  document.body.classList.toggle('deckblatt', idx === 0);
+  /* Nur die nackte Zahl: 2, 3, 4. Kein Gesamtzähler, keine führende Null. */
+  numEl.textContent = String(idx + 1);
+}
+Reveal.on('ready', chromeUpdate);
+Reveal.on('slidechanged', chromeUpdate);
+
+/* Wo genau liegt die Bühne im Fenster? Reveal skaliert sie und zentriert sie,
+   sobald das Fenster nicht 16:9 ist. Die Logos sollen an der Folienkante
+   hängen, nicht am Fensterrand. */
+function chromeAusrichten() {
+  var s = document.querySelector('.reveal .slides');
+  if (!s) return;
+  var r = s.getBoundingClientRect();
+  var w = document.documentElement.style;
+  w.setProperty('--folie-links', Math.max(0, r.left) + 'px');
+  w.setProperty('--folie-rechts', Math.max(0, window.innerWidth - r.right) + 'px');
+  w.setProperty('--folie-oben', Math.max(0, r.top) + 'px');
+  w.setProperty('--folie-unten', Math.max(0, window.innerHeight - r.bottom) + 'px');
+  w.setProperty('--folie-skala', String(r.height / 1080));
+}
+/* Reveal legt für jede Folie ein eigenes Hintergrund-Element an, kopiert
+   aber nur seine eigenen data-background-Attribute dorthin. Die Angabe,
+   welcher Schleier über das Bild gehört, muss also von Hand hinüber. */
+function schleierKopieren() {
+  document.querySelectorAll('.reveal .slides section[data-schleier]').forEach(function (s) {
+    var bg = Reveal.getSlideBackground(s);
+    if (bg) bg.dataset.schleier = s.dataset.schleier;
+  });
+}
+Reveal.on('ready', schleierKopieren);
+Reveal.on('slidechanged', schleierKopieren);
+
+/* Trägt die Folie ein Vollbild, tritt die Galaxie dahinter zurück */
+function bildfolie() {
+  var s = Reveal.getCurrentSlide();
+  document.body.classList.toggle('bildfolie', !!(s && s.dataset.backgroundImage));
+}
+Reveal.on('ready', bildfolie);
+Reveal.on('slidechanged', bildfolie);
+
+Reveal.on('ready', chromeAusrichten);
+Reveal.on('resize', chromeAusrichten);
+window.addEventListener('resize', chromeAusrichten);
+
+/* Die Pizza baut sich auf, sobald ihre Folie steht. Der Aufbau läuft über
+   CSS-Transitions mit gestaffelter Verzögerung, nicht über Einzelbilder:
+   so kommt er auch dann an, wenn der Browser die Seite im Hintergrund hält
+   und Animationsbilder gar nicht erst anfordert. */
+function pizzaPruefen() {
+  var p = document.getElementById('pizza-gut');
+  if (!p) return;
+  var aufFolie = Reveal.getCurrentSlide().contains(p);
+  p.classList.toggle('fertig', aufFolie);
+}
+Reveal.on('ready', pizzaPruefen);
+Reveal.on('slidechanged', pizzaPruefen);
+
+/* Die beiden Wortzahlen zählen hoch, sobald ihr Segment erscheint. Der
+   Unterschied zwischen 4 und 61 wird dadurch körperlich spürbar: die eine
+   Zahl ist sofort fertig, die andere läuft. Über setInterval statt
+   requestAnimationFrame, weil der Browser Animationsbilder anhält, sobald
+   die Seite im Hintergrund liegt, Timer aber weiterlaufen. */
+function zahlHochzaehlen(el) {
+  if (el.dataset.gezaehlt) return;
+  el.dataset.gezaehlt = '1';
+  /* Zielwert einmal merken: wird beim Zurückblättern mitten im Lauf
+     abgebrochen, stünde sonst der halbe Zwischenstand als neues Ziel da. */
+  var ziel = parseInt(el.dataset.ziel || el.textContent, 10);
+  if (!ziel) return;
+  el.dataset.ziel = String(ziel);
+  var dauer = 340 + ziel * 9;     // grosse Zahlen laufen laenger
+  var start = null;
+  el.textContent = '0';
+  var takt = setInterval(function () {
+    start = (start || 0) + 40;
+    var anteil = Math.min(1, start / dauer);
+    /* am Ende auslaufen lassen, sonst wirkt der Stopp abgehackt */
+    var weich = 1 - Math.pow(1 - anteil, 3);
+    el.textContent = String(Math.round(ziel * weich));
+    if (anteil >= 1) clearInterval(takt);
+  }, 40);
+}
+Reveal.on('fragmentshown', function (e) {
+  var z = e.fragment.querySelector('.wortzahl .zahl');
+  if (z) zahlHochzaehlen(z);
+});
+/* Beim Zurückblättern wieder auf Anfang, damit der Effekt beim zweiten
+   Durchgang nicht fehlt. */
+Reveal.on('fragmenthidden', function (e) {
+  var z = e.fragment.querySelector('.wortzahl .zahl');
+  if (z) { delete z.dataset.gezaehlt; }
+});
+
+/* Sternschnuppen wie im EdgeVision-Wizard: alle 6,5 Sekunden eine,
+   hinter den Folien auf der Raum-Ebene. */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  var nebel = document.querySelector('.nebel');
+  setInterval(function () {
+    if (document.hidden) return;
+    var s = document.createElement('div');
+    s.className = 'schnuppe';
+    s.style.top = (8 + Math.random() * 55) + 'vh';
+    s.style.left = (5 + Math.random() * 55) + 'vw';
+    s.style.setProperty('--wk', (18 + Math.random() * 24) + 'deg');
+    nebel.after(s);
+    setTimeout(function () { s.remove(); }, 1300);
+  }, 6500);
+}
+</script>
+<!-- Die Galaxie aus dem EdgeVision-Wizard: three.js-Spiralarme, Sternschichten,
+     Milchstraßenband, langsame Rotation. 2D-Sternenfeld als Rückfall.
+     Zuletzt geladen: die Folien stehen, bevor three.js überhaupt kommt. -->
+<script src="kosmos.js"></script>
+</body>
+</html>
