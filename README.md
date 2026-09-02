@@ -60,10 +60,10 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 | 0:05 | 4 bis 5 | Der Spiegel, „Weiß die KI alles?" | Eddie |
 | 0:07 | 6 bis 8 | Vier Türme, wo anfangen | Eddie |
 | 0:14 | 9 | Der Kompass, eine Folie | Emre |
-| 0:16 | 10 bis 11 | Demo 1: Die Bestellung, Fall aus dem Raum | Eddie tippt, Emre moderiert |
-| 0:23 | 12 bis 13 | Merksatz, Demo 2: Hotelsuche mit Deep Research | Eddie |
+| 0:16 | 10 bis 11 | Demo 1: Die Absage, vorbereiteter Fall, zwei Prompts aus der Zwischenablage | Eddie tippt, Emre erzählt |
+| 0:23 | 12 bis 13 | Merksatz, dann die Hotelsuche in drei Stufen (Stufe 1 und 2 live, Deep Research fertig von heute früh) | Eddie |
 | 0:29 | 14 | Demo 3: Raum, Logo, Gesicht | Eddie |
-| 0:37 | 15 | Demo 4: Zettel zum Plan | Emre |
+| 0:37 | 15 | Demo 4: Emres Zettel wird Aufgabenliste und Teams-Ordner | Emre |
 | 0:41 | 16 bis 19 | Daten, Strom, Jobs | beide, Pingpong |
 | 0:44 | 20 bis 21 | Montags-Aufgabe, QR | Emre |
 | 0:45 | 22 | Fragen, 15 Minuten | beide |
