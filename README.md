@@ -1,7 +1,7 @@
 # Den Überblick behalten. KI-Impulse über den Dächern von Lübeck
 
 Impuls von EDGE Digital bei **Lübeck.lokal** des Convention Bureau Lübeck,
-**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 23 Folien, 45 Minuten
+**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 26 Folien, 45 Minuten
 plus 15 Minuten Fragen. Referenten: Emre Erdogan und Edgar Paul-Ghazaryan (Eddie).
 
 ## Live
@@ -11,7 +11,7 @@ GitHub Pages aus `main`, Repo `EdgarPaulEDGE/cbl-ueberblick`, öffentlich.
 Jeder Push auf `main` geht automatisch live, das dauert etwa eine Minute.
 
 Die Seite zum Mitnehmen liegt unter `/karte.html` und ist das, worauf der
-QR-Code auf Folie 21 zeigt: die vier Türme, der Kompass, die vier Prompts
+QR-Code auf Folie 24 zeigt: die vier Türme, der Kompass, die vier Prompts
 des Vormittags mit Kopieren-Knopf, die Montags-Aufgabe. Nichts wird gedruckt.
 
 ## Stamm
@@ -47,7 +47,7 @@ Was gegenüber K64 anders ist, und warum:
 | **Esc** | Zurück aus der Übersicht |
 
 `?nofrag` an die Adresse hängen zeigt alle Einblendungen sofort. Nur drei
-Folien bauen sich klickweise auf: die Handzeichen (3) und die vier Türme (7).
+Folien bauen sich klickweise auf: die Handzeichen (4) und die vier Türme (8).
 
 Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 (Chrome im Kiosk-Modus, Ende mit `cmd+Q`).
@@ -56,21 +56,27 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 
 | Zeit | Folien | Block | Wer |
 |---|---|---|---|
-| 0:00 | 1 bis 3 | Titel, Team, Handzeichen | Emre |
-| 0:05 | 4 bis 5 | Der Spiegel, „Weiß die KI alles?" | Eddie |
-| 0:07 | 6 bis 8 | Vier Türme, wo anfangen | Eddie |
-| 0:14 | 9 | Der Kompass, eine Folie | Emre |
-| 0:16 | 10 bis 11 | Demo 1: Die Absage, vorbereiteter Fall, zwei Prompts aus der Zwischenablage | Eddie tippt, Emre erzählt |
-| 0:23 | 12 bis 13 | Merksatz, dann die Hotelsuche in drei Stufen (Stufe 1 und 2 live, Deep Research fertig von heute früh) | Eddie |
-| 0:29 | 14 | Demo 3: Raum, Logo, Gesicht | Eddie |
-| 0:37 | 15 | Demo 4: Emres Zettel wird Aufgabenliste und Teams-Ordner | Emre |
-| 0:41 | 16 bis 19 | Daten, Strom, Jobs | beide, Pingpong |
-| 0:44 | 20 bis 21 | Montags-Aufgabe, QR | Emre |
-| 0:45 | 22 | Fragen, 15 Minuten | beide |
-| 1:00 | 23 | Ende, Übergang in die Themenstränge | |
+| 0:00 | 1 bis 2 | Titel, der Roboter stellt sich vor (Video, Klick) | Emre |
+| 0:01 | 3 bis 4 | Team, Handzeichen | Emre |
+| 0:05 | 5 bis 6 | Der Spiegel, „Weiß die KI alles?" | Eddie |
+| 0:07 | 7 bis 9 | Vier Türme, wo anfangen | Eddie |
+| 0:13 | 10 | Vier Fragen, bevor ihr tippt (Kompass) | Emre |
+| 0:15 | 11 bis 12 | Jetzt live, Demo 0: Reden statt tippen (Handy, Sprachmodus) | Eddie |
+| 0:17 | 13 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage | Eddie tippt, Emre erzählt |
+| 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | Eddie |
+| 0:27 | 16 | Drei Bilder: Raum, Logo (nur zeigen), Gesicht | Eddie |
+| 0:33 | 17 | Euer eigener Ordner: NotebookLM, eine Frage live, Podcast vorproduziert | Eddie |
+| 0:37 | 18 bis 20 | Drei Fragen, die immer kommen: Daten, Strom, Jobs | beide, Pingpong |
+| 0:40 | 21 | Merksatz „Wer den Überblick behält" | |
+| 0:41 | 22 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
+| 0:43 | 23 bis 24 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
+| 0:45 | 25 | Fragen, 15 Minuten | beide |
+| 1:00 | 26 | Ende, Übergang in die Themenstränge | |
 
-Streichliste, wenn es eng wird: erst Demo 4 nur erzählen (spart 4 Minuten),
-dann Folie 18 überspringen und die drei Antworten mündlich geben.
+Streichliste, wenn es eng wird: erst den Werkzeugkasten nur nennen, dann
+die Hotelsuche ganz erzählen (spart 3 Minuten), dann Demo 0 weglassen.
+Die Zettel-Demo („Vom Zettel zum Plan") liegt in `reserve-folien.html`,
+falls eine Demo ausfällt und Zeit übrig ist.
 
 ## Demos vorbereiten (am Abend davor, jede einmal komplett)
 
@@ -79,7 +85,9 @@ dann Folie 18 überspringen und die drei Antworten mündlich geben.
 | Bestellung | ChatGPT oder Claude eingeloggt, eine eigene alte Mail als Tonvorlage | Screenshots beider Ergebnisse |
 | Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
 | Bild | Raumfoto um 8:30, CLB-Logo als PNG, Eddies Porträt | alle drei Bilder vorab erzeugt |
-| Zettel | von Hand geschriebene Seite, AirDrop vom Handy | Ergebnistabelle als Screenshot |
+| Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, dänische Anfrage als Text auf dem Handy | Bildschirmaufnahme vom Vorabend |
+| NotebookLM | Notebook mit Ausschreibung, drei Hotelangeboten, Hausordnung; Audio-Übersicht vorab erzeugt | Screenshot der Antwort mit Fundstelle, Audio als mp3 |
+| Roboter-Clips | liegen im Deck (`assets/video/`), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 
 Laptop per HDMI, eigener Hotspot als Netz-Fallback, Browser-Zoom 125 Prozent,
 damit die letzte Reihe mitliest.

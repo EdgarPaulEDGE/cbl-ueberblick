@@ -105,6 +105,20 @@ zusatz = """
 .antwort { padding: 40px 6px; }
 .antwort .label { display: block; margin-bottom: 14px; }
 .antwort p { font-size: 44px; font-weight: 600; line-height: 1.3; margin: 0; }
+/* ---------- Videofenster: der Roboter spricht ----------
+   Start nur per Klick oder Leertaste. Der Knopf verschwindet beim Abspielen. */
+.video-fenster {
+  position: relative; width: 1500px; border-radius: 28px; overflow: hidden;
+  border: 1px solid var(--hairline-stark); background: #06080f;
+}
+.video-fenster video { width: 100%; display: block; }
+.video-start {
+  position: absolute; left: 50%; top: 50%; width: 150px; height: 150px; margin: -75px 0 0 -75px;
+  border-radius: 50%; border: 1px solid var(--hairline-stark); background: rgba(8, 11, 22, .72);
+  color: var(--weiss); cursor: pointer; display: grid; place-items: center; transition: opacity .25s;
+}
+.video-start svg { width: 64px; height: 64px; margin-left: 8px; }
+.video-fenster.laeuft .video-start { opacity: 0; pointer-events: none; }
 </style>"""
 html = html.replace("</style>", zusatz, 1)
 
@@ -123,6 +137,8 @@ html = html.replace("""Reveal.on('ready', function () {
 }
 Reveal.on('ready', schleierKopieren);
 Reveal.on('slidechanged', schleierKopieren);""")
+
+html = html.replace("<script src=\"kosmos.js\"></script>", "<script>" + "\n/* Videos: Klick auf das Fenster oder Leertaste auf der Folie startet, ein\n   zweiter Klick hält an. Beim Verlassen der Folie wird zurückgespult. */\ndocument.querySelectorAll('.video-fenster').forEach(function (f) {\n  var v = f.querySelector('video');\n  function umschalten() { if (v.paused) { v.play(); } else { v.pause(); } }\n  f.addEventListener('click', umschalten);\n  v.addEventListener('play', function () { f.classList.add('laeuft'); });\n  v.addEventListener('pause', function () { f.classList.remove('laeuft'); });\n  v.addEventListener('ended', function () { f.classList.remove('laeuft'); v.currentTime = 0; });\n});\ndocument.addEventListener('keydown', function (e) {\n  if (e.code !== 'Space') return;\n  var v = Reveal.getCurrentSlide().querySelector('.video-fenster video');\n  if (!v) return;\n  e.preventDefault(); e.stopPropagation();\n  if (v.paused) v.play(); else v.pause();\n}, true);\nReveal.on('slidechanged', function (e) {\n  if (e.previousSlide) e.previousSlide.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });\n});\n" + "</script>\n<script src=\"kosmos.js\"></script>")
 
 anfang = html.index('<div class="slides">') + len('<div class="slides">')
 ende = html.index('</div>\n</div>\n\n<script src="vendor/reveal/reveal.js">')

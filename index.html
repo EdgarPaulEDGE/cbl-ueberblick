@@ -679,6 +679,20 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 .antwort { padding: 40px 6px; }
 .antwort .label { display: block; margin-bottom: 14px; }
 .antwort p { font-size: 44px; font-weight: 600; line-height: 1.3; margin: 0; }
+/* ---------- Videofenster: der Roboter spricht ----------
+   Start nur per Klick oder Leertaste. Der Knopf verschwindet beim Abspielen. */
+.video-fenster {
+  position: relative; width: 1500px; border-radius: 28px; overflow: hidden;
+  border: 1px solid var(--hairline-stark); background: #06080f;
+}
+.video-fenster video { width: 100%; display: block; }
+.video-start {
+  position: absolute; left: 50%; top: 50%; width: 150px; height: 150px; margin: -75px 0 0 -75px;
+  border-radius: 50%; border: 1px solid var(--hairline-stark); background: rgba(8, 11, 22, .72);
+  color: var(--weiss); cursor: pointer; display: grid; place-items: center; transition: opacity .25s;
+}
+.video-start svg { width: 64px; height: 64px; margin-left: 8px; }
+.video-fenster.laeuft .video-start { opacity: 0; pointer-events: none; }
 </style>
 </head>
 <body>
@@ -710,6 +724,27 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     </div>
     <aside class="notes">
       Emre begrüßt. Ein Satz zur Terrasse hinter uns, dann die Vorstellung.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ ROBOTER: MOIN ============ -->
+<section data-chrome="aus">
+  <div class="slide mittig" style="position:relative;">
+    <!-- Der Roboter spricht selbst, lippensynchron, offline im Deck. Start per
+         Klick oder Leertaste, nie von allein: Ton darf nicht überraschen. -->
+    <div class="video-fenster">
+      <video id="video-moin" src="assets/video/robo-moin.mp4" poster="assets/video/robo-moin-poster.jpg" preload="auto" playsinline></video>
+      <button class="video-start" type="button" aria-label="Abspielen">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <p class="label" style="margin-top:34px;">Video und Stimme mit KI erstellt</p>
+    <aside class="notes">
+      Emre: „Einer fehlt noch." Klick, der Roboter stellt sich vor. Sein letzter
+      Satz ist die These des Vormittags: Er kann nicht wissen, was ihr ihm
+      nicht sagt. Danach direkt weiter, nicht kommentieren. Zwölf Sekunden.
+      Ton vorher um 8:30 im Saal getestet.
     </aside>
   </div>
 </section>
@@ -970,11 +1005,35 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     </div>
     <p class="label">Jetzt live</p>
     <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Jetzt zeigen<br>wir es <span class="schimmer">euch.</span></h2>
-    <p class="divider-zeit">Absage-Mail · Hotelsuche · Gala-Bild · Handschrift</p>
+    <p class="divider-zeit">Sprechen · Absage-Mail · Hotelsuche · Gala-Bild · Euer Ordner</p>
     <aside class="notes">
       Ab hier tippt Eddie, Emre erzählt und hält die Zeit. Alles ist
       vorbereitet, niemand im Raum muss etwas liefern. Backups liegen als
       Screenshots im Ordner, falls das Netz zickt.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ DEMO 0: REDEN STATT TIPPEN ============ -->
+<section>
+  <div class="slide" style="position:relative;">
+    <h2 class="headline">Reden statt <span class="schimmer">tippen.</span></h2>
+    <div class="begleiter" style="right:70px;bottom:0;height:400px;">
+      <img src="assets/images/robo/zeigt-links.png" alt="">
+    </div>
+    <div class="gruppe-mittig wachsen" style="padding-right:420px;">
+      <p class="label" style="margin-bottom:18px;">Eddie, ins Handy</p>
+      <div class="prompt" style="font-size:40px;line-height:1.4;padding:34px 40px;">
+        <span>„Ich habe eine Anfrage aus Dänemark bekommen. Übersetz sie mir, und dann antworte auf Dänisch, dass wir den Termin bestätigen."</span>
+      </div>
+      <p class="lead" style="font-size:32px;margin-top:34px;">ChatGPT im Sprachmodus. Kein Tippen, keine Tastatur, die Antwort kommt laut.</p>
+    </div>
+    <aside class="notes">
+      Die leichteste Demo des Tages, deshalb die erste. Handy per Kabel an
+      der Anlage, Sprachmodus offen, Eddie spricht den Satz, die KI antwortet
+      auf Deutsch mit der Übersetzung und dann auf Dänisch. Trifft die
+      Bogen-Antwort „überwiegend Übersetzungen". Ohne Saalton: Bildschirm-
+      aufnahme vom Vorabend abspielen, nicht improvisieren. Zwei Minuten.
     </aside>
   </div>
 </section>
@@ -1082,7 +1141,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       einschalten, dieselbe Frage, eine halbe Minute, jetzt mit Links.
       Stufe 3 nicht live, dafür fertig: den Bericht von heute Morgen öffnen,
       Tabelle zeigen, eine Quelle anklicken. „Prüfen ist ein Klick, aber es
-      bleibt euer Klick." Fünf Minuten.
+      bleibt euer Klick." Drei Minuten: Stufe 1 live, Stufe 2 nur zeigen.
     </aside>
   </div>
 </section>
@@ -1136,73 +1195,72 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       Regel („mach ein Bewerbungsfoto daraus", ein fremder Eddie kommt raus),
       dann mit der Regel, Eddie bleibt Eddie. Antwort auf „entstellt".
       Kennzeichnung seit 2. August als Nebensatz, kein Vortrag.
-      Alle drei Ergebnisse liegen als Backup im Ordner. Acht Minuten.
+      Alle drei Ergebnisse liegen als Backup im Ordner. Sechs Minuten: das Logo nur erzählen und das fertige Bild zeigen.
     </aside>
   </div>
 </section>
 
-<!-- ============ 15: DEMO 4 HANDSCHRIFT ============ -->
+
+<!-- ============ DEMO: NOTEBOOKLM ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline">Vom Zettel zum <span class="schimmer">Plan.</span></h2>
+    <h2 class="headline gesetzt">Ein Ordner, der nur<br>eure Unterlagen <span class="schimmer">kennt.</span></h2>
     <div class="gruppe-mittig wachsen">
     <div class="band">
-      <div class="station" style="flex:0 0 440px;">
+      <div class="station" style="flex:0 0 430px;">
         <div class="station-kopf">
           <span class="ring klein warn"><b>1</b></span>
-          <span class="label">Emres Notizen von heute früh</span>
+          <span class="label">Was drinliegt</span>
         </div>
-        <div class="zettel wachsen" style="display:flex;flex-direction:column;justify-content:center;">
-          <ul>
-            <li>Sommerfest 11.9.</li>
-            <li>60 Leute + Familien</li>
-            <li>Grillen, Volleyball</li>
-            <li>ab 15 Uhr</li>
-            <li>Anmeldung bis 29.8.</li>
-            <li>Budget??</li>
-            <li>Location: am Wasser?</li>
-          </ul>
+        <div class="zeilen mit-ikon feld wachsen" style="justify-content:center;font-size:29px;">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>Eure Ausschreibung</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>Drei Hotelangebote</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>Die Hausordnung des Hotels</div>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
-        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d4a)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <defs><linearGradient id="d4a" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
+        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#dna)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="dna" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
           <stop stop-color="#C15DE6"/><stop offset="1" stop-color="#009FF4"/></linearGradient></defs>
       </svg>
       <div class="station" style="flex:1;">
         <div class="station-kopf">
           <span class="ring klein"><b>2</b></span>
-          <span class="label">Was Eddie tippt</span>
+          <span class="label">Was Eddie fragt</span>
         </div>
-        <div class="feld wachsen" style="gap:18px;justify-content:center;">
-          <div class="prompt klein"><span>Das sind meine Notizen aus dem Kundengespräch. Mach daraus eine Aufgabenliste mit Fristen und Verantwortlichen.</span></div>
-          <div class="prompt klein"><span>Welche Ordner brauche ich dafür in Teams? Gib mir die Namen mit je einer Checkliste.</span></div>
+        <div class="feld wachsen" style="justify-content:center;gap:18px;">
+          <div class="prompt klein"><span>Welches der drei Hotels hat Tageslicht im Tagungsraum, und was kostet dort die Tagungspauschale?</span></div>
+          <p style="font-size:27px;line-height:1.45;margin:0;color:var(--w-70);">Die Antwort zeigt, auf welcher Seite in welchem Angebot das steht.</p>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
-        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#d4b)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <defs><linearGradient id="d4b" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
+        <path d="M5 30h66M58 16l16 14-16 14" stroke="url(#dnb)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="dnb" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
           <stop stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
       </svg>
-      <div class="station" style="flex:0 0 380px;">
+      <div class="station" style="flex:0 0 400px;">
         <div class="station-kopf">
           <span class="ring klein ok"><b>3</b></span>
-          <span class="label">Was rauskommt</span>
+          <span class="label">Und dann</span>
         </div>
         <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
-          <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
-          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Live, in einer<br>halben Minute</p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:150px;height:150px;"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Eure Unterlagen<br>als Podcast</p>
         </div>
       </div>
     </div>
+    <div class="takeaway" style="padding-top:26px;">
+      <p>Was nicht im Ordner liegt, weiß er nicht. Genau das ist der Sinn.</p>
+    </div>
     </div>
     <aside class="notes">
-      Emre hat den Zettel morgens wirklich von Hand geschrieben und
-      fotografiert, das Foto liegt schon auf dem Laptop. Eddie zieht es in
-      den Chat, fügt den ersten Prompt ein: eine Tabelle, und „Budget??"
-      steht darin als offene Frage, nicht als erfundene Zahl. Dann der zweite
-      Prompt: die Ordnerstruktur für Teams, Antwort auf die Frage vom Bogen.
-      Vier Minuten.
+      Google NotebookLM, Turm 4 mit Gesicht. Das Notebook ist vorbereitet
+      (Ausschreibung, drei Angebote, Hausordnung). Live nur die eine Frage,
+      Antwort in fünf Sekunden, Fundstelle anklicken: Antwort auf „Quellen
+      prüfen". Dann die vorher erzeugte Audio-Übersicht abspielen, zwei
+      Stimmen reden über die eigenen Unterlagen. Nicht live erzeugen.
+      Datenschutz in einem Satz: mit dem Firmenkonto wird nichts trainiert,
+      mit dem privaten Gratis-Konto nicht. Vier Minuten.
     </aside>
   </div>
 </section>
@@ -1286,6 +1344,29 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <p class="hero schimmer" style="font-size:126px;margin:0;">bleibt gefragt.</p>
     <aside class="notes">
       Antwort auf die Jobfrage, kurz stehen lassen.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ WERKZEUGKASTEN ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline gesetzt">Was ihr schon habt,<br>kann mehr, als ihr <span class="schimmer">benutzt.</span></h2>
+    <div class="gruppe-mittig wachsen">
+    <div class="mitnehmen feld" style="padding:20px 52px;gap:0 70px;">
+      <div><span class="satz">Copilot in Outlook und Teams<small>Fasst das Meeting zusammen, während ihr noch drin sitzt.</small></span></div>
+      <div><span class="satz">Canva mit KI<small>Macht aus drei Zeilen die Einladung mit eurem Logo.</small></span></div>
+      <div><span class="satz">ChatGPT zum Sprechen<small>Übersetzt und antwortet laut, ohne Tippen.</small></span></div>
+      <div><span class="satz">Perplexity<small>Sucht wie Google, antwortet wie ein Kollege, mit Links.</small></span></div>
+      <div style="border-bottom:none;"><span class="satz">NotebookLM<small>Beantwortet Fragen nur aus euren eigenen Unterlagen.</small></span></div>
+      <div style="border-bottom:none;"><span class="satz">Scribe oder Whisper<small>Macht aus der Aufnahme das Protokoll.</small></span></div>
+    </div>
+    </div>
+    <aside class="notes">
+      Keine Live-Demo, zwei Minuten. Fünf von elf haben Copilot in der Firma:
+      „Das Ding in eurem Outlook kann Meetings zusammenfassen, habt ihr das
+      schon mal angeklickt?" Zwei der sechs herausgreifen, der Rest steht da
+      und liegt auf der Karte.
     </aside>
   </div>
 </section>
@@ -1533,6 +1614,28 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 <!-- Die Galaxie aus dem EdgeVision-Wizard: three.js-Spiralarme, Sternschichten,
      Milchstraßenband, langsame Rotation. 2D-Sternenfeld als Rückfall.
      Zuletzt geladen: die Folien stehen, bevor three.js überhaupt kommt. -->
+<script>
+/* Videos: Klick auf das Fenster oder Leertaste auf der Folie startet, ein
+   zweiter Klick hält an. Beim Verlassen der Folie wird zurückgespult. */
+document.querySelectorAll('.video-fenster').forEach(function (f) {
+  var v = f.querySelector('video');
+  function umschalten() { if (v.paused) { v.play(); } else { v.pause(); } }
+  f.addEventListener('click', umschalten);
+  v.addEventListener('play', function () { f.classList.add('laeuft'); });
+  v.addEventListener('pause', function () { f.classList.remove('laeuft'); });
+  v.addEventListener('ended', function () { f.classList.remove('laeuft'); v.currentTime = 0; });
+});
+document.addEventListener('keydown', function (e) {
+  if (e.code !== 'Space') return;
+  var v = Reveal.getCurrentSlide().querySelector('.video-fenster video');
+  if (!v) return;
+  e.preventDefault(); e.stopPropagation();
+  if (v.paused) v.play(); else v.pause();
+}, true);
+Reveal.on('slidechanged', function (e) {
+  if (e.previousSlide) e.previousSlide.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+});
+</script>
 <script src="kosmos.js"></script>
 </body>
 </html>
