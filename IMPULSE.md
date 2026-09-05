@@ -19,7 +19,7 @@ schreiben, Hotels vergleichen und Bilder bauen. Aber ich kann nicht wissen,
 was ihr mir nicht sagt." Der letzte Satz ist die These des ganzen Vormittags,
 aus dem Mund des Roboters. Zweiter Clip am Ende („Und am Montag?"):
 „Sucht euch die Aufgabe, die jede Woche kommt. Den Rest mache ich."
-Stimmprobe liegt vor, Videotest läuft (Higgsfield, Bild plus Audio).
+Stimmprobe und Videotest liegen vor: MiniMax H3 macht aus dem Freisteller plus ElevenLabs-Ton ein 12-Sekunden-Video in 2K, Tonspur drin, Rechenzeit rund acht Minuten. Grok scheiterte.
 
 **Stufe 2, mittleres Risiko: Mit der KI reden statt tippen (2 Minuten).**
 Für Anfänger der leichteste Einstieg überhaupt: Eddie hält das Handy hoch,
