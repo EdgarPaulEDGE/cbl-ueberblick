@@ -1,7 +1,7 @@
 # Den Überblick behalten. KI-Impulse über den Dächern von Lübeck
 
 Impuls von EDGE Digital bei **Lübeck.lokal** des Convention Bureau Lübeck,
-**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 26 Folien, 45 Minuten
+**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 27 Folien, 45 Minuten
 plus 15 Minuten Fragen. Referenten: Emre Erdogan und Edgar Paul-Ghazaryan (Eddie).
 
 ## Live
@@ -11,7 +11,7 @@ GitHub Pages aus `main`, Repo `EdgarPaulEDGE/cbl-ueberblick`, öffentlich.
 Jeder Push auf `main` geht automatisch live, das dauert etwa eine Minute.
 
 Die Seite zum Mitnehmen liegt unter `/karte.html` und ist das, worauf der
-QR-Code auf Folie 24 zeigt: die vier Türme, der Kompass, die vier Prompts
+QR-Code auf Folie 25 zeigt: die vier Türme, der Kompass, die vier Prompts
 des Vormittags mit Kopieren-Knopf, die Montags-Aufgabe. Nichts wird gedruckt.
 
 ## Stamm
@@ -65,13 +65,14 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 | 0:17 | 13 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage | Eddie tippt, Emre erzählt |
 | 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | Eddie |
 | 0:27 | 16 | Drei Bilder: Raum, Logo (nur zeigen), Gesicht | Eddie |
-| 0:33 | 17 | Euer eigener Ordner: NotebookLM, eine Frage live, Podcast vorproduziert | Eddie |
-| 0:37 | 18 bis 20 | Drei Fragen, die immer kommen: Daten, Strom, Jobs | beide, Pingpong |
-| 0:40 | 21 | Merksatz „Wer den Überblick behält" | |
-| 0:41 | 22 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
-| 0:43 | 23 bis 24 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
-| 0:45 | 25 | Fragen, 15 Minuten | beide |
-| 1:00 | 26 | Ende, Übergang in die Themenstränge | |
+| 0:32 | 17 | Und jetzt bewegt es sich: der Gala-Saal als Kamerafahrt (Video, Klick, 30 Sekunden) | Eddie |
+| 0:33 | 18 | Euer eigener Ordner: NotebookLM, eine Frage live, Podcast vorproduziert | Eddie |
+| 0:37 | 19 bis 21 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
+| 0:40 | 22 | Merksatz „Wer den Überblick behält" | |
+| 0:41 | 23 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
+| 0:43 | 24 bis 25 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
+| 0:45 | 26 | Fragen, 15 Minuten | beide |
+| 1:00 | 27 | Ende, Übergang in die Themenstränge | |
 
 Streichliste, wenn es eng wird: erst den Werkzeugkasten nur nennen, dann
 die Hotelsuche ganz erzählen (spart 3 Minuten), dann Demo 0 weglassen.
@@ -87,7 +88,8 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Bild | Raumfoto um 8:30, CLB-Logo als PNG, Eddies Porträt | alle drei Bilder vorab erzeugt |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, dänische Anfrage als Text auf dem Handy | Bildschirmaufnahme vom Vorabend |
 | NotebookLM | Notebook mit Ausschreibung, drei Hotelangeboten, Hausordnung; Audio-Übersicht vorab erzeugt | Screenshot der Antwort mit Fundstelle, Audio als mp3 |
-| Roboter-Clips | liegen im Deck (`assets/video/`), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
+| Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
+| Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist zugleich das fertige Bild 1, falls die Live-Bilddemo streikt |
 
 Laptop per HDMI, eigener Hotspot als Netz-Fallback, Browser-Zoom 125 Prozent,
 damit die letzte Reihe mitliest.
@@ -112,6 +114,10 @@ Alle Bilder mit KI erzeugt und auf der Folie gekennzeichnet:
   Roboter links steht. Spiegeln ging nicht, die Kappe trägt Schrift.
 - `assets/images/robo/tuerme.jpg`: der Begleiter mit Fernglas über den sieben
   Türmen. Trennfolie Landkarte und Merksatz.
+- `assets/images/gala-atlantic.jpg` und `assets/video/gala.mp4`: der Tagungsraum
+  des Atlantic Hotels (Foto von atlantic-hotels.de) als Gala-Dinner, GPT Image 2
+  mit dem Raumfoto als Referenz, danach Kling 3.0 als fünf Sekunden Kamerafahrt.
+  Wer am Vorabend Zeit hat, ersetzt das Website-Foto durch Eddies eigenes.
 - Alle übrigen Motive aus dem K64-Deck (Holstentor, Passat, Freisteller).
 
 Beide neuen Bilder: GPT Image 2 mit dem Roboter-Freisteller und dem
