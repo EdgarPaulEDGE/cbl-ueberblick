@@ -105,6 +105,16 @@ zusatz = """
 .antwort { padding: 40px 6px; }
 .antwort .label { display: block; margin-bottom: 14px; }
 .antwort p { font-size: 44px; font-weight: 600; line-height: 1.3; margin: 0; }
+/* ---------- Bildreihe: ein Foto, drei Schritte ----------
+   Jede Station zeigt ihr Ergebnis als Bild, Schritt 1 trägt das Ausgangsfoto
+   als kleines Bild in der Ecke, damit der Vorher-Nachher-Sprung sichtbar ist. */
+.demo-bild { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--hairline-stark); margin-bottom: 18px; }
+.demo-bild img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+.demo-bild .vorher {
+  position: absolute; left: 14px; bottom: 14px; width: 31%; aspect-ratio: 16 / 9;
+  border: 2px solid rgba(244, 246, 255, .85); border-radius: 10px;
+}
+.demo-bild .vorher + .vorher-label, .demo-bild::after { content: none; }
 /* ---------- Videofenster: der Roboter spricht ----------
    Start nur per Klick oder Leertaste. Der Knopf verschwindet beim Abspielen. */
 .video-fenster {

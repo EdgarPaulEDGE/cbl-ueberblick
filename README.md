@@ -58,15 +58,15 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 |---|---|---|---|
 | 0:00 | 1 bis 2 | Titel, der Roboter stellt sich vor (Video, Klick) | Emre |
 | 0:01 | 3 bis 4 | Team, Handzeichen | Emre |
-| 0:05 | 5 bis 6 | Der Spiegel, „Weiß die KI alles?" | Eddie |
-| 0:07 | 7 bis 9 | Vier Türme, wo anfangen | Eddie |
+| 0:05 | 5 bis 6 | Der Spiegel, „Weiß die KI alles?" | beide |
+| 0:07 | 7 bis 9 | Vier Türme, wo anfangen | beide |
 | 0:13 | 10 | Vier Fragen, bevor ihr tippt (Kompass) | Emre |
-| 0:15 | 11 bis 12 | Jetzt live, Demo 0: Reden statt tippen (Handy, Sprachmodus) | Eddie |
-| 0:17 | 13 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage | Eddie tippt, Emre erzählt |
-| 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | Eddie |
-| 0:27 | 16 | Drei Bilder: Raum, Logo (nur zeigen), Gesicht | Eddie |
-| 0:32 | 17 | Und jetzt bewegt es sich: der Gala-Saal als Kamerafahrt (Video, Klick, 30 Sekunden) | Eddie |
-| 0:33 | 18 | Euer eigener Ordner: NotebookLM, eine Frage live, Podcast vorproduziert | Eddie |
+| 0:15 | 11 bis 12 | Jetzt live, Demo 0: Reden statt tippen (Handy, Sprachmodus) | beide |
+| 0:17 | 13 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage | beide, einer tippt, einer erzählt |
+| 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | beide |
+| 0:27 | 16 | Ein Foto, drei Schritte: Roof Lounge als Gala, Logo an der Wand, Gäste (alle Bilder fertig, nichts live) | beide |
+| 0:32 | 17 | Und jetzt bewegt es sich: Schritt 3 als Kamerafahrt (Video, Klick, 30 Sekunden) | beide |
+| 0:33 | 18 | Euer eigener Ordner: Gemini Notebook (früher NotebookLM), eine Frage live, Podcast vorproduziert (Desktop-Ordner `NotebookLM-Demo`) | beide |
 | 0:37 | 19 bis 21 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
 | 0:40 | 22 | Merksatz „Wer den Überblick behält" | |
 | 0:41 | 23 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
@@ -85,11 +85,11 @@ falls eine Demo ausfällt und Zeit übrig ist.
 |---|---|---|
 | Bestellung | ChatGPT oder Claude eingeloggt, eine eigene alte Mail als Tonvorlage | Screenshots beider Ergebnisse |
 | Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
-| Bild | Raumfoto um 8:30, CLB-Logo als PNG, Eddies Porträt | alle drei Bilder vorab erzeugt |
+| Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
-| NotebookLM | Notebook mit Ausschreibung, drei Hotelangeboten, Hausordnung; Audio-Übersicht vorab erzeugt | Screenshot der Antwort mit Fundstelle, Audio als mp3 |
+| NotebookLM | Desktop-Ordner `NotebookLM-Demo`: fünf PDFs hochladen, Frage einmal testen (Ablauf.md) | Podcast `Podcast-Der-Ordner-aus-Kopenhagen.mp3` (5:51, Roboter und Moderatorin, ElevenLabs) |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
-| Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist zugleich das fertige Bild 1, falls die Live-Bilddemo streikt |
+| Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist Schritt 3 der Bildreihe |
 
 Laptop per HDMI, eigener Hotspot als Netz-Fallback, Browser-Zoom 125 Prozent,
 damit die letzte Reihe mitliest.
@@ -114,10 +114,11 @@ Alle Bilder mit KI erzeugt und auf der Folie gekennzeichnet:
   Roboter links steht. Spiegeln ging nicht, die Kappe trägt Schrift.
 - `assets/images/robo/tuerme.jpg`: der Begleiter mit Fernglas über den sieben
   Türmen. Trennfolie Landkarte und Merksatz.
-- `assets/images/gala-atlantic.jpg` und `assets/video/gala.mp4`: der Tagungsraum
-  des Atlantic Hotels (Foto von atlantic-hotels.de) als Gala-Dinner, GPT Image 2
-  mit dem Raumfoto als Referenz, danach Kling 3.0 als fünf Sekunden Kamerafahrt.
-  Wer am Vorabend Zeit hat, ersetzt das Website-Foto durch Eddies eigenes.
+- `assets/images/demo/`: die Bildreihe von Folie 16. `roof-vorher.jpg` ist das
+  Foto der Roof Lounge von convention-luebeck.com (der Raum des 9. September),
+  `schritt-1.jpg` bis `schritt-3.jpg` sind GPT Image 2 mit dem jeweils vorigen
+  Bild als Referenz: Gala-Dinner, dann das CB-Logo als Datei angehängt, dann
+  Gäste. `assets/video/gala.mp4` ist Kling 3.0 aus Schritt 3, fünf Sekunden.
 - Alle übrigen Motive aus dem K64-Deck (Holstentor, Passat, Freisteller).
 
 Beide neuen Bilder: GPT Image 2 mit dem Roboter-Freisteller und dem
