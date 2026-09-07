@@ -86,7 +86,7 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Bestellung | ChatGPT oder Claude eingeloggt, eine eigene alte Mail als Tonvorlage | Screenshots beider Ergebnisse |
 | Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
 | Bild | Raumfoto um 8:30, CLB-Logo als PNG, Eddies Porträt | alle drei Bilder vorab erzeugt |
-| Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, dänische Anfrage als Text auf dem Handy | Bildschirmaufnahme vom Vorabend |
+| Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
 | NotebookLM | Notebook mit Ausschreibung, drei Hotelangeboten, Hausordnung; Audio-Übersicht vorab erzeugt | Screenshot der Antwort mit Fundstelle, Audio als mp3 |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 | Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist zugleich das fertige Bild 1, falls die Live-Bilddemo streikt |

@@ -1022,16 +1022,26 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       <img src="assets/images/robo/zeigt-links.png" alt="">
     </div>
     <div class="gruppe-mittig wachsen" style="padding-right:420px;">
-      <p class="label" style="margin-bottom:18px;">Eddie, ins Handy</p>
-      <div class="prompt" style="font-size:40px;line-height:1.4;padding:34px 40px;">
-        <span>„Ich habe eine Anfrage aus Dänemark bekommen. Übersetz sie mir, und dann antworte auf Dänisch, dass wir den Termin bestätigen."</span>
+      <p class="label" style="margin-bottom:18px;">Ins Handy gesagt, nicht getippt</p>
+      <!-- Der gesprochene Satz folgt dem Kompass: Rolle, Aufgabe, Kontext, Förmchen.
+           Alles, was die KI wissen muss, steht im Satz selbst, keine Mail nötig. -->
+      <div class="prompt" style="font-size:33px;line-height:1.45;padding:30px 40px;width:100%;">
+      <div style="flex:1;display:grid;grid-template-columns:170px 1fr;row-gap:16px;column-gap:20px;">
+        <span class="baustein-kopf b-rolle" style="font-size:20px;margin:8px 0 0;">Rolle</span><span>„Du bist Eventmanagerin in Lübeck.</span>
+        <span class="baustein-kopf b-ziel" style="font-size:20px;margin:8px 0 0;">Aufgabe</span><span>Bestätige einer Planerin aus Kopenhagen auf Dänisch unseren Termin am 14. November.</span>
+        <span class="baustein-kopf b-kontext" style="font-size:20px;margin:8px 0 0;">Kontext</span><span>25 Personen, Tagungsraum mit Tageslicht, das Angebot kommt morgen.</span>
+        <span class="baustein-kopf b-aufgabe" style="font-size:20px;margin:8px 0 0;">Förmchen</span><span>Drei Sätze, freundlich, per Sie. Lies mir danach die deutsche Fassung vor."</span>
       </div>
-      <p class="lead" style="font-size:32px;margin-top:34px;">ChatGPT im Sprachmodus. Kein Tippen, keine Tastatur, die Antwort kommt laut.</p>
+      </div>
+      <p class="lead" style="font-size:32px;margin-top:34px;">ChatGPT im Sprachmodus. Die Antwort kommt laut, erst auf Dänisch, dann auf Deutsch.</p>
     </div>
     <aside class="notes">
       Die leichteste Demo des Tages, deshalb die erste. Handy per Kabel an
-      der Anlage, Sprachmodus offen, Eddie spricht den Satz, die KI antwortet
-      auf Deutsch mit der Übersetzung und dann auf Dänisch. Trifft die
+      der Anlage, Sprachmodus offen, der Satz wird frei gesprochen, er steht
+      zur Sicherheit als Text auf dem Handy. Nichts muss hochgeladen werden,
+      alles, was die KI braucht, steckt im Satz. Die KI antwortet auf Dänisch
+      und liest dann die deutsche Fassung vor. Hinweis für die Runde: die vier
+      Farben sind der Kompass von eben, gesprochen statt getippt. Trifft die
       Bogen-Antwort „überwiegend Übersetzungen". Ohne Saalton: Bildschirm-
       aufnahme vom Vorabend abspielen, nicht improvisieren. Zwei Minuten.
     </aside>
@@ -1128,7 +1138,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       </div>
       <div>
         <div class="station-kopf"><span class="ring klein ok"><b>3</b></span><span class="label">Deep Research</span></div>
-        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert eine Viertelstunde, liest fünfzig Seiten und schreibt einen Bericht mit Quellen. Heute früh um acht gestartet, das Ergebnis liegt bereit.</p>
+        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert eine Viertelstunde, liest fünfzig Seiten und schreibt einen Bericht mit Quellen.</p>
       </div>
     </div>
     <div class="takeaway mt-auto" style="padding-top:26px;">
@@ -1139,7 +1149,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       Stufe 1 live: Frage einfügen, drei Sekunden, ein erfundenes Hotel
       steht drin. Emre: „Kennt das jemand?" Stufe 2 live: Websuche
       einschalten, dieselbe Frage, eine halbe Minute, jetzt mit Links.
-      Stufe 3 nicht live, dafür fertig: den Bericht von heute Morgen öffnen,
+      Stufe 3 nicht live, dafür fertig: den Bericht vom Desktop öffnen,
       Tabelle zeigen, eine Quelle anklicken. „Prüfen ist ein Klick, aber es
       bleibt euer Klick." Drei Minuten: Stufe 1 live, Stufe 2 nur zeigen.
     </aside>
