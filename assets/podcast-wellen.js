@@ -13,7 +13,7 @@ import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 const W = 1920, H = 1080;
 // Z0 ist die vorderste Reihe. Sie liegt bewusst dicht vor der Kamera, damit
 // das Feld bis an den unteren Bildrand laeuft und nicht davor endet.
-const BAENDER = 64, ROWS = 36, COLS = 150, XW = 52, Z0 = 9.2, ZD = -19, YB = -4.6;
+const BAENDER = 64, ROWS = 46, COLS = 150, XW = 58, Z0 = 9.6, ZD = -19, YB = -4.6;
 const VERLAUF = 90; // gemerkte Frames für den Nachlauf der hinteren Reihen
 
 export function podcastBuehne(buehne) {
@@ -33,7 +33,7 @@ export function podcastBuehne(buehne) {
   const lines = [], rowPos = [], rowCol = [], colBuf = [], mats = [];
   for (let r = 0; r < ROWS; r++) {
     const t = r / (ROWS - 1);
-    const z = Z0 + (ZD - Z0) * Math.pow(t, 1.2);
+    const z = Z0 + (ZD - Z0) * Math.pow(t, 0.52);
     const pos = new Float32Array(COLS * 3), col = new Float32Array(COLS * 3);
     for (let c = 0; c < COLS; c++) {
       const u = c / (COLS - 1);
@@ -116,7 +116,7 @@ export function podcastBuehne(buehne) {
     const t = performance.now() / 1000;
     for (let r = 0; r < ROWS; r++) {
       const rt = r / (ROWS - 1);
-      const lag = Math.min(VERLAUF - 1, Math.round(r * 1.7));
+      const lag = Math.min(VERLAUF - 1, Math.round(r * 1.3));
       const amp = 3.0 * (1 - rt * 0.4);
       const pos = rowPos[r], col = rowCol[r], cb = colBuf[r];
       for (let c = 0; c < COLS; c++) {
