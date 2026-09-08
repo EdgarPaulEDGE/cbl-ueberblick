@@ -592,22 +592,24 @@
 </section>
 
 <!-- ============ 19: DER PODCAST ============ -->
-<section data-chrome="aus">
-  <div class="slide" style="padding:0;position:relative;">
-    <!-- Live-Bühne: Cover, Titel, 3D-Wellenfeld aus dem Ton (assets/podcast-wellen.js). Klick oder Leertaste startet. -->
-    <div class="podcast-buehne">
+<section>
+  <!-- Live-Bühne im Folienraster: Wellenfeld aus dem Ton (assets/podcast-wellen.js). Klick oder Leertaste startet. -->
+  <div class="slide podcast-buehne">
       <canvas width="1920" height="1080"></canvas>
       <div class="podcast-schleier"></div>
-      <div class="podcast-cover"><img src="assets/images/podcast-cover.jpg" alt="Der Roboter und die Moderatorin im Studio"></div>
-      <p class="podcast-kicker">PODCAST · EIN ORDNER, FÜNF UNTERLAGEN</p>
-      <p class="podcast-titel">Der Ordner<br><span>aus Kopenhagen</span></p>
-      <p class="podcast-lead">Der Roboter und die Moderatorin lesen eine Anfrage, drei Hotelangebote und eine Hausordnung. Mehr wissen sie nicht, und genau das ist der Punkt.</p>
-      <p class="podcast-kenn">MIT KI ERSTELLT · STIMMEN: ELEVENLABS · SKRIPT AUS DEN FÜNF DOKUMENTEN</p>
-      <p class="podcast-fuss">EDGE DIGITAL  ×  CONVENTION BUREAU LÜBECK  ·  LÜBECK.LOKAL, 9. SEPTEMBER 2026</p>
+      <h2 class="podcast-kopf">Eure Unterlagen als <span class="schimmer">Podcast.</span></h2>
+      <div class="podcast-inhalt">
+        <div class="podcast-cover"><img src="assets/images/podcast-cover.jpg" alt="Der Roboter und die Moderatorin im Studio"></div>
+        <div class="podcast-text">
+          <p class="podcast-label">Ein Ordner, fünf Unterlagen</p>
+          <p class="podcast-titel">Der Ordner<br><span>aus Kopenhagen</span></p>
+          <p class="podcast-lead">Der Roboter und die Moderatorin lesen eine Anfrage, drei Hotelangebote und eine Hausordnung. Mehr wissen sie nicht, und genau das ist der Punkt.</p>
+        </div>
+      </div>
+      <span class="podcast-quelle">Mit KI erstellt: Skript aus den fünf Unterlagen, Stimmen von ElevenLabs, Wellen live aus dem Ton</span>
       <div class="podcast-balken"><i></i></div><span class="podcast-zeit">0:00 / 5:51</span>
       <audio src="assets/audio/podcast.mp3" preload="auto"></audio>
       <button class="podcast-start" type="button" aria-label="Abspielen"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg></button>
-    </div>
     <aside class="notes">
       Klick, dann 60 bis 90 Sekunden laufen lassen: der Roboter und die
       Moderatorin reden über genau die fünf Dokumente von eben, nichts
