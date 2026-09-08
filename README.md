@@ -1,7 +1,7 @@
 # Den Überblick behalten. KI-Impulse über den Dächern von Lübeck
 
 Impuls von EDGE Digital bei **Lübeck.lokal** des Convention Bureau Lübeck,
-**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 28 Folien, 45 Minuten
+**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 30 Folien, 45 Minuten
 plus 15 Minuten Fragen. Referenten: Emre Erdogan und Edgar Paul-Ghazaryan (Eddie).
 
 ## Live
@@ -11,7 +11,7 @@ GitHub Pages aus `main`, Repo `EdgarPaulEDGE/cbl-ueberblick`, öffentlich.
 Jeder Push auf `main` geht automatisch live, das dauert etwa eine Minute.
 
 Die Seite zum Mitnehmen liegt unter `/karte.html` und ist das, worauf der
-QR-Code auf Folie 26 zeigt: die vier Türme, der Kompass, die vier Prompts
+QR-Code auf Folie 28 zeigt: die vier Türme, der Kompass, die vier Prompts
 des Vormittags mit Kopieren-Knopf, die Montags-Aufgabe. Nichts wird gedruckt.
 
 ## Stamm
@@ -64,15 +64,15 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 | 0:15 | 11 bis 12 | Jetzt live, Demo 0: Reden statt tippen (Handy, Sprachmodus) | beide |
 | 0:17 | 13 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage | beide, einer tippt, einer erzählt |
 | 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | beide |
-| 0:27 | 16 | Ein Foto, drei Schritte: Roof Lounge als Gala, Logo an der Wand, Gäste (alle Bilder fertig, nichts live) | beide |
-| 0:32 | 17 | Und jetzt bewegt es sich: Schritt 3 als Kamerafahrt (Video, Klick, 30 Sekunden) | beide |
-| 0:33 | 18 bis 19 | Euer eigener Ordner: Gemini Notebook (früher NotebookLM), eine Frage live, dann der Podcast als Video (Folie 19, Klick, 60 bis 90 Sekunden) | beide |
-| 0:37 | 20 bis 22 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
-| 0:40 | 23 | Merksatz „Wer den Überblick behält" | |
-| 0:41 | 24 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
-| 0:43 | 25 bis 26 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
-| 0:45 | 27 | Fragen, 15 Minuten | beide |
-| 1:00 | 28 | Ende, Übergang in die Themenstränge | |
+| 0:27 | 16 bis 18 | Ein Foto, drei Schritte: je eine Folie für Raum, Logo, Gäste (alle Bilder fertig, nichts live) | beide |
+| 0:32 | 19 | Und jetzt bewegt es sich: Schritt 3 als Kamerafahrt (Video, Klick, 30 Sekunden) | beide |
+| 0:33 | 20 bis 21 | Euer eigener Ordner: Gemini Notebook (früher NotebookLM), eine Frage live, dann der Podcast (Folie 21, Klick, 60 bis 90 Sekunden) | beide |
+| 0:37 | 22 bis 24 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
+| 0:40 | 25 | Merksatz „Wer den Überblick behält" | |
+| 0:41 | 26 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
+| 0:43 | 27 bis 28 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
+| 0:45 | 29 | Fragen, 15 Minuten | beide |
+| 1:00 | 30 | Ende, Übergang in die Themenstränge | |
 
 Streichliste, wenn es eng wird: erst den Werkzeugkasten nur nennen, dann
 die Hotelsuche ganz erzählen (spart 3 Minuten), dann Demo 0 weglassen.
@@ -87,7 +87,7 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Hotelsuche (Folie 15) | Stufe 1 und 2 live im Chat, Stufe 3 liegt fertig: `Deep-Research-Tagungshotel-Luebeck.html` und `.pdf` auf dem Desktop, auch auf der Karte verlinkt | Screenshots von Stufe 1 und 2 vom Vorabend in `backup/` |
 | Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
-| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast läuft live im Deck (Folie 19, Vollbild) und auf der Karte: `assets/audio/podcast.mp3` plus `assets/podcast-wellen.js` (Three.js lokal unter `assets/vendor/three/`), das 3D-Wellenfeld wird aus dem Ton gerechnet, kein Video, darum auf jedem Bildschirm scharf. Braucht WebGL, läuft offline |
+| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast läuft live im Deck (Folie 21) und auf der Karte: `assets/audio/podcast.mp3` plus `assets/podcast-wellen.js` (Three.js lokal unter `assets/vendor/three/`), das 3D-Wellenfeld wird aus dem Ton gerechnet, kein Video, darum auf jedem Bildschirm scharf. Braucht WebGL, läuft offline |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 | Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist Schritt 3 der Bildreihe |
 
@@ -96,8 +96,8 @@ damit die letzte Reihe mitliest.
 
 ## Am Morgen um 8:30 im Saal
 
-1. `Vollbild starten.command` oder https://ueberblick.edge-digital.ai im Chrome, einmal komplett durchblättern (28 Folien).
-2. Ton: Folie 2 anklicken, Folie 19 anklicken. Beides muss aus der Saalanlage kommen.
+1. `Vollbild starten.command` oder https://ueberblick.edge-digital.ai im Chrome, einmal komplett durchblättern (30 Folien).
+2. Ton: Folie 2 anklicken, Folie 21 anklicken. Beides muss aus der Saalanlage kommen.
 3. Handy per Kabel an die Anlage, Sprachmodus mit dem Kompass-Satz einmal sprechen.
 4. Zweiter Tab: ChatGPT oder Claude eingeloggt, Karte offen (Prompts zum Kopieren).
 5. Dritter Tab: Gemini Notebook „Nordlicht 2027", einmal die Frage stellen.
