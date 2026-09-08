@@ -242,6 +242,14 @@ function medienHalt(folie) {
   var p = folie.querySelector('.podcast-buehne');
   if (p && p.__buehne) { p.__buehne.audio.pause(); p.__buehne.audio.currentTime = 0; }
 }
+// Zurueck heisst zurueck: die linke Taste (und Bild auf) springt immer eine
+// ganze Folie zurueck, statt erst das Medien-Fragment abzuraeumen. Vorwaerts
+// bleibt es beim Zweischritt, damit der erste Klick das Video startet.
+function eineZurueck() {
+  var i = Reveal.getIndices();
+  Reveal.slide(Math.max(i.h - 1, 0));
+}
+Reveal.configure({ keyboard: { 37: eineZurueck, 33: eineZurueck } });
 Reveal.on('fragmentshown', function (e) {
   if (e.fragment.classList.contains('medien-start')) medienStart(Reveal.getCurrentSlide());
 });
