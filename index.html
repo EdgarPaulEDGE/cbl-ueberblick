@@ -614,6 +614,9 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
    Ueberschriften darunter trotzdem auf einer Linie. */
 .spalten .baustein-kopf { min-height: 2.1em; }
 .sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
+/* Unsichtbarer Startpunkt fuer Video und Podcast: zaehlt fuer Reveal als
+   Fragment, darf aber keinen Platz einnehmen. */
+.medien-start { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 /* Kapitel-Trenner: knallig in der Kapitelfarbe, mit der passenden Figur.
    Der Schein liegt hinter dem Text, damit die Farbe den Raum füllt. */
 .kap-trenner .kap-wort { color: var(--kf); }
@@ -792,7 +795,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
   <div class="slide mittig" style="position:relative;">
     <!-- Der Roboter spricht selbst, lippensynchron, offline im Deck. Start per
          Klick oder Leertaste, nie von allein: Ton darf nicht überraschen. -->
-    <div class="video-fenster">
+    <span class="fragment medien-start" aria-hidden="true"></span>
+      <div class="video-fenster">
       <video id="video-moin" src="assets/video/robo-moin.mp4" poster="assets/video/robo-moin-poster.jpg" preload="auto" playsinline></video>
       <button class="video-start" type="button" aria-label="Abspielen">
         <svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>
@@ -1337,6 +1341,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <h2 class="headline">Und jetzt bewegt es <span class="schimmer">sich.</span></h2>
     <div class="gruppe-mittig wachsen">
       <!-- Das Gala-Bild aus dem Raumfoto, eine Sekunde weitergedacht: Klick, fünf Sekunden Kamerafahrt. -->
+      <span class="fragment medien-start" aria-hidden="true"></span>
       <div class="video-fenster" style="width:1400px;">
         <video src="assets/video/gala.mp4" poster="assets/video/gala-poster.jpg" preload="auto" playsinline loop></video>
         <button class="video-start" type="button" aria-label="Abspielen">
@@ -1433,6 +1438,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <section>
   <!-- Live-Bühne im Folienraster: Wellenfeld aus dem Ton (assets/podcast-wellen.js). Klick oder Leertaste startet. -->
   <div class="slide podcast-buehne">
+      <span class="fragment medien-start" aria-hidden="true"></span>
       <canvas width="1920" height="1080"></canvas>
       <div class="podcast-schleier"></div>
       <p class="kapitel"><i style="background:#C7D300"></i>Das Gedächtnis</p>
@@ -1491,6 +1497,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
         </div>
       </div>
       <!-- Die dritte Frage beantwortet der Roboter: Klick, fünfzehn Sekunden. -->
+      <span class="fragment medien-start" aria-hidden="true"></span>
       <div class="video-fenster" style="width:760px;flex:0 0 760px;">
         <video src="assets/video/robo-jobs.mp4" poster="assets/video/robo-jobs-poster.jpg" preload="auto" playsinline></video>
         <button class="video-start" type="button" aria-label="Abspielen">
@@ -1573,6 +1580,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
         </div>
       </div>
       <!-- Der Roboter verabschiedet sich selbst: Klick, zehn Sekunden. -->
+      <span class="fragment medien-start" aria-hidden="true"></span>
       <div class="video-fenster" style="width:760px;flex:0 0 760px;">
         <video src="assets/video/robo-montag.mp4" poster="assets/video/robo-montag-poster.jpg" preload="auto" playsinline></video>
         <button class="video-start" type="button" aria-label="Abspielen">
@@ -1803,25 +1811,41 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
      Milchstraßenband, langsame Rotation. 2D-Sternenfeld als Rückfall.
      Zuletzt geladen: die Folien stehen, bevor three.js überhaupt kommt. -->
 <script>
-/* Videos: Klick auf das Fenster oder Leertaste auf der Folie startet, ein
-   zweiter Klick hält an. Beim Verlassen der Folie wird zurückgespult. */
 document.querySelectorAll('.video-fenster').forEach(function (f) {
   var v = f.querySelector('video');
-  function umschalten() { if (v.paused) { v.play(); } else { v.pause(); } }
-  f.addEventListener('click', umschalten);
+  f.addEventListener('click', function () { if (v.paused) { v.play(); } else { v.pause(); } });
   v.addEventListener('play', function () { f.classList.add('laeuft'); });
   v.addEventListener('pause', function () { f.classList.remove('laeuft'); });
   v.addEventListener('ended', function () { f.classList.remove('laeuft'); v.currentTime = 0; });
 });
-document.addEventListener('keydown', function (e) {
-  if (e.code !== 'Space') return;
-  var v = Reveal.getCurrentSlide().querySelector('.video-fenster video');
-  if (!v) return;
-  e.preventDefault(); e.stopPropagation();
-  if (v.paused) v.play(); else v.pause();
-}, true);
+function medienStart(folie) {
+  var v = folie.querySelector('.video-fenster video');
+  if (v) { v.play(); return; }
+  var p = folie.querySelector('.podcast-buehne');
+  if (p && p.__buehne) p.__buehne.audio.play();
+}
+function medienHalt(folie) {
+  folie.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+  var p = folie.querySelector('.podcast-buehne');
+  if (p && p.__buehne) { p.__buehne.audio.pause(); p.__buehne.audio.currentTime = 0; }
+}
+Reveal.on('fragmentshown', function (e) {
+  if (e.fragment.classList.contains('medien-start')) medienStart(Reveal.getCurrentSlide());
+});
+Reveal.on('fragmenthidden', function (e) {
+  if (e.fragment.classList.contains('medien-start')) medienHalt(Reveal.getCurrentSlide());
+});
 Reveal.on('slidechanged', function (e) {
   if (e.previousSlide) e.previousSlide.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+  // Wer zu einer Medienfolie zurueckblaettert, findet ihr Fragment sonst als
+  // bereits gezeigt vor: dann wuerde der naechste Klick weiterblaettern,
+  // statt das Video zu starten. Also beim Betreten zuruecksetzen.
+  var s = e.currentSlide;
+  if (s && s.querySelector('.medien-start')) {
+    s.querySelectorAll('.fragment.visible').forEach(function (f) {
+      f.classList.remove('visible', 'current-fragment');
+    });
+  }
 });
 </script>
 <script src="kosmos.js"></script>
@@ -1841,12 +1865,6 @@ function pruefen() {
 }
 function start() { pruefen(); Reveal.on("slidechanged", pruefen); Reveal.on("resize", function () { buehnen.forEach(function (p) { p[1].resize(Reveal.getScale()); }); }); }
 if (Reveal.isReady && Reveal.isReady()) start(); else Reveal.on("ready", start);
-document.addEventListener("keydown", function (e) {
-  if (e.code !== "Space") return;
-  var el = Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector(".podcast-buehne");
-  if (!el) return;
-  e.preventDefault(); e.stopPropagation(); el.__buehne.umschalten();
-}, true);
 </script>
 </body>
 </html>

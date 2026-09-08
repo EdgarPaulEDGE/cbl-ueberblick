@@ -40,6 +40,9 @@ zusatz = """
    Ueberschriften darunter trotzdem auf einer Linie. */
 .spalten .baustein-kopf { min-height: 2.1em; }
 .sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
+/* Unsichtbarer Startpunkt fuer Video und Podcast: zaehlt fuer Reveal als
+   Fragment, darf aber keinen Platz einnehmen. */
+.medien-start { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 /* Kapitel-Trenner: knallig in der Kapitelfarbe, mit der passenden Figur.
    Der Schein liegt hinter dem Text, damit die Farbe den Raum füllt. */
 .kap-trenner .kap-wort { color: var(--kf); }
@@ -198,12 +201,6 @@ function pruefen() {
 }
 function start() { pruefen(); Reveal.on("slidechanged", pruefen); Reveal.on("resize", function () { buehnen.forEach(function (p) { p[1].resize(Reveal.getScale()); }); }); }
 if (Reveal.isReady && Reveal.isReady()) start(); else Reveal.on("ready", start);
-document.addEventListener("keydown", function (e) {
-  if (e.code !== "Space") return;
-  var el = Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector(".podcast-buehne");
-  if (!el) return;
-  e.preventDefault(); e.stopPropagation(); el.__buehne.umschalten();
-}, true);
 </script>
 </body>""", 1)
 
@@ -223,7 +220,49 @@ html = html.replace("""Reveal.on('ready', function () {
 Reveal.on('ready', schleierKopieren);
 Reveal.on('slidechanged', schleierKopieren);""")
 
-html = html.replace("<script src=\"kosmos.js\"></script>", "<script>" + "\n/* Videos: Klick auf das Fenster oder Leertaste auf der Folie startet, ein\n   zweiter Klick hält an. Beim Verlassen der Folie wird zurückgespult. */\ndocument.querySelectorAll('.video-fenster').forEach(function (f) {\n  var v = f.querySelector('video');\n  function umschalten() { if (v.paused) { v.play(); } else { v.pause(); } }\n  f.addEventListener('click', umschalten);\n  v.addEventListener('play', function () { f.classList.add('laeuft'); });\n  v.addEventListener('pause', function () { f.classList.remove('laeuft'); });\n  v.addEventListener('ended', function () { f.classList.remove('laeuft'); v.currentTime = 0; });\n});\ndocument.addEventListener('keydown', function (e) {\n  if (e.code !== 'Space') return;\n  var v = Reveal.getCurrentSlide().querySelector('.video-fenster video');\n  if (!v) return;\n  e.preventDefault(); e.stopPropagation();\n  if (v.paused) v.play(); else v.pause();\n}, true);\nReveal.on('slidechanged', function (e) {\n  if (e.previousSlide) e.previousSlide.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });\n});\n" + "</script>\n<script src=\"kosmos.js\"></script>")
+# Videos und Podcast am Presenter: der erste Weiter-Klick startet das Medium
+# (unsichtbares Fragment .medien-start), der zweite blättert weiter. Damit
+# genügt dem Klicker eine einzige Taste, und nichts wird versehentlich pausiert.
+medien_js = """<script>
+document.querySelectorAll('.video-fenster').forEach(function (f) {
+  var v = f.querySelector('video');
+  f.addEventListener('click', function () { if (v.paused) { v.play(); } else { v.pause(); } });
+  v.addEventListener('play', function () { f.classList.add('laeuft'); });
+  v.addEventListener('pause', function () { f.classList.remove('laeuft'); });
+  v.addEventListener('ended', function () { f.classList.remove('laeuft'); v.currentTime = 0; });
+});
+function medienStart(folie) {
+  var v = folie.querySelector('.video-fenster video');
+  if (v) { v.play(); return; }
+  var p = folie.querySelector('.podcast-buehne');
+  if (p && p.__buehne) p.__buehne.audio.play();
+}
+function medienHalt(folie) {
+  folie.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+  var p = folie.querySelector('.podcast-buehne');
+  if (p && p.__buehne) { p.__buehne.audio.pause(); p.__buehne.audio.currentTime = 0; }
+}
+Reveal.on('fragmentshown', function (e) {
+  if (e.fragment.classList.contains('medien-start')) medienStart(Reveal.getCurrentSlide());
+});
+Reveal.on('fragmenthidden', function (e) {
+  if (e.fragment.classList.contains('medien-start')) medienHalt(Reveal.getCurrentSlide());
+});
+Reveal.on('slidechanged', function (e) {
+  if (e.previousSlide) e.previousSlide.querySelectorAll('video').forEach(function (v) { v.pause(); v.currentTime = 0; });
+  // Wer zu einer Medienfolie zurueckblaettert, findet ihr Fragment sonst als
+  // bereits gezeigt vor: dann wuerde der naechste Klick weiterblaettern,
+  // statt das Video zu starten. Also beim Betreten zuruecksetzen.
+  var s = e.currentSlide;
+  if (s && s.querySelector('.medien-start')) {
+    s.querySelectorAll('.fragment.visible').forEach(function (f) {
+      f.classList.remove('visible', 'current-fragment');
+    });
+  }
+});
+</script>
+<script src="kosmos.js"></script>"""
+html = html.replace('<script src="kosmos.js"></script>', medien_js)
 
 anfang = html.index('<div class="slides">') + len('<div class="slides">')
 ende = html.index('</div>\n</div>\n\n<script src="vendor/reveal/reveal.js">')
