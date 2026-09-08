@@ -315,13 +315,13 @@
       <p class="label" style="margin-bottom:18px;">Ins Handy gesagt, nicht getippt</p>
       <!-- Der gesprochene Satz folgt dem Kompass: Rolle, Aufgabe, Kontext, Förmchen.
            Alles, was die KI wissen muss, steht im Satz selbst, keine Mail nötig. -->
-      <div class="prompt" style="font-size:33px;line-height:1.45;padding:30px 40px;width:100%;">
-      <div style="flex:1;display:grid;grid-template-columns:170px 1fr;row-gap:16px;column-gap:20px;">
-        <span class="baustein-kopf b-rolle" style="font-size:20px;margin:8px 0 0;">Rolle</span><span>„Du bist Eventmanagerin in Lübeck.</span>
-        <span class="baustein-kopf b-ziel" style="font-size:20px;margin:8px 0 0;">Aufgabe</span><span>Bestätige einer Planerin aus Kopenhagen auf Dänisch unseren Termin am 14. November.</span>
-        <span class="baustein-kopf b-kontext" style="font-size:20px;margin:8px 0 0;">Kontext</span><span>25 Personen, Tagungsraum mit Tageslicht, das Angebot kommt morgen.</span>
-        <span class="baustein-kopf b-aufgabe" style="font-size:20px;margin:8px 0 0;">Förmchen</span><span>Drei Sätze, freundlich, per Sie. Lies mir danach die deutsche Fassung vor."</span>
+      <!-- Ein gesprochener Satz, wie man ihn wirklich sagt. Die Farben zeigen, wo
+           Rolle, Aufgabe, Kontext und Förmchen drinstecken, ohne Formular. -->
+      <div class="prompt" style="font-size:36px;line-height:1.5;padding:34px 42px;width:100%;">
+        <span>„<span class="b-rolle">Stell dir vor, du bist Eventmanagerin hier in Lübeck.</span> <span class="b-ziel">Ich hab eine Planerin aus Kopenhagen, die will wissen, ob der 14. November bei uns klappt. Sag ihr auf Dänisch: ja, klappt.</span> <span class="b-kontext">25 Leute, Tagungsraum mit Tageslicht, das Angebot schick ich ihr morgen.</span> <span class="b-aufgabe">Kurz und freundlich, per Sie, so drei Sätze. Und lies mir danach vor, was du geschrieben hast, auf Deutsch.</span>"</span>
       </div>
+      <div class="reihe" style="gap:34px;margin-top:22px;font-size:20px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;">
+        <span class="b-rolle">Rolle</span><span class="b-ziel">Aufgabe</span><span class="b-kontext">Kontext</span><span class="b-aufgabe">Förmchen</span>
       </div>
       <p class="lead" style="font-size:32px;margin-top:34px;">ChatGPT im Sprachmodus. Die Antwort kommt laut, erst auf Dänisch, dann auf Deutsch.</p>
     </div>
