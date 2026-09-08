@@ -614,6 +614,21 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
    Ueberschriften darunter trotzdem auf einer Linie. */
 .spalten .baustein-kopf { min-height: 2.1em; }
 .sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
+/* Kapitel-Trenner: knallig in der Kapitelfarbe, mit der passenden Figur.
+   Der Schein liegt hinter dem Text, damit die Farbe den Raum füllt. */
+.kap-trenner .kap-wort { color: var(--kf); }
+/* Eine Groesse fuer alle vier, sonst tanzt jeder Trenner anders. */
+.kap-titel { font-size: 126px; margin: 0; line-height: 1.06; }
+.kap-trenner .slide::before {
+  content: ""; position: absolute; left: -12%; top: 50%; width: 78%; height: 86%;
+  transform: translateY(-50%); pointer-events: none; z-index: 0;
+  background: radial-gradient(circle at 40% 50%, color-mix(in srgb, var(--kf) 30%, transparent) 0%, transparent 68%);
+  filter: blur(70px);
+}
+/* Nur die Textebene anheben: der Begleiter ist bereits absolut positioniert
+   und traegt seinen eigenen z-index. Ihn hier mitzunehmen, holt ihn zurueck
+   in den Fluss und er landet links oben. */
+.kap-trenner .slide > *:not(.begleiter) { position: relative; z-index: 1; }
 /* Titelbild: die Stadt bleibt sichtbar, links liegt genug Dunkel für die
    große Headline. Kräftiger als "seite", weil die Gebäude hell leuchten. */
 .reveal .slide-background[data-schleier="titel"]::after {
@@ -702,10 +717,10 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 .slide.podcast-buehne .kapitel { position: relative; z-index: 1; }
 
 /* ---------- Agenda: was heute passiert ---------- */
-.agenda-zeile { display: grid; grid-template-columns: 26px 340px 1fr; align-items: baseline; column-gap: 22px; padding: 26px 6px; }
-.agenda-zeile .punkt { width: 12px; height: 12px; border-radius: 50%; display: block; }
-.agenda-zeile b { font-size: 38px; font-weight: 700; }
-.agenda-zeile span:last-child { font-size: 29px; color: var(--w-70); }
+.agenda-zeile { display: grid; grid-template-columns: 32px 430px 1fr; align-items: baseline; column-gap: 28px; padding: 44px 12px; }
+.agenda-zeile .punkt { width: 15px; height: 15px; border-radius: 50%; display: block; }
+.agenda-zeile b { font-size: 50px; font-weight: 700; }
+.agenda-zeile span:last-child { font-size: 36px; color: var(--w-70); }
 
 /* ---------- Bildreihe: ein Foto, drei Schritte ----------
    Jede Station zeigt ihr Ergebnis als Bild, Schritt 1 trägt das Ausgangsfoto
@@ -803,14 +818,14 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <div class="kopf-foto"><img src="assets/images/team/emre.png" alt="Emre Erdogan"></div>
           <div>
             <div class="kopf-name">Emre</div>
-            <div class="kopf-rolle">Geschäftsführer</div>
+            <div class="kopf-rolle">CEO</div>
           </div>
         </div>
         <div class="kopf">
           <div class="kopf-foto"><img src="assets/images/team/edgar.png" alt="Edgar Paul-Ghazaryan"></div>
           <div>
             <div class="kopf-name">Eddie</div>
-            <div class="kopf-rolle">CEO</div>
+            <div class="kopf-rolle">COO</div>
           </div>
         </div>
         <p class="lead" style="font-size:30px;">KI aus Lübeck.<br>Für Deutschland.</p>
@@ -938,7 +953,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
   <div class="slide" style="justify-content:center;">
     <span class="bild-quelle">Bild mit KI erstellt</span>
     <p class="label">Der Überblick</p>
-    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">KI-Tools:<br>weniger ist <span class="schimmer">mehr.</span></h2>
+    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">KI-Tools:<br>weniger ist <span class="schimmer">Meer.</span></h2>
     <aside class="notes">
       Vom Dach aus sieht man die ganze Stadt, aber nicht jede
       Straße. Bei KI ist es genauso: Ihr müsst nicht jedes Tool kennen, nur
@@ -950,7 +965,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ 7: DIE VIER TÜRME ============ -->
 <section>
   <div class="slide">
-    <h2 class="headline gesetzt">Vier Arten von Werkzeug.<br>Mehr braucht ihr <span class="schimmer">nicht.</span></h2>
+    <h2 class="headline gesetzt">Das reicht für alles,<br>was ihr <span class="schimmer">vorhabt.</span></h2>
     <div class="gruppe-mittig wachsen">
     <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:34px 52px 44px;">
       <div class="fragment fade-up">
@@ -977,9 +992,6 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
         <h3 style="font-size:32px;min-height:2.5em;">Merkt sich euren Ton und eure Vorlagen</h3>
         <p style="font-size:27px;">Projekte in ChatGPT oder Claude, Custom GPTs, Gemini Notebook.</p>
       </div>
-    </div>
-    <div class="takeaway mt-auto" style="padding-top:26px;">
-      <p>Eins davon benutzt ihr jeden Tag. Die anderen holt ihr, wenn ihr sie braucht.</p>
     </div>
     </div>
     <aside class="notes">
@@ -1061,13 +1073,13 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 </section>
 
 <!-- ============ 10: DIVIDER LIVE ============ -->
-<section data-chrome="aus">
+<section data-chrome="aus" class="kap-trenner" style="--kf:#C15DE6;">
   <div class="slide" style="justify-content:center;position:relative;">
-    <div class="begleiter" style="right:110px;bottom:0;height:640px;">
-      <img src="assets/images/robo/laptop.png" alt="">
+    <div class="begleiter" style="right:120px;bottom:0;height:700px;">
+      <img src="assets/images/robo/kapitel-assistent.png" alt="">
     </div>
     <p class="label">Jetzt live</p>
-    <h2 class="hero gesetzt" style="font-size:118px;margin-top:26px;">Jetzt zeigen<br>wir es <span class="schimmer">euch.</span></h2>
+    <h2 class="hero gesetzt kap-titel" style="margin-top:4px;font-size:110px;">Der<br><span class="kap-wort">Assistent.</span></h2>
     <aside class="notes">
       Ab hier tippt einer, der andere erzählt und hält die Zeit. Alles ist
       vorbereitet, niemand im Raum muss etwas liefern. Backups liegen als
@@ -1114,7 +1126,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <section>
   <div class="slide">
     <p class="kapitel"><i style="background:#C15DE6"></i>Der Assistent</p>
-    <h2 class="headline">Die <span class="schimmer">Absage.</span></h2>
+    <h2 class="headline gesetzt">Die Absage,<br>die klingt <span class="schimmer">wie ihr.</span></h2>
     <div class="gruppe-mittig wachsen">
     <div class="band">
       <div class="station" style="flex:0 0 470px;">
@@ -1123,7 +1135,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <span class="label">Der Fall</span>
         </div>
         <div class="feld" style="border-color:rgba(255,107,94,.25);">
-          <p style="font-size:31px;line-height:1.5;margin:0;color:var(--weiss);">Drei Hotels angefragt, eins gebucht. Die anderen beiden brauchen eine Absage, und nächstes Jahr wollt ihr dort wieder anfragen.</p>
+          <p style="font-size:29px;line-height:1.5;margin:0;color:var(--weiss);">Drei Hotels angefragt, eins gebucht. Die anderen beiden brauchen eine Absage, und nächstes Jahr wollt ihr dort wieder anfragen.</p>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
@@ -1136,9 +1148,11 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <span class="ring klein"><b>2</b></span>
           <span class="label">Was wir tippen</span>
         </div>
-        <div class="feld" style="gap:18px;">
-          <div class="prompt klein"><span>Schreib eine Absage an das Hotel.</span></div>
-          <div class="prompt klein"><span>Du bist Eventmanagerin. Schreib eine Absage an Frau Behrens, Hotel Seeblick, Strandweg 12, Telefon 0451 44 55 66: Wir haben uns für ein anderes Haus entschieden, der Preis war ausschlaggebend, die Betreuung war top, nächstes Jahr fragen wir wieder an. <b>Unter 100 Wörter, per Sie, warm, kein Werbedeutsch.</b></span></div>
+        <div class="feld" style="gap:0;padding:30px 36px;justify-content:center;">
+          <!-- Emre: keine Box in der Box. Die beiden Fassungen trennt eine Linie,
+               die erste steht gedaempft, die zweite in voller Helligkeit. -->
+          <p style="font-size:27px;line-height:1.45;margin:0 0 18px;color:var(--w-45);">Schreib eine Absage an das Hotel.</p>
+          <p style="font-size:27px;line-height:1.45;margin:0;padding-top:18px;border-top:1px solid var(--hairline);color:var(--weiss);">Du bist Eventmanagerin. Schreib eine Absage an Frau Behrens, Hotel Seeblick, Strandweg 12, Telefon 0451 44 55 66: Wir haben uns für ein anderes Haus entschieden, der Preis war ausschlaggebend, die Betreuung war top, nächstes Jahr fragen wir wieder an. <b>Unter 100 Wörter, per Sie, warm, kein Werbedeutsch.</b></p>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
@@ -1152,7 +1166,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <span class="label">Was rauskommt</span>
         </div>
         <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
-          <p class="schimmer" style="font-size:220px;font-weight:700;line-height:1;margin:0;">?</p>
+          <p class="schimmer" style="font-size:170px;font-weight:700;line-height:1;margin:0;">?</p>
           <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Beides live,<br>in einer Minute</p>
         </div>
       </div>
@@ -1184,6 +1198,18 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 </section>
 
 <!-- ============ 13: DIE HOTELSUCHE IN DREI STUFEN ============ -->
+<section data-chrome="aus" class="kap-trenner" style="--kf:#009FF4;">
+  <div class="slide" style="justify-content:center;position:relative;">
+    <div class="begleiter" style="right:120px;bottom:0;height:700px;">
+      <img src="assets/images/robo/kapitel-rechercheur.png" alt="">
+    </div>
+    <h2 class="hero gesetzt kap-titel">Der<br><span class="kap-wort">Rechercheur.</span></h2>
+    <aside class="notes">
+      Kurzer Trenner, fünf Sekunden. Farbe wechselt, das Kapitel auch.
+    </aside>
+  </div>
+</section>
+
 <section>
   <div class="slide">
     <p class="kapitel"><i style="background:#009FF4"></i>Der Rechercheur</p>
@@ -1198,8 +1224,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
         <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert drei Sekunden und kommt aus dem Gedächtnis der KI. Sie erfindet gern ein Hotel dazu, das es nicht gibt.</p>
       </div>
       <div>
-        <div class="station-kopf"><span class="ring klein"><b>2</b></span><span class="label">Mit Websuche</span></div>
-        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Dauert eine halbe Minute. Die KI liest die aktuellen Webseiten der Hotels und nennt, woher sie es hat.</p>
+        <div class="station-kopf"><span class="ring klein"><b>2</b></span><span class="label">Mit euren Unterlagen</span></div>
+        <p style="font-size:30px;line-height:1.5;color:var(--w-70);margin:0;">Ihr hängt eure Angebote als PDF an. Die KI rechnet damit statt zu raten, und nennt die Zahlen aus euren Dateien.</p>
       </div>
       <div>
         <div class="station-kopf"><span class="ring klein ok"><b>3</b></span><span class="label">Deep Research</span></div>
@@ -1221,9 +1247,20 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 </section>
 
 <!-- ============ DEMO 3, SCHRITT 1: DER RAUM ============ -->
+<section data-chrome="aus" class="kap-trenner" style="--kf:#00E2E2;">
+  <div class="slide" style="justify-content:center;position:relative;">
+    <div class="begleiter" style="right:120px;bottom:0;height:700px;">
+      <img src="assets/images/robo/kapitel-bildermacher.png" alt="">
+    </div>
+    <h2 class="hero gesetzt kap-titel">Der<br><span class="kap-wort">Bildermacher.</span></h2>
+    <aside class="notes">
+      Kurzer Trenner. Danach kommen die drei Bilder.
+    </aside>
+  </div>
+</section>
+
 <section>
   <div class="slide">
-    <p class="label">Ein Foto, drei Schritte · Schritt 1</p>
     <p class="kapitel"><i style="background:#00E2E2"></i>Der Bildermacher</p>
     <h2 class="headline">Der Raum, in dem <span class="schimmer">ihr sitzt.</span></h2>
     <div class="gruppe-mittig wachsen">
@@ -1248,7 +1285,6 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ DEMO 3, SCHRITT 2: DAS LOGO ============ -->
 <section>
   <div class="slide">
-    <p class="label">Ein Foto, drei Schritte · Schritt 2</p>
     <p class="kapitel"><i style="background:#00E2E2"></i>Der Bildermacher</p>
     <h2 class="headline">Jetzt mit eurem <span class="schimmer">Logo.</span></h2>
     <div class="gruppe-mittig wachsen">
@@ -1271,7 +1307,6 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ DEMO 3, SCHRITT 3: DIE GÄSTE ============ -->
 <section>
   <div class="slide">
-    <p class="label">Ein Foto, drei Schritte · Schritt 3</p>
     <p class="kapitel"><i style="background:#00E2E2"></i>Der Bildermacher</p>
     <h2 class="headline">Und jetzt die <span class="schimmer">Gäste.</span></h2>
     <div class="gruppe-mittig wachsen">
@@ -1321,6 +1356,18 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 </section>
 
 <!-- ============ DEMO: NOTEBOOKLM ============ -->
+<section data-chrome="aus" class="kap-trenner" style="--kf:#C7D300;">
+  <div class="slide" style="justify-content:center;position:relative;">
+    <div class="begleiter" style="right:120px;bottom:0;height:700px;">
+      <img src="assets/images/robo/kapitel-gedaechtnis.png" alt="">
+    </div>
+    <h2 class="hero gesetzt kap-titel">Das<br><span class="kap-wort">Gedächtnis.</span></h2>
+    <aside class="notes">
+      Letzter Trenner vor dem Ordner und dem Podcast.
+    </aside>
+  </div>
+</section>
+
 <section>
   <div class="slide">
     <p class="kapitel"><i style="background:#C7D300"></i>Das Gedächtnis</p>
@@ -1348,8 +1395,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
           <span class="ring klein"><b>2</b></span>
           <span class="label">Was wir fragen</span>
         </div>
-        <div class="prompt wachsen" style="font-size:32px;line-height:1.45;padding:32px 36px;">
-          <span>Welches der drei Hotels hat Tageslicht im Tagungsraum, und was kostet dort die Tagungspauschale?</span>
+        <div class="feld wachsen" style="justify-content:center;">
+          <p style="font-size:32px;line-height:1.45;margin:0;color:var(--weiss);">Welches der drei Hotels hat Tageslicht im Tagungsraum, und was kostet dort die Tagungspauschale?</p>
         </div>
       </div>
       <svg class="pfeil-r" width="86" height="60" viewBox="0 0 86 60" fill="none">
@@ -1393,10 +1440,9 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
       <div class="podcast-inhalt">
         <div class="podcast-cover"><img src="assets/images/podcast-cover.jpg" alt="Der Roboter und die Moderatorin im Studio"></div>
         <div class="podcast-text">
-          <p class="podcast-titel">Der Ordner<br><span>aus Kopenhagen</span></p>
+          <p class="podcast-titel">„Der Ordner<br><span>aus Kopenhagen"</span></p>
         </div>
       </div>
-      <span class="podcast-quelle">Mit KI erstellt: Skript aus den fünf Unterlagen, Stimmen von ElevenLabs, Wellen live aus dem Ton</span>
       <div class="podcast-balken"><i></i></div><span class="podcast-zeit">0:00 / 5:51</span>
       <audio src="assets/audio/podcast.mp3" preload="auto"></audio>
       <button class="podcast-start" type="button" aria-label="Abspielen"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg></button>
@@ -1498,8 +1544,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <section data-chrome="aus" data-background-image="assets/images/robo/hafen-fernrohr.jpg" data-background-size="cover" data-schleier="seite-rechts">
   <div class="slide rechts" style="justify-content:center;">
     <span class="bild-quelle">Bild mit KI erstellt</span>
-    <h2 class="hero gesetzt" style="font-size:84px;margin-bottom:10px;">Wer den Überblick<br>behält,</h2>
-    <p class="hero schimmer" style="font-size:104px;margin:0;">bleibt gefragt.</p>
+    <h2 class="hero gesetzt" style="font-size:76px;margin-bottom:10px;">Wer den Überblick behält,</h2>
+    <p class="hero schimmer" style="font-size:100px;margin:0;">bleibt gefragt.</p>
     <aside class="notes">
       Antwort auf die Jobfrage, kurz stehen lassen.
     </aside>

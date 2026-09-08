@@ -40,6 +40,21 @@ zusatz = """
    Ueberschriften darunter trotzdem auf einer Linie. */
 .spalten .baustein-kopf { min-height: 2.1em; }
 .sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
+/* Kapitel-Trenner: knallig in der Kapitelfarbe, mit der passenden Figur.
+   Der Schein liegt hinter dem Text, damit die Farbe den Raum füllt. */
+.kap-trenner .kap-wort { color: var(--kf); }
+/* Eine Groesse fuer alle vier, sonst tanzt jeder Trenner anders. */
+.kap-titel { font-size: 126px; margin: 0; line-height: 1.06; }
+.kap-trenner .slide::before {
+  content: ""; position: absolute; left: -12%; top: 50%; width: 78%; height: 86%;
+  transform: translateY(-50%); pointer-events: none; z-index: 0;
+  background: radial-gradient(circle at 40% 50%, color-mix(in srgb, var(--kf) 30%, transparent) 0%, transparent 68%);
+  filter: blur(70px);
+}
+/* Nur die Textebene anheben: der Begleiter ist bereits absolut positioniert
+   und traegt seinen eigenen z-index. Ihn hier mitzunehmen, holt ihn zurueck
+   in den Fluss und er landet links oben. */
+.kap-trenner .slide > *:not(.begleiter) { position: relative; z-index: 1; }
 /* Titelbild: die Stadt bleibt sichtbar, links liegt genug Dunkel für die
    große Headline. Kräftiger als "seite", weil die Gebäude hell leuchten. */
 .reveal .slide-background[data-schleier="titel"]::after {
@@ -128,10 +143,10 @@ zusatz = """
 .slide.podcast-buehne .kapitel { position: relative; z-index: 1; }
 
 /* ---------- Agenda: was heute passiert ---------- */
-.agenda-zeile { display: grid; grid-template-columns: 26px 340px 1fr; align-items: baseline; column-gap: 22px; padding: 26px 6px; }
-.agenda-zeile .punkt { width: 12px; height: 12px; border-radius: 50%; display: block; }
-.agenda-zeile b { font-size: 38px; font-weight: 700; }
-.agenda-zeile span:last-child { font-size: 29px; color: var(--w-70); }
+.agenda-zeile { display: grid; grid-template-columns: 32px 430px 1fr; align-items: baseline; column-gap: 28px; padding: 44px 12px; }
+.agenda-zeile .punkt { width: 15px; height: 15px; border-radius: 50%; display: block; }
+.agenda-zeile b { font-size: 50px; font-weight: 700; }
+.agenda-zeile span:last-child { font-size: 36px; color: var(--w-70); }
 
 /* ---------- Bildreihe: ein Foto, drei Schritte ----------
    Jede Station zeigt ihr Ergebnis als Bild, Schritt 1 trägt das Ausgangsfoto

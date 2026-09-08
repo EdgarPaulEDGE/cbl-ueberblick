@@ -11,7 +11,9 @@ import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 
 const W = 1920, H = 1080;
-const BAENDER = 64, ROWS = 32, COLS = 150, XW = 44, Z0 = 4.5, ZD = -19, YB = -4.6;
+// Z0 ist die vorderste Reihe. Sie liegt bewusst dicht vor der Kamera, damit
+// das Feld bis an den unteren Bildrand laeuft und nicht davor endet.
+const BAENDER = 64, ROWS = 36, COLS = 150, XW = 52, Z0 = 9.2, ZD = -19, YB = -4.6;
 const VERLAUF = 90; // gemerkte Frames für den Nachlauf der hinteren Reihen
 
 export function podcastBuehne(buehne) {
