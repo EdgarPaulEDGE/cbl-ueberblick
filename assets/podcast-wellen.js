@@ -11,10 +11,20 @@ import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 
 const W = 1920, H = 1080;
-// Z0 ist die vorderste Reihe. Sie liegt bewusst dicht vor der Kamera, damit
-// das Feld bis an den unteren Bildrand laeuft und nicht davor endet.
-const BAENDER = 64, ROWS = 46, COLS = 150, XW = 58, Z0 = 9.6, ZD = -19, YB = -4.6;
+const BAENDER = 64, ROWS = 34, COLS = 150, XW = 58, YB = -4.6;
 const VERLAUF = 90; // gemerkte Frames für den Nachlauf der hinteren Reihen
+
+// Kamera und Blickpunkt stehen fest, deshalb lässt sich ausrechnen, wo eine
+// Reihe im Bild landet: Blickwinkel = atan(Höhe über der Ebene / Abstand).
+const CAM = { y: 9.5, z: 12 }, BLICK = { y: -4.5, z: -5 };
+const HOEHE = CAM.y - YB;                                   // 14.1
+// Reihen NICHT gleichmäßig in der Tiefe verteilen: perspektivisch klaffen sie
+// dann genau vorne auseinander und das Feld endet sichtbar über dem unteren
+// Bildrand. Stattdessen den Winkel gleichmäßig teilen und z zurückrechnen.
+const grad = (g) => (g * Math.PI) / 180;
+const PHI_VORN = grad(61.4), PHI_HINTEN = grad(40.6);       // unterer Rand liegt bei 60,5°
+const reiheZ = (t) => CAM.z - HOEHE / Math.tan(PHI_VORN + (PHI_HINTEN - PHI_VORN) * t);
+const Z0 = reiheZ(0), ZD = reiheZ(1);
 
 export function podcastBuehne(buehne) {
   const canvas = buehne.querySelector("canvas");
@@ -31,9 +41,11 @@ export function podcastBuehne(buehne) {
 
   const purple = new THREE.Color("#C15DE6"), blau = new THREE.Color("#009FF4"), cyan = new THREE.Color("#00E2E2");
   const lines = [], rowPos = [], rowCol = [], colBuf = [], mats = [];
+  const rowZ = [];
   for (let r = 0; r < ROWS; r++) {
     const t = r / (ROWS - 1);
-    const z = Z0 + (ZD - Z0) * Math.pow(t, 0.52);
+    const z = reiheZ(t);
+    rowZ.push(z);
     const pos = new Float32Array(COLS * 3), col = new Float32Array(COLS * 3);
     for (let c = 0; c < COLS; c++) {
       const u = c / (COLS - 1);
@@ -46,12 +58,22 @@ export function podcastBuehne(buehne) {
     const line = new Line2(geo, mat);
     scene.add(line); lines.push(line); rowPos.push(pos); rowCol.push(col); colBuf.push(new Float32Array(COLS * 3)); mats.push(mat);
   }
-  // Dunkle Fläche unter den Linien: vordere Berge verdecken hintere Reihen
-  const surfGeo = new THREE.PlaneGeometry(XW, Z0 - ZD, COLS - 1, ROWS - 1);
+  // Dunkle Fläche unter den Linien: vordere Berge verdecken hintere Reihen.
+  // Ihr Raster muss auf denselben z-Werten sitzen wie die Linien, sonst
+  // schiebt sie sich zwischen sie und frisst die vordersten Reihen weg.
+  const surfGeo = new THREE.PlaneGeometry(XW, 1, COLS - 1, ROWS - 1);
   surfGeo.rotateX(-Math.PI / 2);
   const surfPos = surfGeo.attributes.position;
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const i = (r * COLS + c) * 3;
+      surfPos.array[i] = -XW / 2 + (c / (COLS - 1)) * XW;
+      surfPos.array[i + 2] = rowZ[r];
+    }
+  }
+  surfPos.needsUpdate = true;
   const surf = new THREE.Mesh(surfGeo, new THREE.MeshBasicMaterial({ color: 0x04060e, transparent: true, opacity: 0.92, side: THREE.DoubleSide }));
-  surf.position.z = (Z0 + ZD) / 2; scene.add(surf);
+  scene.add(surf);
 
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -116,7 +138,7 @@ export function podcastBuehne(buehne) {
     const t = performance.now() / 1000;
     for (let r = 0; r < ROWS; r++) {
       const rt = r / (ROWS - 1);
-      const lag = Math.min(VERLAUF - 1, Math.round(r * 1.3));
+      const lag = Math.min(VERLAUF - 1, Math.round(r * 1.9));
       const amp = 3.0 * (1 - rt * 0.4);
       const pos = rowPos[r], col = rowCol[r], cb = colBuf[r];
       for (let c = 0; c < COLS; c++) {
@@ -127,7 +149,7 @@ export function podcastBuehne(buehne) {
         pos[c * 3 + 1] = y;
         const hell = 0.5 + 0.9 * v;
         cb[c * 3] = Math.min(1, col[c * 3] * hell); cb[c * 3 + 1] = Math.min(1, col[c * 3 + 1] * hell); cb[c * 3 + 2] = Math.min(1, col[c * 3 + 2] * hell);
-        surfPos.array[(r * COLS + c) * 3 + 1] = y - 0.05;
+        surfPos.array[(r * COLS + c) * 3 + 1] = y - 0.22;
       }
       lines[r].geometry.setPositions(pos); lines[r].geometry.setColors(cb);
     }
