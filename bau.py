@@ -41,9 +41,9 @@ zusatz = """
    Eine Scheibe, um 58 Grad nach hinten gekippt, zwei Ringe darunter für die
    Tiefe, eine Nadel, die von Frage zu Frage wandert. Alles CSS-3D, kein
    WebGL: läuft im Standbild ebenso wie im Vortrag, und ohne box-shadow. */
-.kompass-buehne { flex: 0 0 560px; height: 520px; position: relative; perspective: 1400px; }
+.kompass-buehne { flex: 0 0 620px; height: 640px; position: relative; perspective: 1700px; }
 .kompass {
-  position: absolute; left: 50%; top: 46%; width: 440px; height: 440px;
+  position: absolute; left: 50%; top: 46%; width: 540px; height: 540px;
   transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-14deg);
   transform-style: preserve-3d;
   animation: kompass-schweben 7s ease-in-out infinite alternate;
@@ -65,20 +65,20 @@ zusatz = """
 }
 .kompass-scheibe { position: absolute; inset: 0; transform: translateZ(2px); }
 .kompass-scheibe svg { width: 100%; height: 100%; display: block; }
-.kompass-buchstabe { font-family: var(--font); font-weight: 700; font-size: 26px; text-anchor: middle; }
+.kompass-buchstabe { font-family: var(--font); font-weight: 700; font-size: 25px; text-anchor: middle; }
 .kompass-nadel {
-  position: absolute; left: 50%; top: 50%; width: 22px; height: 300px;
-  margin: -150px 0 0 -11px; transform-style: preserve-3d;
+  position: absolute; left: 50%; top: 50%; width: 28px; height: 400px;
+  margin: -200px 0 0 -14px; transform-style: preserve-3d;
   animation: nadel-wandern 16s cubic-bezier(.5, 0, .2, 1) infinite;
 }
 .kompass-nadel i {
-  position: absolute; left: 0; width: 22px; height: 150px;
+  position: absolute; left: 0; width: 28px; height: 200px;
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 .kompass-nadel i:first-child { top: 0; background: linear-gradient(180deg, var(--cyan), var(--blau)); }
-.kompass-nadel i:last-child { top: 150px; transform: rotate(180deg); background: linear-gradient(180deg, rgba(244,246,255,.7), rgba(244,246,255,.25)); }
+.kompass-nadel i:last-child { top: 200px; transform: rotate(180deg); background: linear-gradient(180deg, rgba(244,246,255,.7), rgba(244,246,255,.25)); }
 .kompass-achse {
-  position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px;
+  position: absolute; left: 50%; top: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px;
   border-radius: 50%; background: #F4F6FF; border: 4px solid #070a14; transform: translateZ(6px);
 }
 /* Die Nadel hält auf jeder Richtung an: Rolle, Aufgabe, Kontext, Förmchen */
@@ -90,16 +90,16 @@ zusatz = """
   100%      { transform: rotate(360deg); }
 }
 .kompass-schatten {
-  position: absolute; left: 50%; bottom: 10px; width: 420px; height: 70px; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: 6px; width: 520px; height: 84px; transform: translateX(-50%);
   border-radius: 50%; background: radial-gradient(50% 50% at 50% 50%, rgba(0, 226, 226, .22), transparent 70%);
 }
 @media (prefers-reduced-motion: reduce) { .kompass, .kompass-nadel { animation: none; } }
 
 /* Die vier Fragen neben dem Kompass */
-.kompass-zeile { display: grid; grid-template-columns: 190px 1fr; column-gap: 24px; padding: 22px 6px; }
-.kompass-zeile .baustein-kopf { margin: 6px 0 0; font-size: 22px; }
-.kompass-zeile b { font-size: 34px; font-weight: 700; display: block; }
-.kompass-zeile span:last-child { grid-column: 2; font-size: 26px; color: var(--w-70); margin-top: 4px; }
+.kompass-zeile { display: grid; grid-template-columns: 210px 1fr; column-gap: 28px; padding: 32px 6px; }
+.kompass-zeile .baustein-kopf { margin: 8px 0 0; font-size: 23px; }
+.kompass-zeile b { font-size: 40px; font-weight: 700; display: block; line-height: 1.2; }
+.kompass-zeile span:last-child { grid-column: 2; font-size: 28px; color: var(--w-70); margin-top: 6px; }
 
 /* Drei Antworten: Frage klein, Antwort groß, nichts sonst */
 .antwort { padding: 40px 6px; }
