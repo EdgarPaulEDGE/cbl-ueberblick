@@ -83,8 +83,8 @@ falls eine Demo ausfällt und Zeit übrig ist.
 
 | Demo | Braucht | Backup im Ordner `backup/` |
 |---|---|---|
-| Bestellung | ChatGPT oder Claude eingeloggt, eine eigene alte Mail als Tonvorlage | Screenshots beider Ergebnisse |
-| Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
+| Die Absage (Folie 13) | ChatGPT oder Claude eingeloggt, beide Prompts stehen auf der Karte mit Kopieren-Knopf, keine Mail nötig | Screenshots beider Ergebnisse vom Vorabend in `backup/` (noch anzulegen) |
+| Hotelsuche (Folie 15) | Stufe 1 und 2 live im Chat, Stufe 3 liegt fertig: `Deep-Research-Tagungshotel-Luebeck.html` und `.pdf` auf dem Desktop, auch auf der Karte verlinkt | Screenshots von Stufe 1 und 2 vom Vorabend in `backup/` |
 | Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
 | Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast läuft live im Deck (Folie 19, Vollbild) und auf der Karte: `assets/audio/podcast.mp3` plus `assets/podcast-wellen.js` (Three.js lokal unter `assets/vendor/three/`), das 3D-Wellenfeld wird aus dem Ton gerechnet, kein Video, darum auf jedem Bildschirm scharf. Braucht WebGL, läuft offline |
@@ -93,6 +93,15 @@ falls eine Demo ausfällt und Zeit übrig ist.
 
 Laptop per HDMI, eigener Hotspot als Netz-Fallback, Browser-Zoom 125 Prozent,
 damit die letzte Reihe mitliest.
+
+## Am Morgen um 8:30 im Saal
+
+1. `Vollbild starten.command` oder https://ueberblick.edge-digital.ai im Chrome, einmal komplett durchblättern (28 Folien).
+2. Ton: Folie 2 anklicken, Folie 19 anklicken. Beides muss aus der Saalanlage kommen.
+3. Handy per Kabel an die Anlage, Sprachmodus mit dem Kompass-Satz einmal sprechen.
+4. Zweiter Tab: ChatGPT oder Claude eingeloggt, Karte offen (Prompts zum Kopieren).
+5. Dritter Tab: Gemini Notebook „Nordlicht 2027", einmal die Frage stellen.
+6. Bericht `Deep-Research-Tagungshotel-Luebeck.html` vom Desktop öffnen, Tabelle sichtbar.
 
 ## Lokal starten und prüfen
 
