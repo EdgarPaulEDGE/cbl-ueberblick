@@ -1,7 +1,7 @@
 # Den Überblick behalten. KI-Impulse über den Dächern von Lübeck
 
 Impuls von EDGE Digital bei **Lübeck.lokal** des Convention Bureau Lübeck,
-**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 27 Folien, 45 Minuten
+**Atlantic Hotel, 9. September 2026, 9 bis 11 Uhr**. 28 Folien, 45 Minuten
 plus 15 Minuten Fragen. Referenten: Emre Erdogan und Edgar Paul-Ghazaryan (Eddie).
 
 ## Live
@@ -11,7 +11,7 @@ GitHub Pages aus `main`, Repo `EdgarPaulEDGE/cbl-ueberblick`, öffentlich.
 Jeder Push auf `main` geht automatisch live, das dauert etwa eine Minute.
 
 Die Seite zum Mitnehmen liegt unter `/karte.html` und ist das, worauf der
-QR-Code auf Folie 25 zeigt: die vier Türme, der Kompass, die vier Prompts
+QR-Code auf Folie 26 zeigt: die vier Türme, der Kompass, die vier Prompts
 des Vormittags mit Kopieren-Knopf, die Montags-Aufgabe. Nichts wird gedruckt.
 
 ## Stamm
@@ -66,13 +66,13 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 | 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | beide |
 | 0:27 | 16 | Ein Foto, drei Schritte: Roof Lounge als Gala, Logo an der Wand, Gäste (alle Bilder fertig, nichts live) | beide |
 | 0:32 | 17 | Und jetzt bewegt es sich: Schritt 3 als Kamerafahrt (Video, Klick, 30 Sekunden) | beide |
-| 0:33 | 18 | Euer eigener Ordner: Gemini Notebook (früher NotebookLM), eine Frage live, Podcast vorproduziert (Desktop-Ordner `NotebookLM-Demo`) | beide |
-| 0:37 | 19 bis 21 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
-| 0:40 | 22 | Merksatz „Wer den Überblick behält" | |
-| 0:41 | 23 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
-| 0:43 | 24 bis 25 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
-| 0:45 | 26 | Fragen, 15 Minuten | beide |
-| 1:00 | 27 | Ende, Übergang in die Themenstränge | |
+| 0:33 | 18 bis 19 | Euer eigener Ordner: Gemini Notebook (früher NotebookLM), eine Frage live, dann der Podcast als Video (Folie 19, Klick, 60 bis 90 Sekunden) | beide |
+| 0:37 | 20 bis 22 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
+| 0:40 | 23 | Merksatz „Wer den Überblick behält" | |
+| 0:41 | 24 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
+| 0:43 | 25 bis 26 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
+| 0:45 | 27 | Fragen, 15 Minuten | beide |
+| 1:00 | 28 | Ende, Übergang in die Themenstränge | |
 
 Streichliste, wenn es eng wird: erst den Werkzeugkasten nur nennen, dann
 die Hotelsuche ganz erzählen (spart 3 Minuten), dann Demo 0 weglassen.
@@ -87,7 +87,7 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
 | Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
-| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast-Video liegt im Deck (`assets/video/podcast.mp4`, Folie 18, Klick) und auf der Karte |
+| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast-Video liegt im Deck (`assets/video/podcast.mp4`, Folie 19, Klick) und auf der Karte |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 | Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist Schritt 3 der Bildreihe |
 

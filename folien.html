@@ -531,9 +531,9 @@
 <section>
   <div class="slide">
     <h2 class="headline gesetzt">Ein Ordner, der nur<br>eure Unterlagen <span class="schimmer">kennt.</span></h2>
-    <div class="gruppe-mittig wachsen">
+    <div class="gruppe-mittig wachsen" style="padding-top:28px;">
     <div class="band">
-      <div class="station" style="flex:0 0 400px;">
+      <div class="station" style="flex:0 0 430px;">
         <div class="station-kopf">
           <span class="ring klein warn"><b>1</b></span>
           <span class="label">Was drinliegt</span>
@@ -564,17 +564,14 @@
         <defs><linearGradient id="dnb" x1="0" y1="30" x2="86" y2="30" gradientUnits="userSpaceOnUse">
           <stop stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/></linearGradient></defs>
       </svg>
-      <div class="station" style="flex:0 0 560px;">
+      <div class="station" style="flex:0 0 400px;">
         <div class="station-kopf">
           <span class="ring klein ok"><b>3</b></span>
-          <span class="label">Und dann: als Podcast</span>
+          <span class="label">Und dann</span>
         </div>
-        <!-- Der fertige Podcast aus den fünf Unterlagen, Klick startet, Leertaste auch. -->
-        <div class="video-fenster" style="width:100%;">
-          <video src="assets/video/podcast.mp4" poster="assets/video/podcast-poster.jpg" preload="metadata" playsinline></video>
-          <button class="video-start" type="button" aria-label="Abspielen">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>
-          </button>
+        <div class="feld wachsen" style="border-color:rgba(58,210,159,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:150px;height:150px;"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          <p class="label" style="margin:0;color:var(--weiss);text-align:center;">Zwei Stimmen reden<br>über eure Unterlagen</p>
         </div>
       </div>
     </div>
@@ -586,11 +583,35 @@
       Gemini Notebook (früher NotebookLM), Turm 4 mit Gesicht. Das Notebook ist vorbereitet
       (Ausschreibung, drei Angebote, Hausordnung). Live nur die eine Frage,
       Antwort in fünf Sekunden, Fundstelle anklicken: Antwort auf „Quellen
-      prüfen". Dann Klick auf das Video rechts: der Roboter und die Moderatorin
-      reden über genau diese fünf Unterlagen, 60 bis 90 Sekunden reichen,
-      Leertaste hält an. Nicht live erzeugen.
+      prüfen". Dann ein Satz zu Station 3 und weiter zur nächsten Folie, dort läuft
+      der Podcast. Nicht live erzeugen.
       Datenschutz in einem Satz: mit dem Firmenkonto wird nichts trainiert,
       mit dem privaten Gratis-Konto nicht. Vier Minuten.
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 19: DER PODCAST ============ -->
+<section>
+  <div class="slide">
+    <h2 class="headline">Eure Unterlagen als <span class="schimmer">Podcast.</span></h2>
+    <div class="gruppe-mittig wachsen">
+      <!-- Der fertige Podcast aus den fünf Unterlagen: Klick oder Leertaste startet, Leertaste hält an. -->
+      <div class="video-fenster" style="width:1400px;">
+        <video src="assets/video/podcast.mp4" poster="assets/video/podcast-poster.jpg" preload="metadata" playsinline></video>
+        <button class="video-start" type="button" aria-label="Abspielen">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <p class="bild-quelle" style="position:static;margin-top:18px;">Mit KI erstellt: Skript aus den fünf Unterlagen, Stimmen von ElevenLabs, Wellen aus der Tonspur</p>
+    </div>
+    <aside class="notes">
+      Klick, dann 60 bis 90 Sekunden laufen lassen: der Roboter und die
+      Moderatorin reden über genau die fünf Dokumente von eben, nichts
+      anderes. Ab Minute 3:10 kommt die Antwort auf die Frage von Folie 18
+      („Zwei von drei …“), falls das Notebook live gestreikt hat. Leertaste
+      hält an. Ein Satz danach: „Das hat die KI aus fünf PDFs gemacht, in
+      drei Minuten. Ob es stimmt, prüft ihr an den Fundstellen.“
     </aside>
   </div>
 </section>
