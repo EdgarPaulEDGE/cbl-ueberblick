@@ -33,6 +33,13 @@ zusatz = """
     linear-gradient(270deg, rgba(3, 3, 9, .97) 0%, rgba(3, 3, 9, .88) 38%, rgba(3, 3, 9, .35) 78%, rgba(3, 3, 9, .55) 100%),
     linear-gradient(0deg, rgba(3, 3, 9, .7) 0%, transparent 45%);
 }
+/* Die vier Arten von Werkzeug bekommen je eine eigene Figur statt eines
+   abstrakten Icons. Feste Hoehe, damit alle vier Koepfe auf einer Linie sitzen. */
+.sp-robo { height: 158px; display: flex; align-items: flex-end; margin-bottom: 14px; }
+/* Zwei der vier Namen brauchen zwei Zeilen: feste Kopfhoehe haelt die
+   Ueberschriften darunter trotzdem auf einer Linie. */
+.spalten .baustein-kopf { min-height: 2.1em; }
+.sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
 /* Titelbild: die Stadt bleibt sichtbar, links liegt genug Dunkel für die
    große Headline. Kräftiger als "seite", weil die Gebäude hell leuchten. */
 .reveal .slide-background[data-schleier="titel"]::after {

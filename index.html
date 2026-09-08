@@ -607,6 +607,13 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     linear-gradient(270deg, rgba(3, 3, 9, .97) 0%, rgba(3, 3, 9, .88) 38%, rgba(3, 3, 9, .35) 78%, rgba(3, 3, 9, .55) 100%),
     linear-gradient(0deg, rgba(3, 3, 9, .7) 0%, transparent 45%);
 }
+/* Die vier Arten von Werkzeug bekommen je eine eigene Figur statt eines
+   abstrakten Icons. Feste Hoehe, damit alle vier Koepfe auf einer Linie sitzen. */
+.sp-robo { height: 158px; display: flex; align-items: flex-end; margin-bottom: 14px; }
+/* Zwei der vier Namen brauchen zwei Zeilen: feste Kopfhoehe haelt die
+   Ueberschriften darunter trotzdem auf einer Linie. */
+.spalten .baustein-kopf { min-height: 2.1em; }
+.sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
 /* Titelbild: die Stadt bleibt sichtbar, links liegt genug Dunkel für die
    große Headline. Kräftiger als "seite", weil die Gebäude hell leuchten. */
 .reveal .slide-background[data-schleier="titel"]::after {
@@ -927,7 +934,7 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 </section>
 
 <!-- ============ 6: DIVIDER LANDKARTE ============ -->
-<section data-chrome="aus" data-background-image="assets/images/robo/tuerme.jpg" data-background-size="cover" data-schleier="seite">
+<section data-chrome="aus" data-background-image="assets/images/robo/strandkorb-chill.jpg" data-background-size="cover" data-schleier="titel">
   <div class="slide" style="justify-content:center;">
     <span class="bild-quelle">Bild mit KI erstellt</span>
     <p class="label">Der Überblick</p>
@@ -945,30 +952,30 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
   <div class="slide">
     <h2 class="headline gesetzt">Vier Arten von Werkzeug.<br>Mehr braucht ihr <span class="schimmer">nicht.</span></h2>
     <div class="gruppe-mittig wachsen">
-    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:56px 52px;">
+    <div class="spalten feld" style="grid-template-columns:repeat(4,1fr);align-items:stretch;padding:34px 52px 44px;">
       <div class="fragment fade-up">
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C15DE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4Z"/><path d="M8 9h8M8 13h5"/></svg></div>
+        <div class="sp-robo"><img src="assets/images/robo/kapitel-assistent.png" alt="Der Roboter diktiert eine Nachricht ins Handy"></div>
         <div class="baustein-kopf b-rolle">Der Assistent</div>
-        <h3 style="font-size:36px;min-height:2.6em;">Schreibt, denkt mit, fasst zusammen</h3>
-        <p style="font-size:29px;">ChatGPT, Claude, Gemini oder Copilot. Eines davon reicht.</p>
+        <h3 style="font-size:32px;min-height:2.5em;">Schreibt, denkt mit, fasst zusammen</h3>
+        <p style="font-size:27px;">ChatGPT, Claude, Gemini oder Copilot. Eines davon reicht.</p>
       </div>
       <div class="fragment fade-up">
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#009FF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8 11h6M11 8v6"/></svg></div>
+        <div class="sp-robo"><img src="assets/images/robo/kapitel-rechercheur.png" alt="Der Roboter mit Lupe und Notizen"></div>
         <div class="baustein-kopf b-ziel">Der Rechercheur</div>
-        <h3 style="font-size:36px;min-height:2.6em;">Sucht mit Quellen, wenn es stimmen muss</h3>
-        <p style="font-size:29px;">Deep Research, Perplexity.</p>
+        <h3 style="font-size:32px;min-height:2.5em;">Sucht mit Quellen, wenn es stimmen muss</h3>
+        <p style="font-size:27px;">Deep Research, Perplexity.</p>
       </div>
       <div class="fragment fade-up">
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00E2E2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 9"/></svg></div>
+        <div class="sp-robo"><img src="assets/images/robo/kapitel-bildermacher.png" alt="Der Roboter mit Palette und Pinsel"></div>
         <div class="baustein-kopf b-kontext">Der Bildermacher</div>
-        <h3 style="font-size:36px;min-height:2.6em;">Baut Bilder aus euren Fotos und Logos</h3>
-        <p style="font-size:29px;">Nano Banana Pro, GPT Image, Canva.</p>
+        <h3 style="font-size:32px;min-height:2.5em;">Baut Bilder aus euren Fotos und Logos</h3>
+        <p style="font-size:27px;">Nano Banana Pro, GPT Image, Canva.</p>
       </div>
       <div class="fragment fade-up">
-        <div class="sp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C7D300" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0-3 4 4 4 0 0 0 3 4v1a4 4 0 0 0 8 0v-1a4 4 0 0 0 3-4 4 4 0 0 0-3-4V7a4 4 0 0 0-4-4Z"/><path d="M12 3v18"/></svg></div>
+        <div class="sp-robo"><img src="assets/images/robo/kapitel-gedaechtnis.png" alt="Der Roboter trägt einen Stapel Ordner"></div>
         <div class="baustein-kopf b-aufgabe">Das Gedächtnis</div>
-        <h3 style="font-size:36px;min-height:2.6em;">Merkt sich euren Ton und eure Vorlagen</h3>
-        <p style="font-size:29px;">Projekte in ChatGPT oder Claude, Custom GPTs, Gemini Notebook.</p>
+        <h3 style="font-size:32px;min-height:2.5em;">Merkt sich euren Ton und eure Vorlagen</h3>
+        <p style="font-size:27px;">Projekte in ChatGPT oder Claude, Custom GPTs, Gemini Notebook.</p>
       </div>
     </div>
     <div class="takeaway mt-auto" style="padding-top:26px;">
@@ -1581,11 +1588,13 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
     <div class="spalte" style="flex:1;gap:26px;justify-content:center;">
       <img src="assets/logos/edge-logo-white.png" alt="EDGE Digital" style="height:110px;align-self:flex-start;margin-bottom:26px;">
       <h2 class="hero gesetzt" style="font-size:100px;margin:0;">Danke fürs<br><span class="schimmer">Mitdenken.</span></h2>
+      <!-- Emres Wunsch: ein Wortspiel mit dem Ort. Lübeck liegt an der Ostsee,
+           der Vortrag läuft auf dem Dach des Atlantic. -->
       <p class="lead" style="font-size:34px;margin-top:10px;">
-        EDGE Digital<br>
-        Fischstraße 16 · 23552 Lübeck
+        Lübeck liegt an der Ostsee.<br>
+        Heute ausnahmsweise am Atlantic.
       </p>
-      <p class="label" style="margin-top:34px;">Künstliche Intelligenz. Echte Wirkung.</p>
+      <p class="label" style="margin-top:34px;">EDGE Digital · Fischstraße 16 · 23552 Lübeck</p>
     </div>
     <div class="posting" style="flex:0 0 640px;">
       <img src="assets/images/robo/dach-winkt.jpg" alt="Der Roboter winkt zum Abschied, dahinter das Holstentor" style="height:820px;object-fit:cover;object-position:70% center;">
