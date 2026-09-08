@@ -1,0 +1,22 @@
+/* Podcast-Bühne: 1920 x 1080, wird per Transform skaliert (Deck: Reveal, Karte: eigener Rahmen) */
+.podcast-buehne { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Avenir Next LT", "Avenir Next", sans-serif; color: #F4F6FF;
+  background: radial-gradient(520px 520px at 1520px 660px, rgba(0,80,110,.55), transparent 70%), radial-gradient(420px 420px at 240px 120px, rgba(90,30,140,.55), transparent 70%), #03030a; cursor: pointer; }
+.podcast-buehne canvas { position: absolute; inset: 0; width: 1920px; height: 1080px; display: block; }
+.podcast-schleier { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,3,9,.93) 0%, rgba(3,3,9,.9) 40%, rgba(3,3,9,.55) 58%, rgba(3,3,9,0) 74%); pointer-events: none; }
+.podcast-cover { position: absolute; left: 150px; top: 170px; width: 600px; height: 600px; border-radius: 34px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(244,246,255,.22), 0 30px 90px rgba(0,0,0,.6), 0 0 120px rgba(0,226,226,.18); }
+.podcast-cover img { width: 100%; height: 100%; display: block; }
+.podcast-buehne p { margin: 0; position: absolute; text-align: left; text-transform: none; letter-spacing: 0; }
+.podcast-kicker { left: 840px; top: 232px; font-weight: 600; font-size: 22px; letter-spacing: .12em !important; color: rgba(244,246,255,.5); }
+.podcast-titel { left: 836px; top: 268px; font-weight: 700; font-size: 84px; line-height: 1.05; letter-spacing: -.01em !important; color: #F4F6FF; }
+.podcast-titel span { color: #00E2E2; }
+.podcast-lead { left: 840px; top: 500px; width: 960px; font-weight: 500; font-size: 30px; line-height: 1.4; color: rgba(244,246,255,.72); }
+.podcast-kenn { left: 840px; top: 640px; font-weight: 600; font-size: 21px; letter-spacing: .1em !important; color: rgba(244,246,255,.38); }
+.podcast-fuss { left: 150px; top: 1022px; font-weight: 600; font-size: 21px; letter-spacing: .1em !important; color: rgba(244,246,255,.45); }
+.podcast-balken { position: absolute; left: 1180px; top: 1033px; width: 590px; height: 2px; background: rgba(244,246,255,.18); }
+.podcast-balken i { display: block; height: 100%; width: 0; background: #00E2E2; }
+.podcast-zeit { position: absolute; left: 1786px; top: 1020px; font-weight: 600; font-size: 21px; letter-spacing: .06em; color: rgba(244,246,255,.6); font-variant-numeric: tabular-nums; }
+.podcast-start { position: absolute; left: 50%; top: 50%; width: 170px; height: 170px; margin: -85px 0 0 -85px; border-radius: 50%;
+  border: 1px solid rgba(244,246,255,.35); background: rgba(8,11,22,.72); color: #F4F6FF; cursor: pointer; display: grid; place-items: center; transition: opacity .25s; padding: 0; }
+.podcast-start svg { width: 70px; height: 70px; margin-left: 8px; }
+.podcast-buehne.laeuft .podcast-start { opacity: 0; pointer-events: none; }

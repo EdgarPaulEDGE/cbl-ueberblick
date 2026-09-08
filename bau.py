@@ -129,8 +129,40 @@ zusatz = """
 }
 .video-start svg { width: 64px; height: 64px; margin-left: 8px; }
 .video-fenster.laeuft .video-start { opacity: 0; pointer-events: none; }
+/* Vollbild-Video: füllt die ganze Folie, kein Rahmen, kein Radius */
+.video-fenster.voll { position: absolute; inset: 0; width: 1920px; height: 1080px; border: 0; border-radius: 0; background: #030309; }
+.video-fenster.voll video { width: 1920px; height: 1080px; object-fit: cover; }
+.video-fenster.voll .video-start { width: 170px; height: 170px; margin: -85px 0 0 -85px; }
 </style>"""
 html = html.replace("</style>", zusatz, 1)
+# Podcast-Bühne: Stylesheet, Importmap für Three.js (lokal, offline) und das Modul
+html = html.replace("</head>", """<link rel="stylesheet" href="assets/podcast.css">
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three/three.module.js", "three/addons/": "./assets/vendor/three/addons/" } }</script>
+</head>""", 1)
+html = html.replace("</body>", """<script type="module">
+/* Podcast-Folie: Wellenfeld läuft nur, solange die Folie steht; Leertaste startet und hält an. */
+import { podcastBuehne } from "./assets/podcast-wellen.js";
+var buehnen = [];
+document.querySelectorAll(".podcast-buehne").forEach(function (el) {
+  var b = podcastBuehne(el); el.__buehne = b; buehnen.push([el, b]);
+  el.addEventListener("click", b.umschalten);
+});
+function pruefen() {
+  var aktuell = Reveal.getCurrentSlide();
+  buehnen.forEach(function (paar) {
+    if (aktuell && aktuell.contains(paar[0])) paar[1].start(Reveal.getScale()); else paar[1].stop();
+  });
+}
+function start() { pruefen(); Reveal.on("slidechanged", pruefen); Reveal.on("resize", function () { buehnen.forEach(function (p) { p[1].resize(Reveal.getScale()); }); }); }
+if (Reveal.isReady && Reveal.isReady()) start(); else Reveal.on("ready", start);
+document.addEventListener("keydown", function (e) {
+  if (e.code !== "Space") return;
+  var el = Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector(".podcast-buehne");
+  if (!el) return;
+  e.preventDefault(); e.stopPropagation(); el.__buehne.umschalten();
+}, true);
+</script>
+</body>""", 1)
 
 # Reveal baut seine Hintergrund-Elemente bei jedem configure() neu, dann ist
 # der kopierte Schleier weg. Deshalb bei jedem Folienwechsel nachkopieren.

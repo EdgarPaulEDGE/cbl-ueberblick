@@ -87,7 +87,7 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
 | Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
-| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast-Video liegt im Deck (`assets/video/podcast.mp4`, Folie 19 als Vollbild, erste 2:30 Minuten in Full HD) und auf der Karte (`podcast-karte.mp4`, ganze Folge in 720p); die 3D-Wellen kommen aus Three.js (`waves.html` im Scratch, Bild für Bild aus der Tonspur gerendert) |
+| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast läuft live im Deck (Folie 19, Vollbild) und auf der Karte: `assets/audio/podcast.mp3` plus `assets/podcast-wellen.js` (Three.js lokal unter `assets/vendor/three/`), das 3D-Wellenfeld wird aus dem Ton gerechnet, kein Video, darum auf jedem Bildschirm scharf. Braucht WebGL, läuft offline |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 | Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist Schritt 3 der Bildreihe |
 

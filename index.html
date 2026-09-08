@@ -708,6 +708,8 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 .video-fenster.voll video { width: 1920px; height: 1080px; object-fit: cover; }
 .video-fenster.voll .video-start { width: 170px; height: 170px; margin: -85px 0 0 -85px; }
 </style>
+<link rel="stylesheet" href="assets/podcast.css">
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three/three.module.js", "three/addons/": "./assets/vendor/three/addons/" } }</script>
 </head>
 <body>
 
@@ -1318,22 +1320,28 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 <!-- ============ 19: DER PODCAST ============ -->
 <section data-chrome="aus">
   <div class="slide" style="padding:0;position:relative;">
-    <!-- Der fertige Podcast aus den fünf Unterlagen, bildschirmfüllend: Klick oder Leertaste startet, Leertaste hält an. -->
-    <div class="video-fenster voll">
-      <video src="assets/video/podcast.mp4" poster="assets/video/podcast-poster.jpg" preload="metadata" playsinline></video>
-      <button class="video-start" type="button" aria-label="Abspielen">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg>
-      </button>
+    <!-- Live-Bühne: Cover, Titel, 3D-Wellenfeld aus dem Ton (assets/podcast-wellen.js). Klick oder Leertaste startet. -->
+    <div class="podcast-buehne">
+      <canvas width="1920" height="1080"></canvas>
+      <div class="podcast-schleier"></div>
+      <div class="podcast-cover"><img src="assets/images/podcast-cover.jpg" alt="Der Roboter und die Moderatorin im Studio"></div>
+      <p class="podcast-kicker">PODCAST · EIN ORDNER, FÜNF UNTERLAGEN</p>
+      <p class="podcast-titel">Der Ordner<br><span>aus Kopenhagen</span></p>
+      <p class="podcast-lead">Der Roboter und die Moderatorin lesen eine Anfrage, drei Hotelangebote und eine Hausordnung. Mehr wissen sie nicht, und genau das ist der Punkt.</p>
+      <p class="podcast-kenn">MIT KI ERSTELLT · STIMMEN: ELEVENLABS · SKRIPT AUS DEN FÜNF DOKUMENTEN</p>
+      <p class="podcast-fuss">EDGE DIGITAL  ×  CONVENTION BUREAU LÜBECK  ·  LÜBECK.LOKAL, 9. SEPTEMBER 2026</p>
+      <div class="podcast-balken"><i></i></div><span class="podcast-zeit">0:00 / 5:51</span>
+      <audio src="assets/audio/podcast.mp3" preload="auto"></audio>
+      <button class="podcast-start" type="button" aria-label="Abspielen"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg></button>
     </div>
     <aside class="notes">
       Klick, dann 60 bis 90 Sekunden laufen lassen: der Roboter und die
       Moderatorin reden über genau die fünf Dokumente von eben, nichts
-      anderes. Ab Minute 3:10 kommt die Antwort auf die Frage von Folie 18
-      („Zwei von drei …“), falls das Notebook live gestreikt hat. Leertaste
-      hält an. Im Deck liegen die ersten 2:30 Minuten in Full HD, die
-      Karte hat die ganze Folge. Ein Satz danach: „Das hat die KI aus fünf
-      PDFs gemacht, in drei Minuten. Ob es stimmt, prüft ihr an den
-      Fundstellen.“
+      anderes. Die Wellen entstehen live aus dem Ton, kein Video. Ab Minute
+      3:10 kommt die Antwort auf die Frage von Folie 18 („Zwei von drei …“),
+      falls das Notebook live gestreikt hat. Leertaste hält an. Ein Satz
+      danach: „Das hat die KI aus fünf PDFs gemacht, in drei Minuten. Ob es
+      stimmt, prüft ihr an den Fundstellen.“
     </aside>
   </div>
 </section>
@@ -1728,5 +1736,28 @@ Reveal.on('slidechanged', function (e) {
 });
 </script>
 <script src="kosmos.js"></script>
+<script type="module">
+/* Podcast-Folie: Wellenfeld läuft nur, solange die Folie steht; Leertaste startet und hält an. */
+import { podcastBuehne } from "./assets/podcast-wellen.js";
+var buehnen = [];
+document.querySelectorAll(".podcast-buehne").forEach(function (el) {
+  var b = podcastBuehne(el); el.__buehne = b; buehnen.push([el, b]);
+  el.addEventListener("click", b.umschalten);
+});
+function pruefen() {
+  var aktuell = Reveal.getCurrentSlide();
+  buehnen.forEach(function (paar) {
+    if (aktuell && aktuell.contains(paar[0])) paar[1].start(Reveal.getScale()); else paar[1].stop();
+  });
+}
+function start() { pruefen(); Reveal.on("slidechanged", pruefen); Reveal.on("resize", function () { buehnen.forEach(function (p) { p[1].resize(Reveal.getScale()); }); }); }
+if (Reveal.isReady && Reveal.isReady()) start(); else Reveal.on("ready", start);
+document.addEventListener("keydown", function (e) {
+  if (e.code !== "Space") return;
+  var el = Reveal.getCurrentSlide() && Reveal.getCurrentSlide().querySelector(".podcast-buehne");
+  if (!el) return;
+  e.preventDefault(); e.stopPropagation(); el.__buehne.umschalten();
+}, true);
+</script>
 </body>
 </html>
