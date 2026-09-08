@@ -33,6 +33,13 @@ zusatz = """
     linear-gradient(270deg, rgba(3, 3, 9, .97) 0%, rgba(3, 3, 9, .88) 38%, rgba(3, 3, 9, .35) 78%, rgba(3, 3, 9, .55) 100%),
     linear-gradient(0deg, rgba(3, 3, 9, .7) 0%, transparent 45%);
 }
+/* Titelbild: die Stadt bleibt sichtbar, links liegt genug Dunkel für die
+   große Headline. Kräftiger als "seite", weil die Gebäude hell leuchten. */
+.reveal .slide-background[data-schleier="titel"]::after {
+  background:
+    linear-gradient(90deg, rgba(3, 3, 9, .97) 0%, rgba(3, 3, 9, .94) 34%, rgba(3, 3, 9, .72) 58%, rgba(3, 3, 9, .3) 88%, rgba(3, 3, 9, .5) 100%),
+    linear-gradient(0deg, rgba(3, 3, 9, .78) 0%, transparent 42%);
+}
 /* Zettel: Inhalt so groß, dass der Kasten neben dem Fragezeichen nicht leer wirkt */
 .zettel ul { font-size: 0; }
 .zettel li { font-size: 31px; line-height: 1.9; }
@@ -105,6 +112,20 @@ zusatz = """
 .antwort { padding: 40px 6px; }
 .antwort .label { display: block; margin-bottom: 14px; }
 .antwort p { font-size: 44px; font-weight: 600; line-height: 1.3; margin: 0; }
+/* ---------- Kapitel-Marker: wo sind wir gerade? ----------
+   Ein farbiger Punkt in der Farbe des jeweiligen Werkzeugs, oben über der
+   Headline. Vier Farben, den ganzen Vormittag dieselben. */
+.kapitel { display: flex; align-items: center; gap: 12px; margin: 0 0 14px;
+  font-weight: 600; font-size: 20px; letter-spacing: .16em; text-transform: uppercase; color: var(--w-45); }
+.kapitel i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.slide.podcast-buehne .kapitel { position: relative; z-index: 1; }
+
+/* ---------- Agenda: was heute passiert ---------- */
+.agenda-zeile { display: grid; grid-template-columns: 26px 340px 1fr; align-items: baseline; column-gap: 22px; padding: 26px 6px; }
+.agenda-zeile .punkt { width: 12px; height: 12px; border-radius: 50%; display: block; }
+.agenda-zeile b { font-size: 38px; font-weight: 700; }
+.agenda-zeile span:last-child { font-size: 29px; color: var(--w-70); }
+
 /* ---------- Bildreihe: ein Foto, drei Schritte ----------
    Jede Station zeigt ihr Ergebnis als Bild, Schritt 1 trägt das Ausgangsfoto
    als kleines Bild in der Ecke, damit der Vorher-Nachher-Sprung sichtbar ist. */
