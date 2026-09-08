@@ -56,28 +56,27 @@ Ohne Adressleiste: Taste `F`, oder Doppelklick auf `Vollbild starten.command`
 
 | Zeit | Folien | Block | Wer |
 |---|---|---|---|
-| 0:00 | 1 bis 2 | Titel, der Roboter stellt sich vor (Video, Klick) | Emre |
-| 0:01 | 3 bis 4 | Team, Handzeichen | Emre |
-| 0:05 | 5 bis 6 | Der Spiegel, „Weiß die KI alles?" | beide |
-| 0:07 | 7 bis 9 | Vier Türme, wo anfangen | beide |
-| 0:13 | 10 | Vier Fragen, bevor ihr tippt (Kompass) | Emre |
-| 0:15 | 11 bis 12 | Jetzt live, Demo 0: Reden statt tippen (Handy, Sprachmodus) | beide |
-| 0:17 | 13 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage | beide, einer tippt, einer erzählt |
-| 0:24 | 14 bis 15 | Merksatz, Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig) | beide |
-| 0:27 | 16 bis 18 | Ein Foto, drei Schritte: je eine Folie für Raum, Logo, Gäste (alle Bilder fertig, nichts live) | beide |
-| 0:32 | 19 | Und jetzt bewegt es sich: Schritt 3 als Kamerafahrt (Video, Klick, 30 Sekunden) | beide |
-| 0:33 | 20 bis 21 | Euer eigener Ordner: Gemini Notebook (früher NotebookLM), eine Frage live, dann der Podcast (Folie 21, Klick, 60 bis 90 Sekunden) | beide |
-| 0:37 | 22 bis 24 | Drei Fragen, die immer kommen: Daten, Strom, Jobs (die dritte beantwortet der Roboter, Video) | beide, Pingpong |
-| 0:40 | 25 | Merksatz „Wer den Überblick behält" | |
-| 0:41 | 26 | Was ihr schon habt, kann mehr (Werkzeugkasten, nichts live) | Emre |
-| 0:43 | 27 bis 28 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
+| 0:00 | 1 bis 2 | Titel über den Dächern, der Roboter stellt sich vor (Video, Klick) | Emre |
+| 0:01 | 3 bis 4 | Team, dann die Agenda: die vier Farben des Vormittags | Emre |
+| 0:04 | 5 bis 6 | Handzeichen, der Spiegel aus den Bögen | beide |
+| 0:07 | 7 bis 9 | Weiß die KI alles, weniger ist mehr, die vier Arten von Werkzeug | beide |
+| 0:13 | 10 bis 11 | Wo anfangen, vier Fragen vor dem Tippen (Kompass) | Emre |
+| 0:15 | 12 bis 13 | Jetzt live, Demo 0: Reden statt tippen (Handy, Sprachmodus) | beide |
+| 0:17 | 14 bis 15 | Demo 1: Die Absage, beide Prompts aus der Zwischenablage, dann der Merksatz | beide |
+| 0:24 | 16 | Hotelsuche in drei Stufen (Stufe 1 live, 2 zeigen, 3 fertig vom Desktop) | beide |
+| 0:27 | 17 bis 19 | Ein Foto, drei Schritte: Raum, Logo, Gäste (alle Bilder fertig, nichts live) | beide |
+| 0:32 | 20 | Und jetzt bewegt es sich: die Kamerafahrt (Video, Klick) | beide |
+| 0:33 | 21 bis 22 | Euer eigener Ordner: Gemini Notebook, eine Frage live, dann der Podcast (Folie 22) | beide |
+| 0:37 | 23 bis 25 | Die Fragen, die immer kommen: kurze Antworten, dann Datenschutz im Detail | beide, Pingpong |
+| 0:41 | 26 | Merksatz „Wer den Überblick behält" | |
+| 0:42 | 27 bis 28 | Und am Montag (der Roboter verabschiedet sich), QR | Emre |
 | 0:45 | 29 | Fragen, 15 Minuten | beide |
 | 1:00 | 30 | Ende, Übergang in die Themenstränge | |
 
-Streichliste, wenn es eng wird: erst den Werkzeugkasten nur nennen, dann
-die Hotelsuche ganz erzählen (spart 3 Minuten), dann Demo 0 weglassen.
-Die Zettel-Demo („Vom Zettel zum Plan") liegt in `reserve-folien.html`,
-falls eine Demo ausfällt und Zeit übrig ist.
+Streichliste, wenn es eng wird: erst die Hotelsuche ganz erzählen statt
+zeigen (spart 3 Minuten), dann Demo 0 weglassen, dann die Bildreihe auf
+Schritt 1 und 3 kürzen. In `reserve-folien.html` liegen die Zettel-Demo
+und der Werkzeugkasten, falls eine Demo ausfällt und Zeit übrig ist.
 
 ## Demos vorbereiten (am Abend davor, jede einmal komplett)
 
@@ -87,7 +86,7 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Hotelsuche (Folie 15) | Stufe 1 und 2 live im Chat, Stufe 3 liegt fertig: `Deep-Research-Tagungshotel-Luebeck.html` und `.pdf` auf dem Desktop, auch auf der Karte verlinkt | Screenshots von Stufe 1 und 2 vom Vorabend in `backup/` |
 | Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
-| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast läuft live im Deck (Folie 21) und auf der Karte: `assets/audio/podcast.mp3` plus `assets/podcast-wellen.js` (Three.js lokal unter `assets/vendor/three/`), das 3D-Wellenfeld wird aus dem Ton gerechnet, kein Video, darum auf jedem Bildschirm scharf. Braucht WebGL, läuft offline |
+| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast läuft live im Deck (Folie 22) und auf der Karte: `assets/audio/podcast.mp3` plus `assets/podcast-wellen.js` (Three.js lokal unter `assets/vendor/three/`), das 3D-Wellenfeld wird aus dem Ton gerechnet, kein Video, darum auf jedem Bildschirm scharf. Braucht WebGL, läuft offline |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 | Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist Schritt 3 der Bildreihe |
 
@@ -97,7 +96,7 @@ damit die letzte Reihe mitliest.
 ## Am Morgen um 8:30 im Saal
 
 1. `Vollbild starten.command` oder https://ueberblick.edge-digital.ai im Chrome, einmal komplett durchblättern (30 Folien).
-2. Ton: Folie 2 anklicken, Folie 21 anklicken. Beides muss aus der Saalanlage kommen.
+2. Ton: Folie 2 anklicken, Folie 22 anklicken. Beides muss aus der Saalanlage kommen.
 3. Handy per Kabel an die Anlage, Sprachmodus mit dem Kompass-Satz einmal sprechen.
 4. Zweiter Tab: ChatGPT oder Claude eingeloggt, Karte offen (Prompts zum Kopieren).
 5. Dritter Tab: Gemini Notebook „Nordlicht 2027", einmal die Frage stellen.
