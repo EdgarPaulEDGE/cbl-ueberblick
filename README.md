@@ -127,7 +127,7 @@ Alle Bilder mit KI erzeugt und auf der Folie gekennzeichnet:
   Foto der Roof Lounge von convention-luebeck.com (der Raum des 9. September),
   `schritt-1.jpg` bis `schritt-3.jpg` sind GPT Image 2 mit dem jeweils vorigen
   Bild als Referenz: Gala-Dinner, dann das CB-Logo als Datei angehängt, dann
-  Gäste. `assets/video/gala.mp4` ist Kling 3.0 aus Schritt 3, fünf Sekunden.
+  Gäste. `assets/video/gala.mp4` ist Seedance 2.5 aus Schritt 3, acht Sekunden Kranfahrt; vier weitere Varianten (Kling 4K, Kling Pro, Cinema Studio, Grok) liegen auf dem Desktop unter `Gala-Video-Varianten`.
 - Alle übrigen Motive aus dem K64-Deck (Holstentor, Passat, Freisteller).
 
 Beide neuen Bilder: GPT Image 2 mit dem Roboter-Freisteller und dem
