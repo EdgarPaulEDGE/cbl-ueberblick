@@ -87,7 +87,7 @@ falls eine Demo ausfällt und Zeit übrig ist.
 | Hotelsuche | Deep Research vorab einmal gelaufen, Dauer gemessen | Ergebnis als PDF |
 | Bild | nichts, alle drei Schritte liegen im Deck (`assets/images/demo/`) | die Folie selbst ist das Backup |
 | Reden statt tippen | Handy per Kabel an der Saalanlage, ChatGPT-Sprachmodus, der Kompass-Satz (Folie 12) als Text auf dem Handy; keine Mail nötig, alles steckt im Satz | Bildschirmaufnahme vom Vorabend |
-| NotebookLM | Desktop-Ordner `NotebookLM-Demo`: fünf PDFs hochladen, Frage einmal testen (Ablauf.md) | Podcast `Podcast-Der-Ordner-aus-Kopenhagen.mp3` (5:51, Roboter und Moderatorin, ElevenLabs) |
+| Gemini Notebook | Notebook „Nordlicht 2027“ liegt im Google-Konto, Frage einmal testen (Desktop-Ordner `NotebookLM-Demo`, Ablauf.md) | Podcast-Video liegt im Deck (`assets/video/podcast.mp4`, Folie 18, Klick) und auf der Karte |
 | Roboter-Clips | drei Clips liegen im Deck (`assets/video/robo-*.mp4`: Begrüßung, Jobs-Antwort, Montag), Ton im Saal um 8:30 testen | Folie ohne Ton erzählen |
 | Gala-Kamerafahrt | liegt im Deck (`assets/video/gala.mp4`), nichts vorzubereiten | Das Standbild (Poster) ist Schritt 3 der Bildreihe |
 
