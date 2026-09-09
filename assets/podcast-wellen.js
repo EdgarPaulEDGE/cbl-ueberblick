@@ -10,7 +10,7 @@ import { Line2 } from "three/addons/lines/Line2.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 
-const W = 1920, H = 1080;
+let W = 1920, H = 1080; // wird in groesse() aus dem Canvas gelesen
 const BAENDER = 64, ROWS = 34, COLS = 150, XW = 58, YB = -4.6;
 const VERLAUF = 90; // gemerkte Frames für den Nachlauf der hinteren Reihen
 
@@ -26,8 +26,11 @@ const PHI_VORN = grad(61.4), PHI_HINTEN = grad(40.6);       // unterer Rand lieg
 const reiheZ = (t) => CAM.z - HOEHE / Math.tan(PHI_VORN + (PHI_HINTEN - PHI_VORN) * t);
 const Z0 = reiheZ(0), ZD = reiheZ(1);
 
-export function podcastBuehne(buehne) {
-  const canvas = buehne.querySelector("canvas");
+export function podcastBuehne(buehne, opts = {}) {
+  // Im Deck liegt der Canvas auf Fensterebene (16:10-Bildschirme haben unter der
+  // 16:9-Buehne einen Streifen, den die Folie nicht deckt). Auf der Karte bleibt
+  // er in der Buehne. Beides laeuft ueber dieselbe Funktion.
+  const canvas = opts.canvas || buehne.querySelector("canvas");
   const audio = buehne.querySelector("audio");
   const balken = buehne.querySelector(".podcast-balken i");
   const zeit = buehne.querySelector(".podcast-zeit");
@@ -128,6 +131,8 @@ export function podcastBuehne(buehne) {
   // ---------- Bild ----------
   let pr = 1;
   function groesse(scale) {
+    W = canvas.clientWidth || 1920; H = canvas.clientHeight || 1080;
+    camera.aspect = W / H; camera.updateProjectionMatrix();
     pr = Math.min((window.devicePixelRatio || 1) * scale, 2.2);
     renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
     composer.setSize(W * pr, H * pr);

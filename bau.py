@@ -40,6 +40,13 @@ zusatz = """
    Ueberschriften darunter trotzdem auf einer Linie. */
 .spalten .baustein-kopf { min-height: 2.1em; }
 .sp-robo img { height: 100%; width: auto; display: block; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, .55)); }
+/* Podcast-Wellenfeld auf Fensterebene: zwischen Hintergrund und Folien,
+   sichtbar nur auf der Podcast-Folie. Kein z-index, die DOM-Reihenfolge
+   (nach .backgrounds, vor .slides) regelt die Stapelung. */
+#podcast-fenster { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s; }
+#podcast-fenster.an { opacity: 1; }
+#podcast-fenster canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#podcast-fenster .podcast-schleier { position: absolute; inset: 0; }
 /* Unsichtbarer Startpunkt fuer Video und Podcast: zaehlt fuer Reveal als
    Fragment, darf aber keinen Platz einnehmen. */
 .medien-start { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -189,17 +196,31 @@ html = html.replace("</body>", """<script type="module">
 /* Podcast-Folie: Wellenfeld läuft nur, solange die Folie steht; Leertaste startet und hält an. */
 import { podcastBuehne } from "./assets/podcast-wellen.js";
 var buehnen = [];
-document.querySelectorAll(".podcast-buehne").forEach(function (el) {
-  var b = podcastBuehne(el); el.__buehne = b; buehnen.push([el, b]);
-  el.addEventListener("click", b.umschalten);
-});
-function pruefen() {
-  var aktuell = Reveal.getCurrentSlide();
-  buehnen.forEach(function (paar) {
-    if (aktuell && aktuell.contains(paar[0])) paar[1].start(Reveal.getScale()); else paar[1].stop();
+/* Das Wellenfeld liegt nicht in der Folie, sondern fensterfuellend zwischen
+   Reveals Hintergrund und den Folien. Die Buehne ist 16:9, viele Bildschirme
+   sind 16:10: sonst bleibt unter der Folie ein Streifen ohne Wellen. */
+var fenster = document.createElement("div"); fenster.id = "podcast-fenster";
+fenster.innerHTML = '<canvas></canvas><div class="podcast-schleier"></div>';
+function einhaengen() {
+  var reveal = document.querySelector(".reveal"), slides = reveal.querySelector(".slides");
+  reveal.insertBefore(fenster, slides);
+  document.querySelectorAll(".podcast-buehne").forEach(function (el) {
+    var b = podcastBuehne(el, { canvas: fenster.querySelector("canvas") }); el.__buehne = b; buehnen.push([el, b]);
+    el.addEventListener("click", b.umschalten);
   });
 }
-function start() { pruefen(); Reveal.on("slidechanged", pruefen); Reveal.on("resize", function () { buehnen.forEach(function (p) { p[1].resize(Reveal.getScale()); }); }); }
+function pruefen() {
+  var aktuell = Reveal.getCurrentSlide(), an = false;
+  buehnen.forEach(function (paar) {
+    if (aktuell && aktuell.contains(paar[0])) { paar[1].start(1); an = true; } else paar[1].stop();
+  });
+  fenster.classList.toggle("an", an);
+}
+function start() {
+  einhaengen(); pruefen();
+  Reveal.on("slidechanged", pruefen);
+  window.addEventListener("resize", function () { buehnen.forEach(function (p) { p[1].resize(1); }); });
+}
 if (Reveal.isReady && Reveal.isReady()) start(); else Reveal.on("ready", start);
 </script>
 </body>""", 1)
