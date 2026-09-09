@@ -6,6 +6,19 @@ const s = await b.newPage();
 await s.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 2 });
 await s.goto("http://localhost:8151/?nofrag&v=" + Date.now(), { waitUntil: "networkidle0" });
 await new Promise((r) => setTimeout(r, 2500));
+// Im PDF kann niemand abspielen: Play-Knöpfe und der Podcast-Starter wären
+// tote Schaltflächen. Die Videos bleiben als Standbild stehen (poster-Bild),
+// die Bedienelemente verschwinden.
+await s.addStyleTag({ content: `
+  .video-start, .podcast-start { display: none !important; }
+  .video-fenster video { pointer-events: none; }
+` });
+await s.evaluate(() => {
+  document.querySelectorAll("video").forEach((v) => {
+    v.pause(); v.currentTime = 0; v.removeAttribute("controls"); v.load();
+  });
+});
+await new Promise((r) => setTimeout(r, 1200));
 const anz = await s.evaluate(() => Reveal.getTotalSlides());
 for (let i = 0; i < anz; i++) {
   await s.evaluate((n) => Reveal.slide(n), i);
