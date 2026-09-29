@@ -183,9 +183,21 @@ zusatz = """
 .video-start svg { width: 64px; height: 64px; margin-left: 8px; }
 .video-fenster.laeuft .video-start { opacity: 0; pointer-events: none; }
 /* Vollbild-Video: füllt die ganze Folie, kein Rahmen, kein Radius */
-.video-fenster.voll { position: absolute; inset: 0; width: 1920px; height: 1080px; border: 0; border-radius: 0; background: #030309; }
-.video-fenster.voll video { width: 1920px; height: 1080px; object-fit: cover; }
+.video-fenster.voll { position: absolute; inset: 0; width: 1920px; height: var(--buehne-h); border: 0; border-radius: 0; background: #030309; }
+.video-fenster.voll video { width: 1920px; height: var(--buehne-h); object-fit: cover; }
 .video-fenster.voll .video-start { width: 170px; height: 170px; margin: -85px 0 0 -85px; }
+
+/* ---------- Bühne folgt dem Fenster-Seitenverhältnis ----------
+   Der Stamm setzt Reveal fest auf 1920x1080. Auf 16:10 (MacBook) oder 4:3
+   skaliert Reveal das nur auf die Fensterbreite und lässt oben/unten einen
+   Streifen mit harter Bildkante stehen. Deshalb übernimmt die Bühne selbst
+   die Fensterhöhe (buehnenHoehe() im Skript unten), die eigentliche Folie
+   bleibt unverändert 1920x1080 und sitzt mittig darin (margin-top: --extra).
+   Bei exakt 16:9 (Standbild-Prüfung, PDF-Export) ist h=1080 und --extra=0,
+   also pixelgleich zum bisherigen Verhalten. */
+:root { --buehne-h: 1080px; --extra: 0px; }
+.reveal .slides > section { height: var(--buehne-h); }
+.slide { margin-top: var(--extra); }
 </style>"""
 html = html.replace("</style>", zusatz, 1)
 # Podcast-Bühne: Stylesheet, Importmap für Three.js (lokal, offline) und das Modul
@@ -292,6 +304,39 @@ Reveal.on('slidechanged', function (e) {
 </script>
 <script src="kosmos.js"></script>"""
 html = html.replace('<script src="kosmos.js"></script>', medien_js)
+
+# Bühne folgt dem Fenster-Seitenverhältnis (siehe CSS-Kommentar zu --buehne-h
+# weiter oben): buehnenHoehe() muss vor Reveal.initialize() stehen, weil das
+# initiale height dort schon daraus berechnet wird.
+buehne_js = """}
+
+function buehnenHoehe() {
+  return Math.max(1080, Math.min(1440, Math.round(1920 * window.innerHeight / window.innerWidth)));
+}
+function buehneSetzen() {
+  var h = buehnenHoehe(), w = document.documentElement.style;
+  w.setProperty('--buehne-h', h + 'px');
+  w.setProperty('--extra', Math.round((h - 1080) / 2) + 'px');
+  if (window.Reveal && Reveal.isReady && Reveal.isReady()) {
+    var c = Reveal.getConfig();
+    if (c.height !== h) Reveal.configure({ width: 1920, height: h });
+  }
+}
+buehneSetzen();
+window.addEventListener('resize', buehneSetzen);
+
+Reveal.initialize({"""
+html = html.replace("""}
+
+Reveal.initialize({""", buehne_js, 1)
+html = html.replace("  height: 1080,\n  margin: 0,", "  height: buehnenHoehe(),\n  margin: 0,", 1)
+# Skalierungsfaktor für Logo und Seitenzahl: bisher fest durch 1080 geteilt,
+# jetzt durch die tatsächliche Bühnenhöhe.
+html = html.replace(
+    "w.setProperty('--folie-skala', String(r.height / 1080));",
+    "w.setProperty('--folie-skala', String(r.height / buehnenHoehe()));",
+    1,
+)
 
 anfang = html.index('<div class="slides">') + len('<div class="slides">')
 ende = html.index('</div>\n</div>\n\n<script src="vendor/reveal/reveal.js">')

@@ -757,9 +757,21 @@ body.bildfolie #kosmos, body.bildfolie .nebel, body.bildfolie .vignette { opacit
 .video-start svg { width: 64px; height: 64px; margin-left: 8px; }
 .video-fenster.laeuft .video-start { opacity: 0; pointer-events: none; }
 /* Vollbild-Video: füllt die ganze Folie, kein Rahmen, kein Radius */
-.video-fenster.voll { position: absolute; inset: 0; width: 1920px; height: 1080px; border: 0; border-radius: 0; background: #030309; }
-.video-fenster.voll video { width: 1920px; height: 1080px; object-fit: cover; }
+.video-fenster.voll { position: absolute; inset: 0; width: 1920px; height: var(--buehne-h); border: 0; border-radius: 0; background: #030309; }
+.video-fenster.voll video { width: 1920px; height: var(--buehne-h); object-fit: cover; }
 .video-fenster.voll .video-start { width: 170px; height: 170px; margin: -85px 0 0 -85px; }
+
+/* ---------- Bühne folgt dem Fenster-Seitenverhältnis ----------
+   Der Stamm setzt Reveal fest auf 1920x1080. Auf 16:10 (MacBook) oder 4:3
+   skaliert Reveal das nur auf die Fensterbreite und lässt oben/unten einen
+   Streifen mit harter Bildkante stehen. Deshalb übernimmt die Bühne selbst
+   die Fensterhöhe (buehnenHoehe() im Skript unten), die eigentliche Folie
+   bleibt unverändert 1920x1080 und sitzt mittig darin (margin-top: --extra).
+   Bei exakt 16:9 (Standbild-Prüfung, PDF-Export) ist h=1080 und --extra=0,
+   also pixelgleich zum bisherigen Verhalten. */
+:root { --buehne-h: 1080px; --extra: 0px; }
+.reveal .slides > section { height: var(--buehne-h); }
+.slide { margin-top: var(--extra); }
 </style>
 <link rel="stylesheet" href="assets/podcast.css">
 <script type="importmap">{ "imports": { "three": "./assets/vendor/three/three.module.js", "three/addons/": "./assets/vendor/three/addons/" } }</script>
@@ -1673,6 +1685,21 @@ if (new URLSearchParams(location.search).has('nofrag')) {
   document.body.classList.add('standbild');
 }
 
+function buehnenHoehe() {
+  return Math.max(1080, Math.min(1440, Math.round(1920 * window.innerHeight / window.innerWidth)));
+}
+function buehneSetzen() {
+  var h = buehnenHoehe(), w = document.documentElement.style;
+  w.setProperty('--buehne-h', h + 'px');
+  w.setProperty('--extra', Math.round((h - 1080) / 2) + 'px');
+  if (window.Reveal && Reveal.isReady && Reveal.isReady()) {
+    var c = Reveal.getConfig();
+    if (c.height !== h) Reveal.configure({ width: 1920, height: h });
+  }
+}
+buehneSetzen();
+window.addEventListener('resize', buehneSetzen);
+
 Reveal.initialize({
   /* ?nofrag zeigt alle Einblendungen sofort: für die visuelle Prüfung und den PDF-Export */
   fragments: !new URLSearchParams(location.search).has('nofrag'),
@@ -1688,7 +1715,7 @@ Reveal.initialize({
   slideNumber: false,
   center: false,
   width: 1920,
-  height: 1080,
+  height: buehnenHoehe(),
   margin: 0,
   plugins: [RevealNotes]
 });
@@ -1720,7 +1747,7 @@ function chromeAusrichten() {
   w.setProperty('--folie-rechts', Math.max(0, window.innerWidth - r.right) + 'px');
   w.setProperty('--folie-oben', Math.max(0, r.top) + 'px');
   w.setProperty('--folie-unten', Math.max(0, window.innerHeight - r.bottom) + 'px');
-  w.setProperty('--folie-skala', String(r.height / 1080));
+  w.setProperty('--folie-skala', String(r.height / buehnenHoehe()));
 }
 /* Reveal legt für jede Folie ein eigenes Hintergrund-Element an, kopiert
    aber nur seine eigenen data-background-Attribute dorthin. Die Angabe,
